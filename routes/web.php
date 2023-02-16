@@ -13,20 +13,19 @@ use App\Http\Controllers\controladorMacuin;
 | contains the "web" middleware group. Now create something great!
 |
 
+*/
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-Route::get('/login', function () {
-    return view('login');
-});
-=======
-*/
+
+
 
 
 
 //Route::view('loginGG','login');
 
-Route::get('/',[controladorMacuin::class,'index']);
+Route::get('/login',[controladorMacuin::class,'index']);
 
