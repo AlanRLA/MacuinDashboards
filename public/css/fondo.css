@@ -31,10 +31,10 @@ height: 100%;
 .form h2{
     text-align: center;
     letter-spacing: 0.1em;
-    background-color: white;
     transform: translateY(55px);
     font-style: italic;
-    margin-bottom: 100px;
+    margin-bottom: 40px;
+
 }
 
 
