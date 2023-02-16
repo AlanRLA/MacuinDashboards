@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,3 +43,11 @@
 
 </body>
 </html>
+
+@extends('template')
+@section('codigo')
+    
+    <h1>hola mundo</h1>
+
+@endsection
+
