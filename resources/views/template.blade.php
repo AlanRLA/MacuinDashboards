@@ -10,7 +10,7 @@
 </head>
 <body>
 
-    <div class="capa"></div>
+    <div class="contenedor-flexbox">
     <div class="container-menu">
         <div class="cont-menu">
             <nav>
@@ -26,6 +26,83 @@
             </nav>
         </div>
     </div>
+
+    <div class="container-cliente">
+        <div class="card">
+            <!-- Separación de la pagina en 2  -->
+            <div class="row mt-4">
+        
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header bg-transparent"><h3>Solicitud de Tickets</h3></div>
+                        <div class="cardbody">
+        
+                            <!-- Creacion del Formulario  -->
+                            <div class="container">
+                                <div class="card-body">
+                                    <form action="">
+                                        @csrf
+                                        <div class="mb-3">
+                                            <label class="form-label">Departamento</label>                                        
+                                            <select name="txtDepartamento" class="form-select" aria-label="Default select example">
+                                                <option selected>Seleccione el departamento...</option>
+                                                <option value="1">Ejemplo</option>                                            
+                                            </select>
+                                        </div>
+
+                                        <div class="contenedor-flexbox">
+                                            <div class="mb-3">
+                                                <label class="form-label">Clasificación</label>                                        
+                                                <select name="txtClasificacion" class="form-select" aria-label="Default select example">
+                                                    <option selected>Seleccione el problema que tiene...</option>
+                                                    <option value="1">Ejemplo</option>                                            
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleInputEmail1" class="form-label">¿Cual?</label>
+                                                <input name="txtCual" type="email" class="form-control"  disabled>
+                                            </div>                                                                                                                                    
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Descripcion:</label>
+                                            <div>
+                                                <textarea name="txtDescripcion" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Enviar Ticket</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="col-md-6">
+                    <!--Agregar tabla  -->
+                    <div class="card ">
+                        <div class="card-header bg-transparent mb-3"><h3>Consulta de Tickets</h3></div>
+                        <div class="cardbody">
+                            <div class="container">
+                                <div class="card mb-2">
+                                    <div class="contenedor-flexbox">
+                                        <label class="form-label mb-2 mt-2">Descripcion del ticket...</label>
+                                        <button class="btn btn-primary">Cancelar Ticket</button>
+                                    </div>                    
+                                </div>
+                                <div class="card mb-2">
+                                    <div class="contenedor-flexbox">
+                                        <label class="form-label mb-2 mt-2">Descripcion del ticket...</label>
+                                        <button class="btn btn-primary">Cancelar Ticket</button>
+                                    </div>                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
     
     @yield('codigo')
 

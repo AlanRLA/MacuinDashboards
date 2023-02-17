@@ -5,14 +5,13 @@ body{
 
 }
 
-
-
 .cont-menu{
     width: 100%;
     max-width: 250px;
     max-height: auto;
     background: white;
     height: 100vh;
+    display: inline-block;
 }
 #btn-menu:checked ~ .container-menu .cont-menu{
     transform: translateX(0%);
@@ -32,7 +31,7 @@ body{
 
 .cont-menu nav a:hover{
     border-left: 5px solid #c7c7c7;
-    background: orange;
+    background:rgba(197, 151, 208, 0.515);
 }
 .cont-menu label{
     position: absolute;
@@ -41,4 +40,19 @@ body{
     color: #fff;
     cursor: pointer;
     font-size: 18px;
+}
+
+.container-cliente{
+    width: 80%;
+    position:absolute;
+    left: 225px;
+    float: none;
+    display: inline-block;
+    margin-top: 30px;
+}
+
+.contenedor-flexbox {
+    display: flex; 
+    justify-content: space-between; /*Con esto le indicamos que margine todos los items que se encuentra adentro hacia la derecha e izquierda*/
+    align-items: normal; /*con esto alineamos de manera vertical*/
 }
