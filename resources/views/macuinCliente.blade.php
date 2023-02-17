@@ -1,6 +1,8 @@
 @extends('template')
 @section('codigo')
 
-    <h1>Hola mundo</h1>
+    <h1>hola</h1>
+
+    
 
 @endsection
