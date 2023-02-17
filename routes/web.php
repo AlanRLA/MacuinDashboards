@@ -15,17 +15,9 @@ use App\Http\Controllers\controladorMacuin;
 
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//RUTAS LOGIN
+Route::get('/',[controladorMacuin::class,'loginInicio']);
 
 
-
-
-
-
-
-//Route::view('loginGG','login');
-
-Route::get('/login',[controladorMacuin::class,'index']);
-
+//RUTA VISTA CLIENTE
+Route::get('cliente', [controladorMacuin::class, 'indexCliente']);
