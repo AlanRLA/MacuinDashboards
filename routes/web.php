@@ -16,7 +16,7 @@ use App\Http\Controllers\controladorMacuin;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 
