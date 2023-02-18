@@ -1,4 +1,5 @@
 @extends('template')
+
 @section('codigo')
 
     <h1>Hola mundo</h1>
@@ -8,6 +9,9 @@
               Colaboradores
             </button>
     </div>    
+
+@section('codigo')  
+
 
     <!-- Modal de Colaboradores -->
     <div class="modal fade" id="modalColab">
