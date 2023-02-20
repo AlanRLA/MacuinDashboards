@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use Carbon\Carbon;
 
 class controladorMacuin extends Controller
 {
@@ -17,6 +19,13 @@ class controladorMacuin extends Controller
     public function indexCliente()
     {
         return view('macuinCliente');
+    }
+
+    public function insertTicket()
+    {
+        DB::table('tb_tickets')->insert([
+            
+        ]);
     }
 
 
