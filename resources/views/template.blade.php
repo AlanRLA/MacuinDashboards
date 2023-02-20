@@ -51,7 +51,7 @@
                             <!-- Creacion del Formulario  -->
                             <div class="container">
                                 <div class="card-body">
-                                    <form action="">
+                                    <form action="/ticket">
                                         @csrf
                                         <div class="mb-3">
                                             <label class="form-label">Departamento</label>                                        

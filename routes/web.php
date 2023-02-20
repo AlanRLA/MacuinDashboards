@@ -21,3 +21,4 @@ Route::get('/',[controladorMacuin::class,'loginInicio']);
 
 //RUTA VISTA CLIENTE
 Route::get('cliente', [controladorMacuin::class, 'indexCliente']);
+Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
