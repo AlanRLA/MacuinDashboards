@@ -15,22 +15,26 @@
 </head>
 <body>
 
-    <div class="contenedor-flexbox">
-    <div class="container-menu">
-        <div class="cont-menu">
-            <nav>
-                <a href=""><  Registro Comics</a>
-                <a href=""> Registrar Articulos</a>
-                <a href=""> Consulta Comics</a>
-                <a href=""> Consulta Articulos</a>
-                <a href=""> Proveedores</a>
-                <a href=""> Consulta Proveedores</a>
-                <a href="">Pedidos</a>
-                <a href="">Ventas</a>
-                <a class="fw-bold" href="/">LOG OUT</a>
-            </nav>
+<!-- LOGIN  -->
+
+    <div class="sidebar">
+
+
+        <h3 class="mt-3 mb-4"><strong>Macuin<br/></strong>Dashboards</h3>
+        <h4>Alan Rodolfo</h4>
+        <h5 class="mt-2">Jefe de carrera</h5>
+        <br>
+        <a href=""><i class="bi bi-pencil-square mt-4"> Editar Datos</i></a>
+        <a href="" data-bs-toggle="modal" data-bs-target="#modalColab"><i class="bi bi-people-fill"> Colaborador</i></a>
+
+        <div class="botonaso d-grid">
+            <a href="/"><i class="bi bi-box-arrow-left"><strong> LOG OUT</strong></a></i>
         </div>
     </div>
+
+    
+
+    <!-- CARD DE CLIENTES  -->
 
     <div class="container-cliente">
         <div class="card">
