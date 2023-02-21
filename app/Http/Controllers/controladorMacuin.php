@@ -15,6 +15,10 @@ class controladorMacuin extends Controller
         return view('login');
     }
 
+    public function registrarUsu(){
+        return view('registrarUsuario');
+    }
+
     //FUNCIONES INDEX (CLIENTE, J-SOPORTE Y AUXILIAR)
     public function indexCliente()
     {
