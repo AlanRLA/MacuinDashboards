@@ -22,21 +22,23 @@
             </div>
 
             <div class="inputB">
-                <input type="text" name="txtusu" required="required">
-                <span>Perfil</span>
-                <select name="" id="">
-                    <option value="">Seleccionar...</option>
-                </select>
-            </div>
-
-            <div class="inputB">
                 <input type="password" name="txtpass" required="required">
                 <span>Contraseña</span>
                 <i></i>
             </div>
 
+            <div class="inputB">
+                <select class="form-select" aria-label="Default select example" required> 
+                    <option selected>Selecciona un perfil...</option>
+                    <option value="1">Cliente</option>
+                    <option value="2">Auxiliar</option>
+                    <option value="3">Jefe de soporte</option>
+                  </select>
+            </div>
+
             <button type="submit" class="btn btn-success mb-3 mt-4 form-control">Registrar</button>     
         </form> 
+            <p class="text-left"><a class="text-left" href="/"><button type="button" class="btn"><strong><i class="bi bi-arrow-left-square-fill"> Login</i></strong></button></a></p> 
         </div>
     </div>
 </div>

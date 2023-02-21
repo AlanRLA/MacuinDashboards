@@ -23,7 +23,7 @@
 
             <button type="submit" class="btn btn-primary mb-3 mt-4 form-control">Ingresar</button>     
         </form> 
-           <p class="text-center"><a href="">Registrarse</a></p>
+           <p class="text-center"><a href="registro">Registrarse</a></p>
         </div>
     </div>
 </div>

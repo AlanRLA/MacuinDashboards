@@ -1,14 +1,6 @@
 @extends('template')
 
-@section('codigo')
-
-    <h1>Hola mundo</h1>
-    
-    <div class="card-body align-self-center">
-            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modalColab">
-              Colaboradores
-            </button>
-    </div>    
+@section('codigo')   
 
 @section('codigo')  
 
