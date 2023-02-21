@@ -10,13 +10,7 @@
         <title>Macuin Dashboards</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
         <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/626/626610.png">
-        
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/estilos.css">
-    <title>MacuinDashboards</title>
+        <link rel="stylesheet" href="css/estilos.css">
 
 </head>
 <body>
@@ -51,27 +45,34 @@
                             <!-- Creacion del Formulario  -->
                             <div class="container">
                                 <div class="card-body">
-                                    <form action="/ticket">
+                                    <form action="/ticket" method="post">
                                         @csrf
                                         <div class="mb-3">
                                             <label class="form-label">Departamento</label>                                        
                                             <select name="txtDepartamento" class="form-select" aria-label="Default select example">
-                                                <option selected>Seleccione el departamento...</option>
-                                                <option value="1">Ejemplo</option>                                            
+                                                <option selected disabled>Seleccione el departamento...</option>
+                                                @foreach ($deptos as $dpto)
+                                                    <option value="{{$dpto->id_dpto}}">{{$dpto->nombre}}</option>
+                                                @endforeach                                                                                           
                                             </select>
                                         </div>
 
                                         <div class="contenedor-flexbox">
                                             <div class="mb-3">
                                                 <label class="form-label">Clasificación</label>                                        
-                                                <select name="txtClasificacion" class="form-select" aria-label="Default select example">
-                                                    <option selected>Seleccione el problema que tiene...</option>
-                                                    <option value="1">Ejemplo</option>                                            
+                                                <select name="txtClasificacion" class="form-select"  id="txtClasificacion" aria-label="Default select example">
+                                                    <option selected disabled>Seleccione el problema que tiene...</option>
+                                                    <option value="Falla de office">Falla de office</option>
+                                                    <option value="Fallas en la red">Fallas en la red</option>
+                                                    <option value="Errores de software">Errores de software</option>
+                                                    <option value="Errores de hardware">Errores de hardware</option>
+                                                    <option value="Mantenientos Preventivos">Mantenientos Preventivos</option>
+                                                    <option value="Otro:">Otro:</option>                                                             
                                                 </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="exampleInputEmail1" class="form-label">¿Cual?</label>
-                                                <input name="txtCual" type="email" class="form-control"  disabled>
+                                                <input name="txtCual" type="text" id="txtCual" class="form-control"  disabled>
                                             </div>                                                                                                                                    
                                         </div>
                                         <div class="mb-3">
@@ -114,7 +115,20 @@
         </div>
     </div>  
 </div>
-    
+<!--Javacript-->
+<script>    
+    const select = document.getElementById('txtClasificacion');
+    const input = document.getElementById('txtCual');
+
+    select.addEventListener('change', function() {
+    if (select.value === 'Otro:') {
+        input.disabled = false;
+    } else {
+        input.disabled = true;
+    }
+    });
+</script>
+
     @yield('codigo')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
