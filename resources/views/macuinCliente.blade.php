@@ -10,7 +10,7 @@
         <div class="modal-dialog modal-modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Detalles de ticket</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Datos de usuario</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -19,27 +19,25 @@
 
                         </select>                    
                         <div class="row mb-3">
-                            <span>Cliente</span>
-                            <input type="text" name="txtCliente" class="form-control" placeholder="Abraham Serrato" required disabled>
+                            <span>Nombre</span>
+                            <input type="text" name="txtNombre" class="form-control" placeholder="" required>
                         </div>
                         <div class="row mb-3">
-                            <span>Mensaje...</span>
+                            <span>Apellidos</span>
                             <input type="text" name="txtApellido" class="form-control" placeholder="" required>
                         </div>
                         <div class="row mb-3">
-                            <span>Comentarios del auxiliar...</span>
-                            <textarea class="form-control" name="txtDireccion" rows="2" placeholder="" required></textarea>
+                            <span>Perfil</span>
+                            <input type="text" name="txtPerfil" class="form-control" placeholder="" required disabled>
                         </div>
                         <div class="row mb-3">
-                            <span>Estatus</span>
-                            <select class="form-select row mb-3" name="txtSector" aria-label="Default select example" required>                            
-                            <option selected disabled>Sector</option>
-                            </select>
+                            <span>Contraseña</span>
+                            <input type="password" name="txtPass" class="form-control" placeholder="" required>
                         </div>
                         
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Guardar Colaborador</button>
+                            <button type="submit" class="btn btn-primary">Editar Datos</button>
                         </div>
                     </form>                   
                 </div>        

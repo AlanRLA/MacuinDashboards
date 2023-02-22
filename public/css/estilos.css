@@ -14,7 +14,7 @@ body{
     left: 285px;
     float: none;
     display: inline-block;
-    margin-top: 80px;
+    margin-top: 60px;
 }
 
 .contenedor-flexbox {
@@ -79,4 +79,10 @@ body{
 
 .botonaso{
     margin-top: 340px;
+}
+
+.card{
+    margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
