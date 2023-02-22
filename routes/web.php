@@ -18,8 +18,13 @@ use App\Http\Controllers\controladorMacuin;
 //RUTAS LOGIN
 Route::get('/',[controladorMacuin::class,'loginInicio']);
 
-Route::get('registro', [controladorMacuin::class, 'registrarUsu']);
+
+//RUTAS REGISTRAR CLIENTE
+Route::get('registro', [controladorMacuin::class, 'registrarUsu'])->name('apo.regisCli');
+Route::post('sesion', [controladorMacuin::class, 'storeCliente'])->name('apo.registro');
+
 
 //RUTA VISTA CLIENTE
 Route::get('cliente', [controladorMacuin::class, 'indexCliente']);
 Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
+
