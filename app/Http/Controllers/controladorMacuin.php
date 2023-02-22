@@ -24,7 +24,8 @@ class controladorMacuin extends Controller
     public function indexCliente()
     {
         $deptos = DB::table('tb_departamentos')->get();
-        return view('macuinCliente',compact('deptos'));
+        $tickets = DB::table('tb_tickets')->get();
+        return view('macuinCliente',compact('deptos','tickets'));
     }
 
     public function insertTicket(Ticket $request)
