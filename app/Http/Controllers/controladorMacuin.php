@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket;
+use App\Http\Requests\validadorCliente;
 use DB;
 use App\Models\User;
 use Carbon\Carbon;
@@ -36,6 +37,7 @@ class controladorMacuin extends Controller
         return view('registrarUsuario');
     }
 
+
     //REGISTRO DE USUARIO
     public function registrar_v(Request $r)  
     {
@@ -55,6 +57,19 @@ class controladorMacuin extends Controller
     return redirect()->route('login')->with('success', 'Registrado');
     }
 
+    public function storeCliente(validadorCliente $request){
+        DB::table('tb_usuarios')->insert([
+            "nombre"=>$request->input('txtApe'),
+            "apellido"=>$request->input('txtNom'),
+            "perfil"=>$request->input('txtPas'),
+            "created_at"=> Carbon::now(),
+            "updated_at"=> Carbon::now(),
+        ]);
+
+        return redirect('/')->with('hecho','nohecho');
+    }
+   
+
     //FUNCIONES INDEX (CLIENTE, J-SOPORTE Y AUXILIAR)
     public function indexCliente()
     {
@@ -63,6 +78,7 @@ class controladorMacuin extends Controller
         return view('macuinCliente',compact('deptos','tickets'));
     }
 
+    //FUNCION INCERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)
     {
         if ($request->input('txtClasificacion') !== "Otro:"){

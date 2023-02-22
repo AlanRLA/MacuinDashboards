@@ -1,5 +1,18 @@
 @extends('fondo')
 @section('contenido')
+
+@if (session()->has('hecho')) 
+        <script type="text/javascript">          
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Usuario creado :D',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        </script> 
+@endif
+
 <div class="form">
 <div class="container mt-4 col-md-4" style="background-color: aliceblue; border: 2px solid #9eadba">
     <div class="row align-items-stretch">
