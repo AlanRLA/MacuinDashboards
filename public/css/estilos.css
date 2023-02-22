@@ -5,40 +5,84 @@ body{
 
 }
 
+/*estilos CLIENTE*/
 
-
-.cont-menu{
-    width: 100%;
-    max-width: 250px;
-    max-height: auto;
-    background: white;
-    height: 100vh;
-}
-#btn-menu:checked ~ .container-menu .cont-menu{
-    transform: translateX(0%);
-}
-.cont-menu nav{
-    transform: translateY(15%);
+.container-cliente{
+    position: center;
+    width: 80%;
+    position:relative;
+    left: 285px;
+    float: none;
+    display: inline-block;
+    margin-top: 60px;
 }
 
-.cont-menu nav a{
-    display: block;
-    text-decoration: none;
-    padding: 15px;
+.contenedor-flexbox {
+    display: flex; 
+    justify-content: space-between; /*Con esto le indicamos que margine todos los items que se encuentra adentro hacia la derecha e izquierda*/
+    align-items: normal; /*con esto alineamos de manera vertical*/
+}
+
+/*ESTILOS MENU LATERAL */
+
+.sidebar{
+    position:  fixed;
+    width: 260px;
+    height: 100%;
+    padding-top: 20px;
+    left: 0;
+    background-color: #C19FE2;
+}
+
+.sidebar h3{
+    margin-left: 20px;
+    font-size: 35px;
+    color: white;
+}
+
+.sidebar strong{
     color: black;
-    border-left: 5px solid transparent;
-    transition: all 400ms ease;
 }
 
-.cont-menu nav a:hover{
-    border-left: 5px solid #c7c7c7;
-    background: orange;
+.sidebar h4{
+    margin-left: 20px;
+    font-size: 25px;
+    color: black;
 }
-.cont-menu label{
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 18px;
+
+.sidebar h5{
+    margin-left: 20px;
+    font-size: 15px;
+    color: black;
+
+}
+
+.sidebar a{
+    color: black;
+    display: block;
+    width: 100%;
+    line-height: 60px;
+    text-decoration: none;
+    padding-left: 40px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    transition-property:background;
+}
+
+.sidebar a:hover{
+    background: #A2E0EB;
+}
+
+.sidebar ion-icon{
+    padding-right: 10px;
+}
+
+.botonaso{
+    margin-top: 340px;
+}
+
+.card{
+    margin-top: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Ticket;
+use DB;
+use Carbon\Carbon;
 
 class controladorMacuin extends Controller
 {
@@ -13,10 +16,43 @@ class controladorMacuin extends Controller
         return view('login');
     }
 
+    public function registrarUsu(){
+        return view('registrarUsuario');
+    }
+
     //FUNCIONES INDEX (CLIENTE, J-SOPORTE Y AUXILIAR)
     public function indexCliente()
     {
-        return view('macuinCliente');
+        $deptos = DB::table('tb_departamentos')->get();
+        $tickets = DB::table('tb_tickets')->get();
+        return view('macuinCliente',compact('deptos','tickets'));
+    }
+
+    public function insertTicket(Ticket $request)
+    {
+        if ($request->input('txtClasificacion') !== "Otro:"){
+            DB::table('tb_tickets')->insert([
+                "id_usu"=>1,
+                "id_dpto"=>$request->input('txtDepartamento'),
+                "clasificacion"=>$request->input('txtClasificacion'),
+                "detalle"=>$request->input('txtDescripcion'),
+                "estatus"=>"Solicitado",
+                "created_at"=>Carbon::now(),
+                "updated_at"=>Carbon::now()
+            ]);
+            return "se manda el select";
+        } else{
+            DB::table('tb_tickets')->insert([
+                "id_usu"=>1,
+                "id_dpto"=>$request->input('txtDepartamento'),
+                "clasificacion"=>$request->input('txtCual'),
+                "detalle"=>$request->input('txtDescripcion'),
+                "estatus"=>"Solicitado",
+                "created_at"=>Carbon::now(),
+                "updated_at"=>Carbon::now()
+            ]);
+            return "se manda otro";
+        }
     }
 
 
