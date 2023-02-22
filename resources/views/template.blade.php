@@ -7,11 +7,11 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/658c27c3ed.js" crossorigin="anonymous"></script>   
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <title>Macuin Dashboards</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
         <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/626/626610.png">
         <link rel="stylesheet" href="css/estilos.css">
-
 </head>
 <body>
 
@@ -98,20 +98,16 @@
                     <div class="card ">
                         <div class="card-header bg-transparent mb-3"><h3>Consulta de Tickets</h3></div>
                         <div class="cardbody">
+                            @foreach($tickets as $tick)
                             <div class="container">
                                 <div class="card mb-2">
-                                    <div class="contenedor-flexbox">
-                                        <label class="form-label mb-2 mt-2">Descripcion del ticket...</label>
+                                    <div class="contenedor-flexbox" style="margin-left: 20px">
+                                        <label class="form-label mb-2 mt-2">{{$tick->clasificacion}}: {{$tick->detalle}} . . .</label>
                                         <button class="btn btn-primary">Cancelar Ticket</button>
                                     </div>                    
-                                </div>
-                                <div class="card mb-2">
-                                    <div class="contenedor-flexbox">
-                                        <label class="form-label mb-2 mt-2">Descripcion del ticket...</label>
-                                        <button class="btn btn-primary">Cancelar Ticket</button>
-                                    </div>                    
-                                </div>
+                                </div>                        
                             </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
