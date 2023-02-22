@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\controladorMacuin;
 
@@ -16,10 +17,22 @@ use App\Http\Controllers\controladorMacuin;
 */
 
 //RUTAS LOGIN
-Route::get('/',[controladorMacuin::class,'loginInicio']);
+Route::get('/',[controladorMacuin::class,'loginInicio'])->name('login');
 
 Route::get('registro', [controladorMacuin::class, 'registrarUsu']);
 
 //RUTA VISTA CLIENTE
 Route::get('cliente', [controladorMacuin::class, 'indexCliente']);
 Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
+
+//Auth
+Route::post('/', [controladorMacuin::class, 'login_v'])->name("login.v");
+
+Route::post('registro', [controladorMacuin::class, 'registrar_v']);
+
+//protegida
+
+Route::middleware('auth')->group(function(){
+    Route::get('cliente', [controladorMacuin::class, 'indexCliente'])->name('cliente');
+
+});

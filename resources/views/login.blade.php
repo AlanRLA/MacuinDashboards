@@ -3,15 +3,28 @@
 <div class="form">
 <div class="container mt-4 col-md-4" style="background-color: aliceblue; border: 2px solid #9eadba">
     <div class="row align-items-stretch">
-        <h2>Macuin <br/> Dashboards</h2>     
+        <h2>Macuin <br/> Dashboards</h2>   
+        
+        @if(session()->has('success'))
+           <span>Registrado</span>
+        @endif
+
+        @error('invalid_credentials')
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <small>{{$message}}</small>
+                    <button type="button" class="close" data-dimiss="alert" aria-label="close">
+                        <span aria-hidden="true"></span>
+                    </button>
+            </div>  
+        @enderror
         
         <div class="container col-md-10 mt-5 mb-5" style="background-color: #e0defd; border: 1px solid #6558f5">
 
-        <form action="">
+        <form action="{{route('login.v')}}" method="POST">
         @csrf
             <div class="inputB">
-                <input type="text" name="txtusu" required="required">
-                <span>Usuario</span>
+                <input type="text" name="txtemail" required="required">
+                <span>Correo</span>
                 <i></i>
             </div>
 
