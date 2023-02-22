@@ -11,7 +11,9 @@
         <title>Macuin Dashboards</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
         <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/626/626610.png">
-        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="stylesheet" href="css/estilosForms.css">
+
+
 </head>
 <body>
 
