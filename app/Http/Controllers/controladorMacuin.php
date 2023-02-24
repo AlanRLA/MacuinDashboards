@@ -28,7 +28,7 @@ class controladorMacuin extends Controller
         if(Auth::attempt(['email'=>$r->txtemail,'password'=>$r->txtpass])){
             //Enviar el email
             $mail = $r->txtemail;
-            return redirect()->route('cliente')->with('mail',$mail);
+            return redirect()->route('cliente_rs')->with('mail',$mail);
         }
         
 

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\controladorMacuin;
 
@@ -40,6 +39,6 @@ Route::get('logout', [controladorMacuin::class, 'salir'])->name('logout');
 //protegida
 
 Route::middleware('auth')->group(function(){
-    Route::get('cliente', [controladorMacuin::class, 'indexCliente'])->name('cliente');
-
+    Route::get('cliente_rs', [controladorMacuin::class, 'indexCliente'])->name('cliente_rs');
 });
+
