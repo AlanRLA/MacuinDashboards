@@ -86,3 +86,14 @@ body{
     margin-left: 5px;
     margin-right: 5px;
 }
+
+.but{
+    border: transparent;
+    background-color: transparent;
+    color: white;
+}
+
+.modal-Center{
+    top: 25%;
+    transform: translateY(-25%);
+}
