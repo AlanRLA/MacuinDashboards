@@ -11,11 +11,21 @@
         <title>Macuin Dashboards</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
         <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/626/626610.png">
-        <link rel="stylesheet" href="css/estilosForms.css">
+        <link rel="stylesheet" href="css/estilos.css">
 
 
 </head>
 <body>
+
+@if (session()->has('hecho')) 
+    <script type="text/javascript">          
+        Swal.fire(
+        'Ticket registrado',
+        'Sigue asi UwU',
+        'success'
+        )
+    </script> 
+@endif
 
 <!-- LOGIN  -->
 
@@ -31,29 +41,36 @@
             <div class="card mb-3" style="max-width: 18rem;">
                 <div class="card-header">Solicitudes</div>
                 <div class="card-body">
+
                     <div class="tablita">
                         <table class="table">
                             <thead>
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Titulo</th>
+                                <th scope="col">Problema</th>
+                                <th scope="col">Estatus</th>
                             </tr>
                             </thead>
+
+                            @foreach ($tickets as $item)
                             <tbody>
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
+                                <td>{{$item->clasificacion}}</td>
+                                <td>
+                                    {{$item->estatus}}
+                                </td>
                             </tr>
                             </tbody>
+                            @endforeach
+
                         </table>
                     </div>
 
                 </div>
             </div>
         </div>
-
-
     </div>
+
+
 
     
 
