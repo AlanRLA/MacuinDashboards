@@ -17,28 +17,7 @@
 </head>
 <body>
 
-
-
-    @if(session()->has('cancelacion'))
-        
-    {!!" <script>Swal.fire(
-      'Cancelacion exitosa!',
-      '¡Se ha cancelado su ticket!',
-      'success'
-    )</script>"!!}
-    @endif
-
-    @if(session()->has('ticket'))
-        
-    {!!" <script>Swal.fire(
-      Solicitud exitosa!',
-      '¡Se ha generado su ticket!',
-      'Pronto tendra alguna respuesta'
-      'success'
-    )</script>"!!}
-    @endif
-
-@if (session()->has('hecho')) 
+@if (session()->has('firmado')) 
     <script type="text/javascript">          
         Swal.fire(
         'Ticket registrado',
@@ -47,6 +26,16 @@
         )
     </script> 
 @endif
+
+@if(session()->has('cancelacion'))
+        
+    {!!" <script>Swal.fire(
+      'Cancelacion exitosa!',
+      '¡Se ha cancelado su ticket!',
+      'success'
+    )</script>"!!}
+@endif
+
 
 
 <!-- LOGIN  -->
