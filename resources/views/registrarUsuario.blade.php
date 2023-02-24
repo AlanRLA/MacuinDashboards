@@ -21,13 +21,24 @@
 {{-- Pausada su funcionalidad
             <div class="inputB">
                 <input type="text" name="txtape" required="required">
+
+        <form action="/sesion" method="post">
+        @csrf
+            <div class="inputB">
+                <input type="text" name="txtApe" required="required">
+
                 <span>Apellidos</span>
                 <i></i>
             </div>
 --}}
             <div class="inputB">
+
                 <input type="text" name="txtemail" required="required">
                 <span>Correo</span>
+
+                <input type="text" name="txtNom" required="required">
+                <span>Nombre</span>
+
                 <i></i>
             </div>
             @error('txtemail')
@@ -36,7 +47,6 @@
 
             <div class="inputB">
                 <input type="password" name="txtpass" required="required">
-
                 <span>Contraseña</span>
                 <i></i>
             </div>
@@ -62,6 +72,8 @@
 --}}
             <button type="submit" class="btn btn-success mb-3 mt-4 form-control">Registrar</button>     
         </form> 
+           <p class="text-left"><a class="text-left" href="/"><button type="button" class="btn"><strong><i class="bi bi-arrow-left-square-fill"> Login</i></strong></button></a></p> 
+
         </div>
     </div>
 </div>

@@ -13,8 +13,6 @@ use PhpParser\Node\Stmt\Return_;
 
 class controladorMacuin extends Controller
 {
-
-
     //FUNCIONES LOGIN
     public function loginInicio(){
         return view('login');
@@ -37,6 +35,35 @@ class controladorMacuin extends Controller
         return view('registrarUsuario');
     }
 
+
+    // public function storeCliente(validadorCliente $request){
+    //     DB::table('tb_usuarios')->insert([
+    //         "nombre"=>$request->input('txtApe'),
+    //         "apellido"=>$request->input('txtNom'),
+    //         "perfil"=>$request->input('txtPas'),
+    //         "created_at"=> Carbon::now(),
+    //         "updated_at"=> Carbon::now(),
+    //     ]);
+    // }
+
+    //REGISTRO DE USUARIO
+    public function  registrar_v(Request $r){  
+    
+        $r->validate([
+            'txtusu' =>'required|string',
+            'txtemail' =>'required|email|unique:users,email',
+            'txtpass'=>'required|min:4',
+            'txtpass_v' => 'required|same:txtpass'
+        ]);
+
+        User::create([
+            'name' => $r->txtusu,
+            'email' => $r->txtemail,
+            'password' => bcrypt($r->txtpass),
+        ]);
+
+    return redirect()->route('login')->with('success', 'Registrado');
+    }
 
     public function storeCliente(validadorCliente $request){
         DB::table('tb_usuarios')->insert([
@@ -134,3 +161,6 @@ class controladorMacuin extends Controller
         //
     }
 }
+
+
+

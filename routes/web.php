@@ -41,4 +41,3 @@ Route::middleware('auth')->group(function(){
     Route::get('cliente', [controladorMacuin::class, 'indexCliente'])->name('cliente');
 
 });
-
