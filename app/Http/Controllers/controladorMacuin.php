@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket;
+use App\Http\Requests\validadorCliente;
 use DB;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\Return_;
 
 class controladorMacuin extends Controller
 {
@@ -16,9 +20,55 @@ class controladorMacuin extends Controller
         return view('login');
     }
 
+    public function login_v(Request $r){
+        $r->validate([
+            'txtemail' =>'required|email',
+            'txtpass'=>'required|min:4',
+        ]);
+
+        if(Auth::attempt(['email'=>$r->txtemail,'password'=>$r->txtpass])){
+            return redirect()->route('cliente');
+        }
+        
+        return back()->withErrors(['invalid_credentials'=>'usuario o contraseña no coinciden'])->withInput();
+    }
+
     public function registrarUsu(){
         return view('registrarUsuario');
     }
+
+
+    //REGISTRO DE USUARIO
+    public function registrar_v(Request $r)  
+    {
+        $r->validate([
+            'txtusu' =>'required|string',
+            'txtemail' =>'required|email|unique:users,email',
+            'txtpass'=>'required|min:4',
+            'txtpass_v' => 'required|same:txtpass'
+        ]);
+
+        User::create([
+            'name' => $r->txtusu,
+            'email' => $r->txtemail,
+            'password' => bcrypt($r->txtpass),
+        ]);
+
+    return redirect()->route('login')->with('success', 'Registrado');
+    }
+
+    public function storeCliente(validadorCliente $request){
+        DB::table('tb_usuarios')->insert([
+            "nombre"=>$request->input('txtApe'),
+            "apellido"=>$request->input('txtNom'),
+            "perfil"=>$request->input('txtPas'),
+            "created_at"=> Carbon::now(),
+            "updated_at"=> Carbon::now(),
+        ]);
+
+        return redirect('/')->with('hecho','nohecho');
+    }
+   
 
     //FUNCIONES INDEX (CLIENTE, J-SOPORTE Y AUXILIAR)
     public function indexCliente()
@@ -28,6 +78,7 @@ class controladorMacuin extends Controller
         return view('macuinCliente',compact('deptos','tickets'));
     }
 
+    //FUNCION INCERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)
     {
         if ($request->input('txtClasificacion') !== "Otro:"){

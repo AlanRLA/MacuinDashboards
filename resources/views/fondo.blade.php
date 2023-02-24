@@ -9,6 +9,7 @@
         <title>Macuin Dashboards</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
         <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/626/626610.png">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         
         <link rel="stylesheet" href="css/fondo.css">
 </head>
