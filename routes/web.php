@@ -23,3 +23,5 @@ Route::get('registro', [controladorMacuin::class, 'registrarUsu']);
 //RUTA VISTA CLIENTE
 Route::get('cliente', [controladorMacuin::class, 'indexCliente']);
 Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
+
+Route::put('cancelar/{id}', [controladorMacuin::class, 'cancelTicket'])->name('cancel');
