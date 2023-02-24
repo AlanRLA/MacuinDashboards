@@ -95,7 +95,7 @@ class controladorMacuin extends Controller
                 "created_at"=>Carbon::now(),
                 "updated_at"=>Carbon::now()
             ]);
-            return redirect()->route('cliente')->with('hecho','no hecho');
+
         } else{
             DB::table('tb_tickets')->insert([
                 "id_usu"=>1,
@@ -106,7 +106,7 @@ class controladorMacuin extends Controller
                 "created_at"=>Carbon::now(),
                 "updated_at"=>Carbon::now()
             ]);
-            return redirect()->route('cliente')->with('hecho','no hecho');
+
         }
     }
 

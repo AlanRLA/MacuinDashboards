@@ -17,16 +17,6 @@
 </head>
 <body>
 
-@if (session()->has('hecho')) 
-    <script type="text/javascript">          
-        Swal.fire(
-        'Ticket registrado',
-        'Sigue asi UwU',
-        'success'
-        )
-    </script> 
-@endif
-
 <!-- LOGIN  -->
 
     <div class="sidebar">
