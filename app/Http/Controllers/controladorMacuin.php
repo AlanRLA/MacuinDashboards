@@ -13,8 +13,6 @@ use PhpParser\Node\Stmt\Return_;
 
 class controladorMacuin extends Controller
 {
-
-
     //FUNCIONES LOGIN
     public function loginInicio(){
         return view('login');
@@ -26,21 +24,40 @@ class controladorMacuin extends Controller
             'txtpass'=>'required|min:4',
         ]);
 
+
         if(Auth::attempt(['email'=>$r->txtemail,'password'=>$r->txtpass])){
-            return redirect()->route('cliente');
+            //Enviar el email
+            $mail = $r->txtemail;
+            return redirect()->route('cliente_rs')->with('mail',$mail);
         }
         
-        return back()->withErrors(['invalid_credentials'=>'usuario o contraseña no coinciden'])->withInput();
+
+        return back()->withErrors(['invalid_credentials'=>'Usuario y contraseña no coinciden'])->withInput();
     }
 
     public function registrarUsu(){
         return view('registrarUsuario');
     }
 
+    //Salir sesión
+    public function salir(){
+        Auth::logout();
+        return redirect()->route('login');
+    }
+
+    // public function storeCliente(validadorCliente $request){
+    //     DB::table('tb_usuarios')->insert([
+    //         "nombre"=>$request->input('txtApe'),
+    //         "apellido"=>$request->input('txtNom'),
+    //         "perfil"=>$request->input('txtPas'),
+    //         "created_at"=> Carbon::now(),
+    //         "updated_at"=> Carbon::now(),
+    //     ]);
+    // }
 
     //REGISTRO DE USUARIO
-    public function registrar_v(Request $r)  
-    {
+    public function  registrar_v(Request $r){  
+    
         $r->validate([
             'txtusu' =>'required|string',
             'txtemail' =>'required|email|unique:users,email',
@@ -96,7 +113,10 @@ class controladorMacuin extends Controller
                 "updated_at"=>Carbon::now()
             ]);
 
+
         return redirect()->route('cliente')->with('firado','no hecho');
+
+
 
 
         } else{
@@ -173,3 +193,6 @@ class controladorMacuin extends Controller
         //
     }
 }
+
+
+

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\controladorMacuin;
 
@@ -38,12 +37,14 @@ Route::post('/', [controladorMacuin::class, 'login_v'])->name("login.v");
 
 Route::post('registro', [controladorMacuin::class, 'registrar_v']);
 
+Route::get('logout', [controladorMacuin::class, 'salir'])->name('logout');
+
 //protegida
 
 Route::middleware('auth')->group(function(){
-    Route::get('cliente', [controladorMacuin::class, 'indexCliente'])->name('cliente');
-
+    Route::get('cliente_rs', [controladorMacuin::class, 'indexCliente'])->name('cliente_rs');
 });
+
 
 //RUTAS REGISTRAR CLIENTE
 Route::get('registro', [controladorMacuin::class, 'registrarUsu'])->name('apo.regisCli');

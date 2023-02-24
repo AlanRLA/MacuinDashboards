@@ -18,14 +18,14 @@ return new class extends Migration
             $table->bigIncrements('id_ticket');
             $table->unsignedBigInteger('id_usu');
             $table->unsignedBigInteger('id_dpto');
-            $table->date('fecha');
+            $table->date('fecha')->nullable();
             $table->string('clasificacion');
             $table->string('detalle');
             $table->string('estatus');
             $table->timestamps();
 
-            $table->foreign('id_usu')->references('id_usu')->onDelete('CASCADE')
-            ->on('tb_usuarios');
+            $table->foreign('id_usu')->references('id')->onDelete('CASCADE')
+            ->on('users');
 
             $table->foreign('id_dpto')->references('id_dpto')->onDelete('CASCADE')
             ->on('tb_departamentos');
