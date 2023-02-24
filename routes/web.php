@@ -35,6 +35,8 @@ Route::post('/', [controladorMacuin::class, 'login_v'])->name("login.v");
 
 Route::post('registro', [controladorMacuin::class, 'registrar_v']);
 
+Route::get('logout', [controladorMacuin::class, 'salir'])->name('logout');
+
 //protegida
 
 Route::middleware('auth')->group(function(){

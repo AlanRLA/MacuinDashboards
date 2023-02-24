@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
         <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/626/626610.png">
         <link rel="stylesheet" href="css/estilosForms.css">
+        <link rel="stylesheet" href="css/estilos.css">
 
 
 </head>
@@ -25,8 +26,15 @@
         <h5 class="mt-2">Jefe de carrera</h5>
         <br>
         <a href="" data-bs-toggle="modal" data-bs-target="#modalColab"><i class="bi bi-people-fill"> Editar Datos</i></a>
-        <a href="/"><i class="bi bi-box-arrow-left"><strong> Cerrar Sesion</strong></a></i>
-
+        {{-- <form action="{{route('logout')}}" method="POST">
+            @csrf
+            <a><i class="bi bi-box-arrow-left"><strong> Cerrar Sesion</strong></i></a>
+        </form> 
+        
+        ESTO ESTA COMENTADO POR UN DETALLITO DE POST entonces puse tipo get la ruta y quedo el de abajo
+        --}}
+        <a href="{{route('logout')}}"><i class="bi bi-box-arrow-left"><strong> Cerrar Sesion</strong></i></a>
+        
         <div class="card" style="max-width: 18rem;">
             <div class="card mb-3" style="max-width: 18rem;">
                 <div class="card-header">Solicitudes</div>
@@ -144,12 +152,13 @@
     const input = document.getElementById('txtCual');
 
     select.addEventListener('change', function() {
-    if (select.value === 'Otro:') {
-        input.disabled = false;
-    } else {
-        input.disabled = true;
-    }
+        if (select.value === 'Otro:') {
+            input.disabled = false;
+        } else {
+            input.disabled = true;
+        }
     });
+
 </script>
 
     @yield('codigo')

@@ -4,8 +4,7 @@
 <div class="form">
 <div class="container mt-4 col-md-4" style="background-color: aliceblue; border: 2px solid #9eadba">
     <div class="row align-items-stretch">
-        <h2>Registrar <br/> Usuario</h2>     
-        
+            <h2>Registrar <br/> Usuario</h2>          
         <div class="container col-md-10 mt-5 mb-3" style="background-color: #e0defd; border: 1px solid #6558f5">
 
         <form action="" method="POST">
@@ -32,13 +31,8 @@
             </div>
 --}}
             <div class="inputB">
-
                 <input type="text" name="txtemail" required="required">
                 <span>Correo</span>
-
-                <input type="text" name="txtNom" required="required">
-                <span>Nombre</span>
-
                 <i></i>
             </div>
             @error('txtemail')

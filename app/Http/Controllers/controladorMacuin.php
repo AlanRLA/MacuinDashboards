@@ -28,13 +28,18 @@ class controladorMacuin extends Controller
             return redirect()->route('cliente');
         }
         
-        return back()->withErrors(['invalid_credentials'=>'usuario o contraseña no coinciden'])->withInput();
+        return back()->withErrors(['invalid_credentials'=>'Usuario y contraseña no coinciden'])->withInput();
     }
 
     public function registrarUsu(){
         return view('registrarUsuario');
     }
 
+    //Salir sesión
+    public function salir(){
+        Auth::logout();
+        return redirect()->route('login');
+    }
 
     // public function storeCliente(validadorCliente $request){
     //     DB::table('tb_usuarios')->insert([
