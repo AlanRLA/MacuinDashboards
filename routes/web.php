@@ -19,17 +19,6 @@ use App\Http\Controllers\controladorMacuin;
 //RUTAS LOGIN
 Route::get('/',[controladorMacuin::class,'loginInicio'])->name('login');
 
-
-//RUTAS REGISTRAR CLIENTE
-Route::get('registro', [controladorMacuin::class, 'registrarUsu'])->name('apo.regisCli');
-Route::post('sesion', [controladorMacuin::class, 'storeCliente'])->name('apo.registro');
-
-
-//RUTA VISTA CLIENTE
-Route::get('cliente', [controladorMacuin::class, 'indexCliente']);
-Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
-
-
 //Auth
 Route::post('/', [controladorMacuin::class, 'login_v'])->name("login.v");
 
@@ -41,5 +30,17 @@ Route::middleware('auth')->group(function(){
     Route::get('cliente', [controladorMacuin::class, 'indexCliente'])->name('cliente');
 
 });
+
+//RUTAS REGISTRAR CLIENTE
+Route::get('registro', [controladorMacuin::class, 'registrarUsu'])->name('apo.regisCli');
+// Route::post('sesion', [controladorMacuin::class, 'storeCliente'])->name('apo.registro');
+
+
+//RUTA VISTA CLIENTE
+// Route::get('cliente', [controladorMacuin::class, 'indexCliente']);
+Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
+
+
+
 
 

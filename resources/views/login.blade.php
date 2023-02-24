@@ -1,7 +1,7 @@
 @extends('fondo')
 @section('contenido')
 
-@if (session()->has('hecho')) 
+@if (session()->has('success')) 
         <script type="text/javascript">          
             Swal.fire({
             position: 'top-end',
@@ -17,10 +17,6 @@
 <div class="container mt-4 col-md-4" style="background-color: aliceblue; border: 2px solid #9eadba">
     <div class="row align-items-stretch">
         <h2>Macuin <br/> Dashboards</h2>   
-        
-        @if(session()->has('success'))
-           <span>Registrado</span>
-        @endif
 
         @error('invalid_credentials')
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
