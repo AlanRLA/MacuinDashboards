@@ -29,9 +29,7 @@ Route::post('sesion', [controladorMacuin::class, 'storeCliente'])->name('apo.reg
 Route::get('cliente', [controladorMacuin::class, 'indexCliente']);
 Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
 
-<<<<<<< HEAD
 Route::put('cancelar/{id}', [controladorMacuin::class, 'cancelTicket'])->name('cancel');
-=======
 
 //Auth
 Route::post('/', [controladorMacuin::class, 'login_v'])->name("login.v");
@@ -46,4 +44,3 @@ Route::middleware('auth')->group(function(){
 });
 
 
->>>>>>> main
