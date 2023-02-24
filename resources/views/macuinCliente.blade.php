@@ -1,4 +1,4 @@
-@extends('cliente')
+@extends('template')
 
 @section('codigo')   
 
@@ -17,11 +17,15 @@
                         </select>                    
                         <div class="row mb-3">
                             <span>Nombre</span>
-                            <input type="text" name="txtNombre" class="form-control" placeholder="" required>
+                            <input type="text" name="txtNombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
                         </div>
                         <div class="row mb-3">
                             <span>Apellidos</span>
                             <input type="text" name="txtApellido" class="form-control" placeholder="" required>
+                        </div>
+                        <div class="row mb-3">
+                            <span>Correo</span>
+                            <input type="text" name="txtEmail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
                         </div>
                         <div class="row mb-3">
                             <span>Perfil</span>
@@ -32,7 +36,6 @@
                             <input type="password" name="txtPass" class="form-control" placeholder="" required>
                         </div>
                         
-
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Editar Datos</button>
                         </div>
