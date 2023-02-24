@@ -57,17 +57,17 @@ class controladorMacuin extends Controller
     return redirect()->route('login')->with('success', 'Registrado');
     }
 
-    public function storeCliente(validadorCliente $request){
-        DB::table('tb_usuarios')->insert([
-            "nombre"=>$request->input('txtApe'),
-            "apellido"=>$request->input('txtNom'),
-            "perfil"=>$request->input('txtPas'),
-            "created_at"=> Carbon::now(),
-            "updated_at"=> Carbon::now(),
-        ]);
+    // public function storeCliente(validadorCliente $request){
+    //     DB::table('tb_usuarios')->insert([
+    //         "nombre"=>$request->input('txtApe'),
+    //         "apellido"=>$request->input('txtNom'),
+    //         "perfil"=>$request->input('txtPas'),
+    //         "created_at"=> Carbon::now(),
+    //         "updated_at"=> Carbon::now(),
+    //     ]);
 
-        return redirect('/')->with('hecho','nohecho');
-    }
+    //     return redirect('/')->with('hecho','nohecho');
+    // }
    
 
     //FUNCIONES INDEX (CLIENTE, J-SOPORTE Y AUXILIAR)
@@ -77,6 +77,10 @@ class controladorMacuin extends Controller
         $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->get();
         return view('macuinCliente',compact('deptos','tickets'));
     }
+
+    //FUNCION CONSULTAR TICKET DE CLIENTE
+
+
 
     //FUNCION INCERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)
@@ -91,7 +95,11 @@ class controladorMacuin extends Controller
                 "created_at"=>Carbon::now(),
                 "updated_at"=>Carbon::now()
             ]);
+
             return redirect('cliente')->with('ticket','tick');
+
+            return redirect()->route('cliente')->with('hecho','no hecho');
+
         } else{
             DB::table('tb_tickets')->insert([
                 "id_usu"=>1,
@@ -102,7 +110,11 @@ class controladorMacuin extends Controller
                 "created_at"=>Carbon::now(),
                 "updated_at"=>Carbon::now()
             ]);
+
             return redirect('cliente')->with('ticket','tick');
+
+            return redirect()->route('cliente')->with('hecho','no hecho');
+
         }
     }
 

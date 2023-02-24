@@ -37,9 +37,6 @@
                 <input type="text" name="txtemail" required="required">
                 <span>Correo</span>
 
-                <input type="text" name="txtNom" required="required">
-                <span>Nombre</span>
-
                 <i></i>
             </div>
             @error('txtemail')
@@ -49,9 +46,6 @@
             <div class="inputB">
 
                 <input type="password" name="txtpass" required="required">
-
-
-                <input type="password" name="txtPas" required="required">
 
                 <span>Contraseña</span>
                 <i></i>
@@ -69,6 +63,7 @@
             @error('txtpass_v')
                  <small class="txt-danger mt-1"> <strong>{{$message}}</strong> </small>
             @enderror
+
 {{-- Select de perfil (el perfil cliente se puede asignar a todos, el jefe asigna rol) 
             <div class="inputB">
                 <select class="form-select" aria-label="Default select example" required> 
@@ -77,10 +72,6 @@
                   </select>
             </div>
 --}}
-            <button type="submit" class="btn btn-success mb-3 mt-4 form-control">Registrar</button>     
-        </form> 
-
-
             <button type="submit" class="btn btn-success mb-3 mt-4 form-control">Registrar</button>     
         </form> 
 
