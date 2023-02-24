@@ -74,7 +74,7 @@ class controladorMacuin extends Controller
     public function indexCliente()
     {
         $deptos = DB::table('tb_departamentos')->get();
-        $tickets = DB::table('tb_tickets')->get();
+        $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->get();
         return view('macuinCliente',compact('deptos','tickets'));
     }
 
@@ -95,7 +95,11 @@ class controladorMacuin extends Controller
                 "created_at"=>Carbon::now(),
                 "updated_at"=>Carbon::now()
             ]);
+
+            return redirect('cliente')->with('ticket','tick');
+
             return redirect()->route('cliente')->with('hecho','no hecho');
+
         } else{
             DB::table('tb_tickets')->insert([
                 "id_usu"=>1,
@@ -106,8 +110,22 @@ class controladorMacuin extends Controller
                 "created_at"=>Carbon::now(),
                 "updated_at"=>Carbon::now()
             ]);
+
+            return redirect('cliente')->with('ticket','tick');
+
             return redirect()->route('cliente')->with('hecho','no hecho');
+
         }
+    }
+
+    public function cancelTicket (Request $req, $id){
+        
+        DB::table('tb_tickets')->where('id_ticket',$id)->update([
+            "estatus"=>"Cancelado",
+            "updated_at"=>Carbon::now(),
+        ]);
+        return redirect('cliente')->with('cancelacion','cancel');
+        
     }
 
 

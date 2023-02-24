@@ -17,6 +17,26 @@
 </head>
 <body>
 
+
+    @if(session()->has('cancelacion'))
+        
+    {!!" <script>Swal.fire(
+      'Cancelacion exitosa!',
+      '¡Se ha cancelado su ticket!',
+      'success'
+    )</script>"!!}
+    @endif
+
+    @if(session()->has('ticket'))
+        
+    {!!" <script>Swal.fire(
+      Solicitud exitosa!',
+      '¡Se ha generado su ticket!',
+      'Pronto tendra alguna respuesta'
+      'success'
+    )</script>"!!}
+    @endif
+
 @if (session()->has('hecho')) 
     <script type="text/javascript">          
         Swal.fire(
@@ -26,6 +46,7 @@
         )
     </script> 
 @endif
+
 
 <!-- LOGIN  -->
 
@@ -137,25 +158,49 @@
                     <!--Agregar tabla  -->
                     <div class="card ">
                         <div class="card-header bg-transparent mb-3"><h3>Consulta de Tickets</h3></div>
-                        <div class="cardbody">
-                            @foreach($tickets as $tick)
-                            <div class="container">
+                        @foreach($tickets as $tick)
+                        <div class="cardbody">                            
+                            <div class="container">                    
                                 <div class="card mb-2">
                                     <div class="contenedor-flexbox" style="margin-left: 20px">
                                         <label class="form-label mb-2 mt-2">{{$tick->clasificacion}}: {{$tick->detalle}} . . .</label>
-                                        <button class="btn btn-primary">Cancelar Ticket</button>
-                                    </div>                    
-                                </div>                        
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Cancel">Cancelar Ticket</button>
+                                    </div>                                                                                     
+                                </div>                    
                             </div>
-                            @endforeach
+
+                            <!-- Modal Confirmar Cancelar ticket-->
+                            <div class="modal fade" id="Cancel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="Cancel" aria-hidden="true">
+                                <div class="modal-dialog modal-Center">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">¡Cuidado!</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    ¿Seguro que quieres cancelar el ticket?
+                                    </div>
+                                    <form action="{{route('cancel',$tick->id_ticket)}}" method="POST" id="Cancel" name="Cancel">
+                                    @csrf
+                                    {!!method_field('PUT')!!}
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, regresa</button>
+                                    <button type="submit" class="btn btn-primary">Si, cancelalo</button>
+                                    </form>    
+                                    </div>
+                                </div>
+                            </div>                            
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
-    </div>  
-</div>
+    </div>
+</div>  
+
 <!--Javacript-->
+
 <script>    
     const select = document.getElementById('txtClasificacion');
     const input = document.getElementById('txtCual');
