@@ -24,10 +24,14 @@ class controladorMacuin extends Controller
             'txtpass'=>'required|min:4',
         ]);
 
+
         if(Auth::attempt(['email'=>$r->txtemail,'password'=>$r->txtpass])){
-            return redirect()->route('cliente');
+            //Enviar el email
+            $mail = $r->txtemail;
+            return redirect()->route('cliente')->with('mail',$mail);
         }
         
+
         return back()->withErrors(['invalid_credentials'=>'Usuario y contraseña no coinciden'])->withInput();
     }
 
