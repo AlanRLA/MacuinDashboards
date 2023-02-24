@@ -14,13 +14,20 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->engine="InnoDB";
             $table->id();
             $table->string('name');
+            $table->string('apellido')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('perfil')->nullable();
             $table->string('password');
+            $table->unsignedBigInteger('id_dpto')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('id_dpto')->references('id_dpto')->onDelete('CASCADE')
+            ->on('tb_departamentos');
         });
     }
 
