@@ -1,6 +1,5 @@
 @extends('template')
 
-
 @section('codigo')   
 
     <!-- Modal de Colaboradores -->
