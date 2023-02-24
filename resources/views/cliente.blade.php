@@ -26,22 +26,12 @@
       'success'
     )</script>"!!}
     @endif
-
-    @if(session()->has('ticket'))
-        
-    {!!" <script>Swal.fire(
-      Solicitud exitosa!',
-      '¡Se ha generado su ticket!',
-      'Pronto tendra alguna respuesta'
-      'success'
-    )</script>"!!}
-    @endif
-
+    
 @if (session()->has('hecho')) 
     <script type="text/javascript">          
         Swal.fire(
-        'Ticket registrado',
-        'Sigue asi UwU',
+        '¡Se ha generado su ticket!',
+        'Pronto tendra alguna respuesta',
         'success'
         )
     </script> 

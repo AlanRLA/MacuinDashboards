@@ -96,7 +96,6 @@ class controladorMacuin extends Controller
                 "updated_at"=>Carbon::now()
             ]);
 
-            return redirect('cliente')->with('ticket','tick');
 
             return redirect()->route('cliente')->with('hecho','no hecho');
 
@@ -111,7 +110,6 @@ class controladorMacuin extends Controller
                 "updated_at"=>Carbon::now()
             ]);
 
-            return redirect('cliente')->with('ticket','tick');
 
             return redirect()->route('cliente')->with('hecho','no hecho');
 
