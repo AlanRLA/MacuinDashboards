@@ -1,4 +1,4 @@
-@extends('template')
+@extends('cliente')
 
 @section('codigo')   
 
