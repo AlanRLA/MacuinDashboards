@@ -26,7 +26,7 @@ Route::post('sesion', [controladorMacuin::class, 'storeCliente'])->name('apo.reg
 
 
 //RUTA VISTA CLIENTE
-Route::get('cliente', [controladorMacuin::class, 'indexCliente']);
+Route::get('cliente', [controladorMacuin::class, 'indexCliente'])->name('cliente');
 Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
 
 Route::put('cancelar/{id}', [controladorMacuin::class, 'cancelTicket'])->name('cancel');
@@ -54,6 +54,9 @@ Route::get('registro', [controladorMacuin::class, 'registrarUsu'])->name('apo.re
 //RUTA VISTA CLIENTE
 // Route::get('cliente', [controladorMacuin::class, 'indexCliente']);
 Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
+
+//Editar Perfil
+Route::put('cliente_edit/{id}', [controladorMacuin::class, 'editarPerfil'])->name('cliente_edit');
 
 
 

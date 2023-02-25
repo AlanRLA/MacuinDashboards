@@ -74,6 +74,20 @@ class controladorMacuin extends Controller
     return redirect()->route('login')->with('success', 'Registrado');
     }
 
+    public function editarPerfil(Request $r, $id){
+
+            $usu = User::findOrFail($id); // Buscar el usuario en la base de datos
+    
+            $usu->name = $r->input('txtNombre');
+            $usu->apellido = $r->input('txtApellido');
+            $usu->email = $r->input('txtEmail');
+    
+            $usu->save(); //Actualizar
+            
+            return redirect()->route('cliente')->with('save','editado');
+
+    }
+
     // public function storeCliente(validadorCliente $request){
     //     DB::table('tb_usuarios')->insert([
     //         "nombre"=>$request->input('txtApe'),
@@ -98,10 +112,10 @@ class controladorMacuin extends Controller
     //FUNCION CONSULTAR TICKET DE CLIENTE
 
 
-
     //FUNCION INCERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)
     {
+        
         if ($request->input('txtClasificacion') !== "Otro:"){
             DB::table('tb_tickets')->insert([
                 "id_usu"=>1,
