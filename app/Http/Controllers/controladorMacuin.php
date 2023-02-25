@@ -84,7 +84,7 @@ class controladorMacuin extends Controller
     
             $usu->save(); //Actualizar
             
-            return redirect()->route('cliente')->with('save','editado');
+            return redirect()->route('cliente_rs')->with('save','editado');
 
     }
 
@@ -115,10 +115,10 @@ class controladorMacuin extends Controller
     //FUNCION INCERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)
     {
-        
+
         if ($request->input('txtClasificacion') !== "Otro:"){
             DB::table('tb_tickets')->insert([
-                "id_usu"=>1,
+                "id_usu"=>Auth::user()->id,
                 "id_dpto"=>$request->input('txtDepartamento'),
                 "clasificacion"=>$request->input('txtClasificacion'),
                 "detalle"=>$request->input('txtDescripcion'),
@@ -131,15 +131,12 @@ class controladorMacuin extends Controller
 
             return redirect()->route('cliente_rs')->with('hecho','no hecho');
 
-        return redirect()->route('cliente')->with('firado','no hecho');
-
-
-
+        return redirect()->route('cliente_rs')->with('firado','no hecho');
 
 
         } else{
             DB::table('tb_tickets')->insert([
-                "id_usu"=>1,
+                "id_usu"=>Auth::user()->id,
                 "id_dpto"=>$request->input('txtDepartamento'),
                 "clasificacion"=>$request->input('txtCual'),
                 "detalle"=>$request->input('txtDescripcion'),
@@ -151,7 +148,7 @@ class controladorMacuin extends Controller
 
             return redirect()->route('cliente_rs')->with('hecho','no hecho');
 
-            return redirect()->route('cliente')->with('hecho','no hecho');
+            return redirect()->route('cliente_rs')->with('hecho','no hecho');
 
 
 
@@ -164,7 +161,7 @@ class controladorMacuin extends Controller
             "estatus"=>"Cancelado",
             "updated_at"=>Carbon::now(),
         ]);
-        return redirect('cliente')->with('cancelacion','cancel');
+        return redirect()->route('cliente_rs')->with('cancelacion','cancel');
         
     }
 
