@@ -18,6 +18,15 @@
 </head>
 <body>
 
+    @if(session()->has('save'))
+    <script type="text/javascript">          
+        Swal.fire(
+        '¡Todo correcto!',
+        'Se ha editado su perfil',
+        'success'
+        )
+    </script> 
+    @endif
 
     @if(session()->has('cancelacion'))
         

@@ -1,6 +1,7 @@
-@extends('template')
+@extends('cliente')
 
 @section('codigo')   
+
 
     <!-- Modal de Colaboradores -->
     <div class="modal fade" id="modalColab">
@@ -12,8 +13,9 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <form action="" method="POST">                    
-
+                    <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST">  
+                        @csrf                  
+                        @method('PUT')
                         </select>                    
                         <div class="row mb-3">
                             <span>Nombre</span>
@@ -21,7 +23,7 @@
                         </div>
                         <div class="row mb-3">
                             <span>Apellidos</span>
-                            <input type="text" name="txtApellido" class="form-control" placeholder="" required>
+                            <input type="text" name="txtApellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
                         </div>
                         <div class="row mb-3">
                             <span>Correo</span>
@@ -29,11 +31,11 @@
                         </div>
                         <div class="row mb-3">
                             <span>Perfil</span>
-                            <input type="text" name="txtPerfil" class="form-control" placeholder="" required disabled>
+                            <input type="text" name="txtPerfil" class="form-control" placeholder="Pendiente" value="" disabled>
                         </div>
                         <div class="row mb-3">
                             <span>Contraseña</span>
-                            <input type="password" name="txtPass" class="form-control" placeholder="" required>
+                            <input type="password" name="txtPass" class="form-control" placeholder="Solicitar cambio" disabled>
                         </div>
                         
                         <div class="modal-footer">
