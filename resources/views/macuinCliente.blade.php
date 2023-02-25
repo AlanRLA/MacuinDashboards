@@ -3,6 +3,7 @@
 @section('codigo')   
 
 
+
     <!-- Modal de Colaboradores -->
     <div class="modal fade" id="modalColab">
         <div class="modal-dialog modal-modal-dialog-centered">
@@ -47,5 +48,6 @@
           </div>
         </div>
     </div>
+
 
 @endsection
