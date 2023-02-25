@@ -28,15 +28,18 @@
     </script> 
     @endif
 
-    @if(session()->has('cancelacion'))
-        
-    {!!" <script>Swal.fire(
-      'Cancelacion exitosa!',
-      '¡Se ha cancelado su ticket!',
-      'success'
-    )</script>"!!}
-    @endif
-    
+@if (session()->has('mail')) 
+    <script type="text/javascript">          
+        Swal.fire({
+        position: 'top-center',
+        icon: 'success',
+        title: 'Bienvenido: {{ Auth::user()->name }}',
+        showConfirmButton: false,
+        timer: 1500
+        })
+    </script> 
+@endif
+
 @if (session()->has('hecho')) 
     <script type="text/javascript">          
         Swal.fire(
@@ -47,15 +50,30 @@
     </script> 
 @endif
 
+@if(session()->has('cancelacion'))
+        
+    {!!" <script>Swal.fire(
+      'Cancelacion exitosa!',
+      '¡Se ha cancelado su ticket!',
+      'success'
+    )</script>"!!}
+@endif
+
+
 
 <!-- LOGIN  -->
 
     <div class="sidebar">
         <h3 class="mt-3 mb-4"><strong>Macuin<br/></strong>Dashboards</h3>
         <h4>{{ Auth::user()->name }}</h4>
-        <h5 class="mt-2">Jefe de carrera</h5>
+
+        <h5 class="mt-2">Cliente</h5>
+
+        <h5 class="mt-2">{{ Auth::user()->email }}</h5>
+
         <br>
         <a href="" data-bs-toggle="modal" data-bs-target="#modalColab"><i class="bi bi-person-fill-gear"> Editar Perfil</i></a>
+
         {{-- <form action="{{route('logout')}}" method="POST">
             @csrf
             <a><i class="bi bi-box-arrow-left"><strong> Cerrar Sesion</strong></i></a>
@@ -63,44 +81,60 @@
         
         ESTO ESTA COMENTADO POR UN DETALLITO DE POST entonces puse tipo get la ruta y quedo el de abajo
         --}}
+
         <a href="{{route('logout')}}"><i class="bi bi-box-arrow-left"><strong> Cerrar Sesion</strong></i></a>
         
         <div class="card" style="max-width: 18rem;">
             <div class="card mb-3" style="max-width: 18rem;">
                 <div class="card-header">Solicitudes</div>
                 <div class="card-body">
-
                     <div class="tablita">
                         <table class="table">
                             <thead>
-                            <tr>
-                                <th scope="col">Problema</th>
-                                <th scope="col">Estatus</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">Problema</th>
+                                    <th scope="col">Estatus</th>
+                                </tr>
                             </thead>
-
-                            @foreach ($tickets as $item)
-                            <tbody>
-                            <tr>
-                                <td>{{$item->clasificacion}}</td>
-                                <td>
-                                    {{$item->estatus}}
-                                </td>
-                            </tr>
-                            </tbody>
-                            @endforeach
-
+                            <tbody style="max-height: 50px; overflow-y: auto;">
+                                @foreach ($tickets as $item)
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#Detalle{{$item->id_ticket}}">
+                                            {{$item->clasificacion}}
+                                        </button>
+                                    </td>
+                                    <td>
+                                        {{$item->estatus}}
+                                    </td>
+                                </tr>
+                            </tbody>                                                                                                        
+                            @endforeach                                                                           
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
-
-
-    
+    @foreach ($tickets as $item)
+    <!-- Modal Detalle Ticket -->
+    <div class="modal fade" id="Detalle{{$item->id_ticket}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+        <div class="modal-dialog modal-Center">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Detalles de Seguimiento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            id de ticket {{$item->id_ticket}}
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+        </div>
+    </div>
+    @endforeach
 
     <!-- CARD DE CLIENTES  -->
 
@@ -120,6 +154,7 @@
                                     <form action="/ticket" method="post">
                                         @csrf
                                         <div class="mb-3">
+                                            <input type="hidden" value="{{Auth::user()->name}}">
                                             <label class="form-label">Departamento</label>                                        
                                             <select name="txtDepartamento" class="form-select" aria-label="Default select example">
                                                 <option selected disabled>Seleccione el departamento...</option>
@@ -185,7 +220,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                    ¿Seguro que quieres cancelar el ticket?
+                                    ¿Seguro que quieres cancelar el ticket: {{$tick->clasificacion}}?
                                     </div>
                                     <form action="{{route('cancel',$tick->id_ticket)}}" method="POST" id="Cancel" name="Cancel">
                                     @csrf

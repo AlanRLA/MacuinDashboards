@@ -105,8 +105,8 @@ class controladorMacuin extends Controller
     public function indexCliente()
     {
         $deptos = DB::table('tb_departamentos')->get();
-        $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->get();
-        return view('macuinCliente',compact('deptos','tickets'));
+        $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
+        return view('cliente',compact('deptos','tickets'));
     }
 
     //FUNCION CONSULTAR TICKET DE CLIENTE
@@ -128,7 +128,14 @@ class controladorMacuin extends Controller
             ]);
 
 
-            return redirect()->route('cliente')->with('hecho','no hecho');
+
+            return redirect()->route('cliente_rs')->with('hecho','no hecho');
+
+        return redirect()->route('cliente')->with('firado','no hecho');
+
+
+
+
 
         } else{
             DB::table('tb_tickets')->insert([
@@ -142,7 +149,11 @@ class controladorMacuin extends Controller
             ]);
 
 
+            return redirect()->route('cliente_rs')->with('hecho','no hecho');
+
             return redirect()->route('cliente')->with('hecho','no hecho');
+
+
 
         }
     }
