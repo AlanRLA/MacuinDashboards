@@ -4,7 +4,7 @@
 @if (session()->has('success')) 
         <script type="text/javascript">          
             Swal.fire({
-            position: 'top-end',
+            position: 'top-center',
             icon: 'success',
             title: 'Usuario creado',
             showConfirmButton: false,
@@ -13,11 +13,18 @@
         </script> 
 @endif
 
-@error('invalid_credentials')  
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong><small>{{$message}}</small></strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
+@error('invalid_credentials')
+
+<script type="text/javascript">          
+    Swal.fire({
+    position: 'top-end',
+    icon: 'error',
+    title: 'Datos incorrectos',
+    showConfirmButton: false,
+    timer: 1700
+    })
+</script> 
+
 @enderror
 
 <div class="form">
@@ -26,14 +33,6 @@
         <h2>Macuin <br/> Dashboards</h2>   
 
 
-        @error('invalid_credentials')
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <small>{{$message}}</small>
-                    <button type="button" class="close" data-dimiss="alert" aria-label="close">
-                        <span aria-hidden="true"></span>
-                    </button>
-            </div>  
-        @enderror
 
         
         <div class="container col-md-10 mt-5 mb-5" style="background-color: #e0defd; border: 1px solid #6558f5">

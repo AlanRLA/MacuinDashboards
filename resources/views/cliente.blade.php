@@ -19,15 +19,18 @@
 <body>
 
 
-    @if(session()->has('cancelacion'))
-        
-    {!!" <script>Swal.fire(
-      'Cancelacion exitosa!',
-      '¡Se ha cancelado su ticket!',
-      'success'
-    )</script>"!!}
-    @endif
-    
+@if (session()->has('mail')) 
+    <script type="text/javascript">          
+        Swal.fire({
+        position: 'top-center',
+        icon: 'success',
+        title: 'Bienvenido: {{ Auth::user()->name }}',
+        showConfirmButton: false,
+        timer: 1500
+        })
+    </script> 
+@endif
+
 @if (session()->has('hecho')) 
     <script type="text/javascript">          
         Swal.fire(
@@ -38,15 +41,26 @@
     </script> 
 @endif
 
+@if(session()->has('cancelacion'))
+        
+    {!!" <script>Swal.fire(
+      'Cancelacion exitosa!',
+      '¡Se ha cancelado su ticket!',
+      'success'
+    )</script>"!!}
+@endif
+
+
 
 <!-- LOGIN  -->
 
     <div class="sidebar">
         <h3 class="mt-3 mb-4"><strong>Macuin<br/></strong>Dashboards</h3>
         <h4>{{ Auth::user()->name }}</h4>
-        <h5 class="mt-2">Cliente</h5>
+        <h5 class="mt-2">{{ Auth::user()->email }}</h5>
         <br>
         <a href="" data-bs-toggle="modal" data-bs-target="#modalColab"><i class="bi bi-person-fill-gear"> Editar Perfil</i></a>
+
         {{-- <form action="{{route('logout')}}" method="POST">
             @csrf
             <a><i class="bi bi-box-arrow-left"><strong> Cerrar Sesion</strong></i></a>
@@ -54,6 +68,7 @@
         
         ESTO ESTA COMENTADO POR UN DETALLITO DE POST entonces puse tipo get la ruta y quedo el de abajo
         --}}
+
         <a href="{{route('logout')}}"><i class="bi bi-box-arrow-left"><strong> Cerrar Sesion</strong></i></a>
         
         <div class="card" style="max-width: 18rem;">

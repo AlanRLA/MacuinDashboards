@@ -129,6 +129,7 @@ class controladorMacuin extends Controller
 
             return redirect()->route('cliente_rs')->with('hecho','no hecho');
 
+
         }
     }
 
