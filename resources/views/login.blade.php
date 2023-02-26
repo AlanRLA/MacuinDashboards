@@ -31,10 +31,7 @@
 <div class="container mt-4 col-md-4" style="background-color: aliceblue; border: 2px solid #9eadba">
     <div class="row align-items-stretch">
         <h2>Macuin <br/> Dashboards</h2>   
-
-
-
-        
+       
         <div class="container col-md-10 mt-5 mb-5" style="background-color: #e0defd; border: 1px solid #6558f5">
 
         <form action="{{route('login.v')}}" method="POST">

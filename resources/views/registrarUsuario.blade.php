@@ -57,7 +57,7 @@
                  <small class="txt-danger mt-1"> <strong>{{$message}}</strong> </small>
             @enderror
 
-{{-- Select de perfil (el perfil cliente se puede asignar a todos, el jefe asigna rol) 
+{{--        Select de perfil (el perfil cliente se puede asignar a todos, el jefe asigna rol) 
             <div class="inputB">
                 <select class="form-select" aria-label="Default select example" required> 
                     <option selected>Selecciona un perfil...</option>

@@ -18,12 +18,12 @@ class controladorMacuin extends Controller
         return view('login');
     }
 
+    //AUTENTIFICACION
     public function login_v(Request $r){
         $r->validate([
             'txtemail' =>'required|email',
             'txtpass'=>'required|min:4',
         ]);
-
 
         if(Auth::attempt(['email'=>$r->txtemail,'password'=>$r->txtpass])){
             //Enviar el email
@@ -31,29 +31,18 @@ class controladorMacuin extends Controller
             return redirect()->route('cliente_rs')->with('mail',$mail);
         }
         
-
-        return back()->withErrors(['invalid_credentials'=>'Usuario y contraseña no coinciden'])->withInput();
+        return back()->withErrors(['invalid_credentials'=>'Usuario y/o contraseña no coinciden'])->withInput();
     }
 
     public function registrarUsu(){
         return view('registrarUsuario');
     }
 
-    //Salir sesión
+    //LOGOUT
     public function salir(){
         Auth::logout();
         return redirect()->route('login');
     }
-
-    // public function storeCliente(validadorCliente $request){
-    //     DB::table('tb_usuarios')->insert([
-    //         "nombre"=>$request->input('txtApe'),
-    //         "apellido"=>$request->input('txtNom'),
-    //         "perfil"=>$request->input('txtPas'),
-    //         "created_at"=> Carbon::now(),
-    //         "updated_at"=> Carbon::now(),
-    //     ]);
-    // }
 
     //REGISTRO DE USUARIO
     public function  registrar_v(Request $r){  
@@ -112,7 +101,7 @@ class controladorMacuin extends Controller
     //FUNCION CONSULTAR TICKET DE CLIENTE
 
 
-    //FUNCION INCERTAR TICKET CLIENTE
+    //FUNCION INSERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)
     {
 
