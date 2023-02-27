@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class validadorCliente extends FormRequest
+class RegisUsu extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class validadorCliente extends FormRequest
     public function rules()
     {
         return [
-
-            'txtApe'=>'required',
-            'txtNom'=>'required',
-            'txtPas'=>'required',
+            'txtusu' =>'required|string',
+            'txtemail' =>'required|email|unique:users,email',
+            'txtpass'=>'required|min:4',
+            'txtpass_v' => 'required|same:txtpass'
         ];
     }
 }

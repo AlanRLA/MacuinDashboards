@@ -40,6 +40,9 @@
                 <input type="text" name="txtemail" required="required">
                 <span>Correo</span>
                 <i></i>
+                @error('txtemail')
+                 <small class="txt-danger mt-1"> <strong>{{$message}}</strong> </small>
+                @enderror
             </div>
 
             <div class="inputB">
