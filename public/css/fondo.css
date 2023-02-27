@@ -4,6 +4,9 @@
     padding: 0;
     margin: 0;
 }
+
+
+
 svg {
     content: '';
     position: absolute;
@@ -12,7 +15,6 @@ svg {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    
     
 }
 
@@ -32,13 +34,13 @@ svg {
 }
 
 
-.inputB{
+.inputB {
     position: relative;
-    width: 348px;
-    margin-top: 32px;    
+    width: 100%;
+    margin-top: 32px;
 }
 
-.inputB input{
+.inputB input {
     position: relative;
     width: 100%;
     padding: 20px 10px 10px;
@@ -50,7 +52,7 @@ svg {
     z-index: 10;
 }
 
-.inputB span{
+.inputB span {
     position: absolute;
     left: 0;
     padding: 20px 10px 10px;
@@ -59,16 +61,17 @@ svg {
     pointer-events: none;
     letter-spacing: 0.05em;
     transition: 0.5s;
+    z-index: 20; /* establecer una mayor z-index */
 }
 
 .inputB input:valid ~ span, 
-.inputB input:focus ~ span{
+.inputB input:focus ~ span {
     color: rgb(0, 0, 0);
     transform: translateX(-10px) translateY(-34px);
     font-size: 18px;
 }
 
-.inputB i{
+.inputB i {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -79,10 +82,25 @@ svg {
     transition: 0.5s;
     pointer-events: none;
     z-index: 9;
-
 }
 
 .inputB input:valid ~ i, 
-.inputB input:focus ~ i{
+.inputB input:focus ~ i {
     height: 44px;
 }
+
+@media only screen and (min-width: 768px) {
+    .inputB {
+        max-width: 348px;
+        width: auto;
+    }
+}
+
+.inputB input:-webkit-autofill,
+.inputB input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #000;
+    position: relative;
+    width: 100%;
+    border-radius: 3%;
+}
+
