@@ -207,13 +207,13 @@
                                 <div class="card mb-2">
                                     <div class="contenedor-flexbox" style="margin-left: 20px">
                                         <label class="form-label mb-2 mt-2">{{$tick->clasificacion}}: {{$tick->detalle}} . . .</label>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Cancel">Cancelar Ticket</button>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Cancel{{$tick->id_ticket}}">Cancelar Ticket</button>
                                     </div>                                                                                     
                                 </div>                    
                             </div>
 
                             <!-- Modal Confirmar Cancelar ticket-->
-                            <div class="modal fade" id="Cancel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="Cancel" aria-hidden="true">
+                            <div class="modal fade" id="Cancel{{$tick->id_ticket}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="Cancel" aria-hidden="true">
                                 <div class="modal-dialog modal-Center">
                                 <div class="modal-content">
                                     <div class="modal-header">
