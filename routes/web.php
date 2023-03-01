@@ -19,6 +19,12 @@ Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
 Route::put('cancelar/{id}', [controladorMacuin::class, 'cancelTicket'])->name('cancel');
 Route::put('cliente_edit/{id}', [controladorMacuin::class, 'editarPerfil'])->name('cliente_edit');
 
+
+//RUTAS JEFE DE SOPORTE
+Route::get('soporte', [ControladorMacuin_Vistas::class, 'consultaDepa'])->name('soporte');
+
+
+
 //RUTAS PROTEGIDAS
 Route::middleware('auth')->group(function(){
     //CLIENTE
