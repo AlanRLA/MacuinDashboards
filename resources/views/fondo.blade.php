@@ -15,8 +15,6 @@
 </head>
 <body style="background-color: #d5e7f7">
 
-
-
 <div>
 
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg"

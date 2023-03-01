@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket;
-use App\Http\Requests\validadorCliente;
+use App\Http\Requests\RegisUsu;
+use App\Http\Requests\Login;
 use DB;
 use App\Models\User;
 use Carbon\Carbon;
@@ -13,17 +14,8 @@ use PhpParser\Node\Stmt\Return_;
 
 class controladorMacuin extends Controller
 {
-    //FUNCIONES LOGIN
-    public function loginInicio(){
-        return view('login');
-    }
-
-    public function login_v(Request $r){
-        $r->validate([
-            'txtemail' =>'required|email',
-            'txtpass'=>'required|min:4',
-        ]);
-
+    //AUTENTIFICACION
+    public function login_v(Login $r){
 
         if(Auth::attempt(['email'=>$r->txtemail,'password'=>$r->txtpass])){
             //Enviar el email
@@ -31,39 +23,17 @@ class controladorMacuin extends Controller
             return redirect()->route('cliente_rs')->with('mail',$mail);
         }
         
-
-        return back()->withErrors(['invalid_credentials'=>'Usuario y contraseña no coinciden'])->withInput();
+        return back()->withErrors(['invalid_credentials'=>'Usuario y/o contraseña no coinciden'])->withInput();
     }
 
-    public function registrarUsu(){
-        return view('registrarUsuario');
-    }
-
-    //Salir sesión
+    //LOGOUT
     public function salir(){
         Auth::logout();
         return redirect()->route('login');
     }
 
-    // public function storeCliente(validadorCliente $request){
-    //     DB::table('tb_usuarios')->insert([
-    //         "nombre"=>$request->input('txtApe'),
-    //         "apellido"=>$request->input('txtNom'),
-    //         "perfil"=>$request->input('txtPas'),
-    //         "created_at"=> Carbon::now(),
-    //         "updated_at"=> Carbon::now(),
-    //     ]);
-    // }
-
     //REGISTRO DE USUARIO
-    public function  registrar_v(Request $r){  
-    
-        $r->validate([
-            'txtusu' =>'required|string',
-            'txtemail' =>'required|email|unique:users,email',
-            'txtpass'=>'required|min:4',
-            'txtpass_v' => 'required|same:txtpass'
-        ]);
+    public function  registrar_v(RegisUsu $r){  
 
         User::create([
             'name' => $r->txtusu,
@@ -74,7 +44,8 @@ class controladorMacuin extends Controller
     return redirect()->route('login')->with('success', 'Registrado');
     }
 
-    public function editarPerfil(Request $r, $id){
+    //FUNCION EDITAR PERFIL
+    public function editarPerfil(RegisUsu $r, $id){
 
             $usu = User::findOrFail($id); // Buscar el usuario en la base de datos
     
@@ -84,41 +55,17 @@ class controladorMacuin extends Controller
     
             $usu->save(); //Actualizar
             
-            return redirect()->route('cliente')->with('save','editado');
+            return redirect()->route('cliente_rs')->with('save','editado');
 
     }
 
-    // public function storeCliente(validadorCliente $request){
-    //     DB::table('tb_usuarios')->insert([
-    //         "nombre"=>$request->input('txtApe'),
-    //         "apellido"=>$request->input('txtNom'),
-    //         "perfil"=>$request->input('txtPas'),
-    //         "created_at"=> Carbon::now(),
-    //         "updated_at"=> Carbon::now(),
-    //     ]);
-
-    //     return redirect('/')->with('hecho','nohecho');
-    // }
-   
-
-    //FUNCIONES INDEX (CLIENTE, J-SOPORTE Y AUXILIAR)
-    public function indexCliente()
-    {
-        $deptos = DB::table('tb_departamentos')->get();
-        $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
-        return view('cliente',compact('deptos','tickets'));
-    }
-
-    //FUNCION CONSULTAR TICKET DE CLIENTE
-
-
-    //FUNCION INCERTAR TICKET CLIENTE
+    //FUNCION INSERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)
     {
-        
+
         if ($request->input('txtClasificacion') !== "Otro:"){
             DB::table('tb_tickets')->insert([
-                "id_usu"=>1,
+                "id_usu"=>Auth::user()->id,
                 "id_dpto"=>$request->input('txtDepartamento'),
                 "clasificacion"=>$request->input('txtClasificacion'),
                 "detalle"=>$request->input('txtDescripcion'),
@@ -127,20 +74,13 @@ class controladorMacuin extends Controller
                 "updated_at"=>Carbon::now()
             ]);
 
-
             return redirect()->route('cliente_rs')->with('hecho','no hecho');
 
-            return redirect()->route('cliente_rs')->with('hecho','no hecho');
-
-        return redirect()->route('cliente')->with('firado','no hecho');
-
-
-
-
+        return redirect()->route('cliente_rs')->with('firado','no hecho');
 
         } else{
             DB::table('tb_tickets')->insert([
-                "id_usu"=>1,
+                "id_usu"=>Auth::user()->id,
                 "id_dpto"=>$request->input('txtDepartamento'),
                 "clasificacion"=>$request->input('txtCual'),
                 "detalle"=>$request->input('txtDescripcion'),
@@ -152,20 +92,21 @@ class controladorMacuin extends Controller
 
             return redirect()->route('cliente_rs')->with('hecho','no hecho');
 
-            return redirect()->route('cliente')->with('hecho','no hecho');
+            return redirect()->route('cliente_rs')->with('hecho','no hecho');
 
 
 
         }
     }
 
+    //FUNCION CANCELAR TICKET
     public function cancelTicket (Request $req, $id){
         
         DB::table('tb_tickets')->where('id_ticket',$id)->update([
             "estatus"=>"Cancelado",
             "updated_at"=>Carbon::now(),
         ]);
-        return redirect('cliente')->with('cancelacion','cancel');
+        return redirect()->route('cliente_rs')->with('cancelacion','cancel');
         
     }
 
