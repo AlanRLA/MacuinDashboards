@@ -17,6 +17,16 @@ body{
     margin-top: 60px;
 }
 
+.container-soporte{
+    position: center;
+    width: 80%;
+    position:relative;
+    left: 285px;
+    float: none;
+    display: inline-block;
+    margin-top: 30px;
+}
+
 .contenedor-flexbox {
     display: flex; 
     justify-content: space-between; /*Con esto le indicamos que margine todos los items que se encuentra adentro hacia la derecha e izquierda*/
