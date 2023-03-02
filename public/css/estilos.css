@@ -107,3 +107,15 @@ body{
     top: 25%;
     transform: translateY(-25%);
 }
+
+.btn-primary {
+    background-color:#c827e0;
+    border-color: #c827e0; 
+    color: #fff;
+  }
+  
+  .btn-primary:hover {
+    background-color: darkorchid;
+    border-color: darkorchid;
+    color: #fff;
+  }
