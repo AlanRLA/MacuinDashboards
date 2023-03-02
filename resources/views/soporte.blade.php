@@ -18,6 +18,17 @@
 </head>
 <body>
 
+    @if (session()->has('successUsuario')) 
+        <script type="text/javascript">          
+            Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Usuario creado en la BD',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        </script> 
+    @endif
 
 <!-- LOGIN  -->
 
@@ -139,29 +150,39 @@
                 <div class="card-header bg-transparent mb-3"><h4>Registrar Usuarios</h4></div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
-                                <form>
-
+                                <form action="/usuarioNew" method="post">
+                                    @csrf
                                     <div class="input-group mb-4">
                                         <span class="input-group-text" id="inputGroup-sizing-default">Nombre Usuario</span>
-                                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                        <input type="text" name="txtNameUsu" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                                     </div>
 
                                     <div class="input-group mb-4">
                                         <span class="input-group-text" id="inputGroup-sizing-default">Correo</span>
-                                        <input type="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                        <input type="email" name="txtemailUsu" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                    </div>
+
+                                    <div class="input-group mb-4
+                                    ">
+                                        <label class="input-group-text" for="inputGroupSelect01">Perfil</label>
+                                        <select class="form-select" name="txtPerfil" id="inputGroupSelect01">
+                                          <option selected>Selecciona una opcion...</option>
+                                          <option value="jefe">Jefe de Soporte</option>
+                                          <option value="auxiliar">Auxiliar</option>
+                                        </select>
                                     </div>
 
                                     <div class="input-group mb-5">
                                         <label class="input-group-text" for="inputGroupSelect01">Departamento</label>
-                                        <select class="form-select" id="inputGroupSelect01">
+                                        <select class="form-select" name="txtDeparta" id="inputGroupSelect01">
                                           <option selected>Selecciona una opcion...</option>
-                                          <option value="1">One</option>
-                                          <option value="2">Two</option>
-                                          <option value="3">Three</option>
+                                        @foreach ($depa as $dpto)
+                                                <option value="{{$dpto->id_dpto}}">{{$dpto->nombre}}</option>
+                                        @endforeach
                                         </select>
                                     </div>
 
-                                    <a href=""><button type="submit" class="btn btn-primary">Guardar Usuario</button></a>
+                                  
 
                                     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Consultar Usuarios</button>
 
@@ -198,7 +219,7 @@
 
                                     </div>
                                     </div>
-
+                                    <button type="submit" class="btn btn-primary">Guardar Usuario</button>
                                 </form>
                     </blockquote>
                 </div>

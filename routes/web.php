@@ -22,6 +22,7 @@ Route::put('cliente_edit/{id}', [controladorMacuin::class, 'editarPerfil'])->nam
 
 //RUTAS JEFE DE SOPORTE
 Route::get('soporte', [ControladorMacuin_Vistas::class, 'consultaDepa'])->name('soporte');
+Route::post('usuarioNew',[controladorMacuin::class, 'registrarUsuario']);
 
 
 
@@ -29,6 +30,7 @@ Route::get('soporte', [ControladorMacuin_Vistas::class, 'consultaDepa'])->name('
 Route::middleware('auth')->group(function(){
     //CLIENTE
     Route::get('cliente_rs', [ControladorMacuin_Vistas::class, 'indexCliente'])->name('cliente_rs');
+    Route::get('soporte_bo', [ControladorMacuin_Vistas::class, 'consultaDepa'])->name('soporte_bo');
 });
 
 
