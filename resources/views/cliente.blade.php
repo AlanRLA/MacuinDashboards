@@ -88,8 +88,8 @@
         <div class="card" style="max-width: 18rem;">
             <div class="card mb-3" style="max-width: 18rem;">
                 <div class="card-header">Solicitudes</div>
-                <div class="card-body">
-                    <div class="tablita">
+               
+                    <div class="tablita overflow-auto" style="max-height: 230px; overflow-y: scroll;">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -97,7 +97,7 @@
                                     <th scope="col">Estatus</th>
                                 </tr>
                             </thead>
-                            <tbody style="max-height: 50px; overflow-y: auto;">
+                            <tbody>
                                 @foreach ($tickets as $item)
                                 <tr>
                                     <td>
@@ -113,7 +113,7 @@
                             @endforeach                                                                           
                         </table>
                     </div>
-                </div>
+                
             </div>
         </div>
     </div>
