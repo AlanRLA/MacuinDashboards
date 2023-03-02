@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Ticket;
 use App\Http\Requests\RegisUsu;
 use App\Http\Requests\Login;
+use App\Http\Requests\regisJeyAu;
 use DB;
 use App\Models\User;
 use Carbon\Carbon;
@@ -21,6 +22,7 @@ class controladorMacuin extends Controller
             //Enviar el email
             $mail = $r->txtemail;
             return redirect()->route('cliente_rs')->with('mail',$mail);
+            
         }
         
         return back()->withErrors(['invalid_credentials'=>'Usuario y/o contraseña no coinciden'])->withInput();
@@ -42,6 +44,20 @@ class controladorMacuin extends Controller
         ]);
 
     return redirect()->route('login')->with('success', 'Registrado');
+    }
+
+    //REGISTRAR USUARIO JEFE Y AUXILIAR
+    public function  registrarUsuario(regisJeyAu $r){  
+
+        User::create([
+            'name' => $r->txtNameUsu,
+            'email' => $r->txtemailUsu,
+            'password' => bcrypt(1234),
+            'perfil' => $r->txtPerfil,
+            'id_dpto' => $r->txtDeparta,
+        ]);
+
+    return redirect()->route('soporte_bo')->with('successUsuario', 'Registrado');
     }
 
     //FUNCION EDITAR PERFIL
@@ -110,6 +126,8 @@ class controladorMacuin extends Controller
         
     }
 
+
+    
 
     public function create()
     {
