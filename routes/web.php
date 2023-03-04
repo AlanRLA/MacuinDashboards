@@ -25,6 +25,7 @@ Route::get('soporte', [ControladorMacuin_Vistas::class, 'consultaDepa'])->name('
 Route::post('usuarioNew',[controladorMacuin::class, 'registrarUsuario']);
 Route::post('departamentoNew',[controladorMacuin::class, 'insertDpto'])->name('regisDpto');
 Route::put('dpto_edit/{id}',[controladorMacuin::class, 'editarDpto'])->name('editDpto');
+Route::post('asignarTicket',[controladorMacuin::class, 'asignarTicket'])->name('compartir');
 
 
 

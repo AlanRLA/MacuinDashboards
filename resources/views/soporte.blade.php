@@ -163,8 +163,7 @@
             <div class="modal-body">
              <div class="container-fluid">
                 <form action="{{route('regisDpto')}}" method="POST">  
-                    @csrf                  
-                    </select>                    
+                    @csrf                                      
                     <div class="row mb-3">
                         <span>Nombre</span>
                         <input type="text" name="txtNombre" class="form-control" value="" placeholder="" required>
@@ -187,6 +186,45 @@
         </div>
         </div>
     </div>
+
+    <!-- Modal AsignaTicket -->
+    <div class="modal fade" id="CompartirObs" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+        <div class="modal-dialog modal-modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registrar Departamento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         <div class="container-fluid">
+            <form action="{{route('compartir')}}" method="POST">  
+            @csrf                  
+                </select>                 
+                <div class="row mb-3">
+                    <span>Buscar Auxiliar</span>
+                    <input hidden type="text" name="txtNombre" class="form-control" value="" placeholder="" required>
+                    <select class="form-select form-select-lg" name="txtAuxiliar" id="">
+                        <option selected disabled>Selecciona un auxiliar</option>
+                        @foreach ($auxs as $aux)
+                        <option value="{{$aux->id}}">{{$aux->name}} {{$aux->apellido}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="row mb-3">
+                    <span>Observaciones</span>
+                    <textarea name="txtObservacion" class="form-control" placeholder="" value="" required></textarea>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </div>
+            </form>                   
+        </div>   
+        </div>
+    </div>
+    </div>
+</div>
 
     <!-- CARD DE CLIENTES  -->
 
@@ -227,6 +265,8 @@
                 </div>
         </div>
 
+        {{-- BTN TEMPORAL PARA PROBAR COMPARTIR TICKETS --}}
+        <a href="" data-bs-toggle="modal" data-bs-target="#CompartirObs"><i class="bi bi-person-fill-gear">Comparitr</i></a>
             <div class="card">
                 <div class="card-header bg-transparent mb-3"><h4>Registrar Usuarios</h4></div>
                 <div class="card-body">
@@ -261,9 +301,7 @@
                                                 <option value="{{$dpto->id_dpto}}">{{$dpto->nombre}}</option>
                                         @endforeach
                                         </select>
-                                    </div>
-
-                                  
+                                    </div>                        
 
                                     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Consultar Usuarios</button>
 

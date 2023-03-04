@@ -104,13 +104,7 @@ class controladorMacuin extends Controller
                 "created_at"=>Carbon::now(),
                 "updated_at"=>Carbon::now()
             ]);
-
-
             return redirect()->route('cliente_rs')->with('hecho','no hecho');
-
-            return redirect()->route('cliente_rs')->with('hecho','no hecho');
-
-
 
         }
     }
@@ -155,6 +149,20 @@ class controladorMacuin extends Controller
 
     }
 
+        //FUNCION ASIGNAR TICKET a AUXILIAR
+        public function asignarTicket(Request $r){
+            // DB::table('tb_soportes')->insert([
+            //     "id_jefe"=>Auth::user()->id,
+            //     "id_aux"=>$r->txtAuxiliar,
+            //     "id_ticket"=>$r->txtTicket,
+            //     "observaciones"=>$r->txtObservacion,
+            //     "created_at"=>Carbon::now(),
+            //     "updated_at"=>Carbon::now()
+            // ]);
+            // return redirect()->route('soporte_bo')->with('share','asignado');
+            return 'asignado';
+        }
+    
     public function create()
     {
         //

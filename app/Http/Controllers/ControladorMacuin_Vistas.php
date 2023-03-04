@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\Ticket;
 use App\Http\Requests\validadorCliente;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -34,8 +34,8 @@ class ControladorMacuin_Vistas extends Controller
      //VISTA JEFE SOPORTE
      public function consultaDepa(){
         $depa = DB::table('tb_departamentos')->get();
-
-        return view('soporte', compact('depa'));
+        $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
+        return view('soporte', compact('depa','auxs'));
      }
 
 }
