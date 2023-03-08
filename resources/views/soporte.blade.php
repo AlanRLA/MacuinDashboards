@@ -30,6 +30,30 @@
         </script> 
     @endif
 
+    @if (session()->has('regis')) 
+        <script type="text/javascript">          
+            Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Departamento creado en la BD',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        </script> 
+    @endif
+
+    @if (session()->has('editado')) 
+        <script type="text/javascript">          
+            Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Departamento editado',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        </script> 
+    @endif
+
 <!-- LOGIN  -->
 
     <div class="sidebar">
@@ -42,7 +66,7 @@
 
         <br>
         <a href="" data-bs-toggle="modal" data-bs-target="#modalColab"><i class="bi bi-person-fill-gear"> Editar Perfil</i></a>
-        <a href="" data-bs-toggle="modal" data-bs-target=""><i class="bi bi-person-fill-gear"> Registrar Departamento</i></a>
+        <a href="" data-bs-toggle="modal" data-bs-target="#RegistrarDpto"><i class="bi bi-person-fill-gear"> Registrar Departamento</i></a>
         
 
         {{-- <form action="{{route('logout')}}" method="POST">
@@ -89,18 +113,39 @@
     </div>
 
     @foreach ($depa as $item)
-    <!-- Modal Detalle Ticket -->
+    <!-- Modal Detalle Departamento -->
     <div class="modal fade" id="Detalle{{$item->id_dpto}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
-        <div class="modal-dialog modal-Center">
+        <div class="modal-dialog modal-modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Detalles de Departamento</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            id de Departamento {{$item->id_dpto}}
-            </div>
-            <div class="modal-footer">
+             <label hidden>id de Departamento {{$item->id_dpto}}</label>   
+             <div class="container-fluid">
+                <form action="{{route('editDpto',$item->id_dpto)}}" method="POST">  
+                    @csrf                  
+                    @method('PUT')
+                    </select>                    
+                    <div class="row mb-3">
+                        <span>Nombre</span>
+                        <input type="text" name="txtNombre" class="form-control" value="{{$item->nombre}}" placeholder="" required>
+                    </div>
+                    <div class="row mb-3">
+                        <span>Telefono</span>
+                        <input type="text" name="txtTel" class="form-control" placeholder="" value="{{$item->telefono}}" required>
+                    </div>
+                    <div class="row mb-3">
+                        <span>Ubicación</span>
+                        <input type="text" name="txtUbi" class="form-control" value="{{$item->ubicacion}}" placeholder="" required>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Editar Datos</button>
+                    </div>
+                </form>                   
+            </div>   
             </div>
         </div>
         </div>
@@ -204,6 +249,8 @@
                 </div>
         </div>
 
+        {{-- BTN TEMPORAL PARA PROBAR COMPARTIR TICKETS --}}
+        <a href="" data-bs-toggle="modal" data-bs-target="#CompartirObs"><i class="bi bi-person-fill-gear">Comparitr</i></a>
             <div class="card">
                 <div class="card-header bg-transparent mb-3"><h4>Registrar Usuarios</h4></div>
                 <div class="card-body">
