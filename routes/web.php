@@ -31,7 +31,6 @@ Route::post('asignarTicket',[controladorMacuin::class, 'asignarTicket'])->name('
 
 //RUTAS PROTEGIDAS
 Route::middleware('auth')->group(function(){
-    //CLIENTE
     Route::get('cliente_rs', [ControladorMacuin_Vistas::class, 'indexCliente'])->name('cliente_rs');
     Route::get('soporte_bo', [ControladorMacuin_Vistas::class, 'consultaDepa'])->name('soporte_bo');
 });

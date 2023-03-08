@@ -33,6 +33,10 @@ class ControladorMacuin_Vistas extends Controller
 
      //VISTA JEFE SOPORTE
      public function consultaDepa(){
+
+        if(Auth::user()->perfil == null||Auth::user()->perfil == 'auxiliar'){
+            return '¡acción invalida!';
+        }
         $depa = DB::table('tb_departamentos')->get();
         $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
         return view('soporte', compact('depa','auxs'));

@@ -202,7 +202,7 @@
                 </select>                 
                 <div class="row mb-3">
                     <span>Buscar Auxiliar</span>
-                    <input hidden type="text" name="txtNombre" class="form-control" value="" placeholder="" required>
+                    <input hidden type="text" name="txtTicket" class="form-control" value="1" placeholder="" required>
                     <select class="form-select form-select-lg" name="txtAuxiliar" id="">
                         <option selected disabled>Selecciona un auxiliar</option>
                         @foreach ($auxs as $aux)
