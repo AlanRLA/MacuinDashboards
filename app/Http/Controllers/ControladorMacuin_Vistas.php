@@ -35,7 +35,28 @@ class ControladorMacuin_Vistas extends Controller
      public function consultaDepa(){
         $depa = DB::table('tb_departamentos')->get();
 
-        return view('soporte', compact('depa'));
+        $tick = DB::table('tb_tickets')
+        ->crossJoin('users')
+        ->crossJoin('tb_departamentos')
+        ->select('tb_tickets.id_ticket', 'users.name', 'tb_departamentos.nombre', 'tb_tickets.created_at', 'tb_tickets.clasificacion', 'tb_tickets.detalle', 'tb_tickets.estatus')
+        ->where('tb_tickets.id_usu','=',DB::raw('users.id'))
+        ->where('tb_tickets.id_dpto','=',DB::raw('tb_departamentos.id_dpto'))
+        ->get();
+
+        $usu = DB::table('users')
+        ->crossJoin('tb_departamentos')
+        ->select('users.name', 'tb_departamentos.nombre')
+        ->where('users.id_dpto','=',DB::raw('tb_departamentos.id_dpto'))
+        ->get();
+
+        $estatus = DB::table('tb_tickets')
+        ->select('estatus')
+        ->groupBy('estatus')
+        ->get();
+
+        $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
+        
+        return view('soporte', compact('depa','tick','usu','estatus','auxs'));
      }
 
 }

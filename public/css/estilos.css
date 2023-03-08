@@ -119,3 +119,13 @@ body{
     border-color: darkorchid;
     color: #fff;
   }
+
+  .btn-primary:disabled{
+    background-color: darkorchid;
+    border-color: darkorchid;
+    color: #fff;
+  }
+
+.consulta{
+    margin-right: 20%;
+}

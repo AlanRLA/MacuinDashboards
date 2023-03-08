@@ -107,42 +107,100 @@
     </div>
     @endforeach
 
-    <!-- CARD DE CLIENTES  -->
+    <!-- CARD DE TICKETS  -->
 
     <div class="container-soporte">
         <div class="card" style="height: 19rem;">
-            <div class="card-header bg-transparent mb-3"><h3>Consulta de Tickets</h3></div>
+            <div class="card-header bg-transparent mb-1"><h3>Consulta de Tickets</h3></div>
                 <div class="card-body overflow-auto" style="max-height: 230px; overflow-y: scroll;">
+                    <div class="container">
+                        <div class="contenedor-flexbox">
+                            <form action="/search" method="get" id="search-form">
+                                @csrf
+                                <select class="form-select" aria-label="Default select example" name="filtro" id="search-form">  
+                                    <option disabled selected>Estatus ...</option>
+                                    @foreach ($estatus as $esta)
+                                        <option value="{{$esta->estatus}}">{{$esta->estatus}}</option>
+                                    @endforeach                                
+                                </select>                            
+                                <button type="submit" class="btn btn-primary">Buscar</button>
+                            </form>    
+                        </div>                                            
+                    </div>
                     <table class="table" >
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                            <th scope="col">Id:</th>
+                            <th scope="col">Usuario:</th>
+                            <th scope="col">Departamento</th>
+                            <th scope="col">Fecha:</th>
+                            <th scope="col">Clasificación:</th>
+                            <th scope="col">Detalle:</th>
+                            <th scope="col">Estatus:</th>
+                            <th scope="col">Opciones:</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        
+                            @foreach ($tick as $tick)
+                            <tr>
+                                <th scope="row">{{$tick->id_ticket}}</th>
+                                <td>{{$tick->name}}</td>
+                                <td>{{$tick->nombre}}</td>
+                                <td>{{$tick->created_at}}</td>
+                                <td>{{$tick->clasificacion}}</td>
+                                <td>{{$tick->detalle}}</td>
+                                <td>{{$tick->estatus}}</td>
+                                <td>
+                                    @unless ($tick->estatus == "Solicitado")
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"disabled>Asignar</button>
+                                    @else
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Asignar{{$tick->id_ticket}}">Asignar</button>
+                                    @endunless                                                                          
+                                </td>
+                            </tr>   
+                                <!-- Modal Asignar Ticket -->
+
+                                <div class="modal fade" id="Asignar{{$tick->id_ticket}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+                                    <div class="modal-dialog modal-modal-dialog-centered">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Registrar Departamento</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <form action="{{route('compartir')}}" method="POST">  
+                                        @csrf                  
+                                            </select>                 
+                                            <div class="row mb-3">
+                                                <span>Buscar Auxiliar</span>
+                                                <input hidden type="text" name="txtTicket" class="form-control" value="1" placeholder="" required>
+                                                <select class="form-select form-select-lg" name="txtAuxiliar" id="">
+                                                    <option selected disabled>Selecciona un auxiliar</option>
+                                                    @foreach ($auxs as $aux)
+                                                    <option value="{{$aux->id}}">{{$aux->name}} {{$aux->apellido}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <span>Observaciones</span>
+                                                <textarea name="txtObservacion" class="form-control" placeholder="" value="" required></textarea>
+                                            </div>
+                                            
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Registrar</button>
+                                            </div>
+                                        </form>                   
+                                    </div>   
+                                    </div>
+                                </div>
+                                </div>
+</div>
+                            @endforeach                                                                                                         
                         </tbody>
                     </table>
+                    <a href="/soporte_bo"><button class="btn btn-primary">Ver todos</button></a>
                 </div>
         </div>
 
@@ -182,9 +240,9 @@
                                         </select>
                                     </div>
 
-                                  
+                                    <button type="submit" class="btn btn-primary">Guardar Usuario</button>
 
-                                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Consultar Usuarios</button>
+                                    <button class="btn btn-primary consulta" style="margin-left: 15%" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Consultar Usuarios</button>
 
                                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                                     <div class="offcanvas-header">
@@ -202,24 +260,25 @@
                                               </tr>
                                             </thead>
                                             <tbody>
-                                              <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>
-                                                    <div class="mb-2">
-                                                        <a class="btn btn-success" href="#" role="button">Editar</a>
-                                                    </div>
-                                                    <div>
-                                                        <a class="btn btn-danger" href="#" role="button">Eliminar</a>
-                                                    </div>
-                                                </td>
-                                              </tr>
+                                                @foreach ($usu as $usu)
+                                                <tr>
+                                                    <th scope="row">{{$usu->name}}</th>
+                                                    <td>{{$usu->nombre}}</td>
+                                                    <td>
+                                                        <div class="mb-2">
+                                                            <a class="btn btn-success" href="#" role="button">Editar</a>
+                                                        </div>
+                                                        <div>
+                                                            <a class="btn btn-danger" href="#" role="button">Eliminar</a>
+                                                        </div>
+                                                    </td>
+                                                  </tr>
+                                                @endforeach                                              
                                             </tbody>
                                           </table>
 
                                     </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Guardar Usuario</button>
+                                    </div>                                    
                                 </form>
                     </blockquote>
                 </div>
@@ -273,20 +332,6 @@
 </div>
 
 <!--Javacript-->
-
-<script>    
-    const select = document.getElementById('txtClasificacion');
-    const input = document.getElementById('txtCual');
-
-    select.addEventListener('change', function() {
-        if (select.value === 'Otro:') {
-            input.disabled = false;
-        } else {
-            input.disabled = true;
-        }
-    });
-
-</script>
 
     @yield('codigo')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
