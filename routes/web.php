@@ -23,6 +23,7 @@ Route::put('cliente_edit/{id}', [controladorMacuin::class, 'editarPerfil'])->nam
 //RUTAS JEFE DE SOPORTE
 Route::get('soporte', [ControladorMacuin_Vistas::class, 'consultaDepa'])->name('soporte');
 Route::post('usuarioNew',[controladorMacuin::class, 'registrarUsuario']);
+Route::get('search',[controladorMacuin::class, 'search'])->name('search');
 Route::post('departamentoNew',[controladorMacuin::class, 'insertDpto'])->name('regisDpto');
 Route::put('dpto_edit/{id}',[controladorMacuin::class, 'editarDpto'])->name('editDpto');
 Route::post('asignarTicket',[controladorMacuin::class, 'asignarTicket'])->name('compartir');
