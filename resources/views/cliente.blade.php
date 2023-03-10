@@ -59,6 +59,19 @@
     )</script>"!!}
 @endif
 
+@if(session()->has('no se puede'))
+
+<script type="text/javascript">          
+    Swal.fire({
+    position: 'top-center',
+    icon: 'error',
+    title: 'No tienes acceso',
+    showConfirmButton: false,
+    timer: 1700
+    })
+</script> 
+
+@endif
 
 
 <!-- LOGIN  -->
