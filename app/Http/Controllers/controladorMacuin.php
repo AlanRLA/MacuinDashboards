@@ -7,7 +7,7 @@ use App\Http\Requests\Ticket;
 use App\Http\Requests\RegisUsu;
 use App\Http\Requests\Login;
 use App\Http\Requests\regisJeyAu;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -20,8 +20,19 @@ class controladorMacuin extends Controller
 
         if(Auth::attempt(['email'=>$r->txtemail,'password'=>$r->txtpass])){
             //Enviar el email
-            $mail = $r->txtemail;
-            return redirect()->route('cliente_rs')->with('mail',$mail);
+            if(Auth::user()->perfil == null){
+                
+               return redirect()->route('cliente_rs');    
+            }
+            if(Auth::user()->perfil == 'jefe'){
+                
+            return redirect()->route('soporte');    
+            }
+            if(Auth::user()->perfil == 'auxiliar'){
+                
+                return 'auxiliar';
+                // return redirect()->route('');    
+            }
             
         }
         
@@ -61,13 +72,14 @@ class controladorMacuin extends Controller
     }
 
     //FUNCION EDITAR PERFIL
-    public function editarPerfil(RegisUsu $r, $id){
+    public function editarPerfil(Request $r, $id){
 
             $usu = User::findOrFail($id); // Buscar el usuario en la base de datos
     
-            $usu->name = $r->input('txtNombre');
-            $usu->apellido = $r->input('txtApellido');
-            $usu->email = $r->input('txtEmail');
+            $usu->name = $r->txtNombre;
+            $usu->apellido = $r->txtApellido;
+            $usu->email = $r->txtEmail;
+            $usu->updated_at = Carbon::now();
     
             $usu->save(); //Actualizar
             
@@ -104,19 +116,13 @@ class controladorMacuin extends Controller
                 "created_at"=>Carbon::now(),
                 "updated_at"=>Carbon::now()
             ]);
-
-
             return redirect()->route('cliente_rs')->with('hecho','no hecho');
-
-            return redirect()->route('cliente_rs')->with('hecho','no hecho');
-
-
 
         }
     }
 
     //FUNCION CANCELAR TICKET
-    public function cancelTicket (Request $req, $id){
+    public function cancelTicket ($id){
         
         DB::table('tb_tickets')->where('id_ticket',$id)->update([
             "estatus"=>"Cancelado",
@@ -126,9 +132,49 @@ class controladorMacuin extends Controller
         
     }
 
+    //FUNCION INSERTAR DEPARTAMENTO
+    public function insertDpto(Request $r){
+        DB::table('tb_departamentos')->insert([
+            "nombre"=>$r->txtNombre,
+            "telefono"=>$r->txtTel,
+            "ubicacion"=>$r->txtUbi,
+            "created_at"=>Carbon::now(),
+            "updated_at"=>Carbon::now()
 
+        ]);
+
+        return redirect()->route('soporte_bo')->with('regis','registrado');
+
+    }
     
+    //FUNCION EDITAR DEPARTAMENTO
+    public function editarDpto(Request $r, $id){
+        DB::table('tb_departamentos')->where('id_dpto',$id)->update([
+            "nombre"=>$r->txtNombre,
+            "telefono"=>$r->txtTel,
+            "ubicacion"=>$r->txtUbi,
+            "updated_at"=>Carbon::now()
 
+        ]);
+
+        return redirect()->route('soporte_bo')->with('editado','editadoo');
+
+    }
+
+        //FUNCION ASIGNAR TICKET a AUXILIAR
+        public function asignarTicket(Request $r){
+            DB::table('tb_soportes')->insert([
+                "id_jefe"=>Auth::user()->id,
+                "id_aux"=>$r->txtAuxiliar,
+                "id_ticket"=>$r->txtTicket,
+                "observaciones"=>$r->txtObservacion,
+                "created_at"=>Carbon::now(),
+                "updated_at"=>Carbon::now()
+            ]);
+            return redirect()->route('soporte_bo')->with('share','asignado');
+            // return 'asignado';
+        }
+    
     public function create()
     {
         //

@@ -189,7 +189,7 @@
                                                 <textarea name="txtDescripcion" class="form-control"></textarea>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Enviar Ticket</button>
+                                        <button type="submit" class="btn btn-primary btn-green">Enviar Ticket</button>
                                     </form>
                                 </div>
                             </div>
