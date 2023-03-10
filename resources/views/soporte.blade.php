@@ -419,6 +419,34 @@
     </div>
 </div>
 
+@foreach ()
+    <!-- Modal Eliminar Uusuario -->
+    <div class="modal fade" id="Detalle{{$item->id_dpto}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+        <div class="modal-dialog modal-modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">¿Seguro de Eliminar Usuario?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+             <label hidden>id de Usuarios {{$item->id_usu}}</label>   
+             <div class="container-fluid">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Eliminar Usuario</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Regresar</button>
+                    </div>
+                </form>                   
+            </div>   
+            </div>
+        </div>
+        </div>
+    </div>
+    @endforeach
+
+
+
 <!--Javacript-->
 
     @yield('codigo')
