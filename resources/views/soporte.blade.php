@@ -291,9 +291,8 @@
                 </div>
         </div>
 
-        {{-- BTN TEMPORAL PARA PROBAR COMPARTIR TICKETS --}}
 
-            <div class="card">
+        {{-- BTN TEMPORAL PARA PROBAR COMPARTIR TICKETS --}}            <div class="card">
                 <div class="card-header bg-transparent mb-3"><h4>Registrar Usuarios</h4></div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
