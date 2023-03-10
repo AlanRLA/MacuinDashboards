@@ -152,6 +152,42 @@
     </div>
     @endforeach
 
+    <!-- Modal Registrar Departamento -->
+    <div class="modal fade" id="RegistrarDpto" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+        <div class="modal-dialog modal-modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registrar Departamento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+         <div class="container-fluid">
+            <form action="{{route('regisDpto')}}" method="POST">  
+                @csrf                  
+                </select>                    
+                <div class="row mb-3">
+                    <span>Nombre</span>
+                    <input type="text" name="txtNombre" class="form-control" value="" placeholder="" required>
+                </div>
+                <div class="row mb-3">
+                    <span>Telefono</span>
+                    <input type="text" name="txtTel" class="form-control" placeholder="" value="" required>
+                </div>
+                <div class="row mb-3">
+                    <span>Ubicación</span>
+                    <input type="text" name="txtUbi" class="form-control" value="" placeholder="" required>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </div>
+            </form>                   
+        </div>   
+        </div>
+    </div>
+    </div>
+</div>
+
     <!-- CARD DE TICKETS  -->
 
     <div class="container-soporte">
@@ -222,9 +258,14 @@
                                                 <input hidden type="text" name="txtTicket" class="form-control" value="1" placeholder="" required>
                                                 <select class="form-select form-select-lg" name="txtAuxiliar" id="">
                                                     <option selected disabled>Selecciona un auxiliar</option>
+
+                                                    
                                                     @foreach ($auxs as $aux)
                                                     <option value="{{$aux->id}}">{{$aux->name}} {{$aux->apellido}}</option>
-                                                    @endforeach
+                                                    @endforeach  
+                                                        
+
+
                                                 </select>
                                             </div>
 
@@ -239,9 +280,10 @@
                                         </form>                   
                                     </div>   
                                     </div>
+                                    </div>
                                 </div>
-                                </div>
-</div>
+
+                            </div>
                             @endforeach                                                                                                         
                         </tbody>
                     </table>
@@ -250,7 +292,7 @@
         </div>
 
         {{-- BTN TEMPORAL PARA PROBAR COMPARTIR TICKETS --}}
-        <a href="" data-bs-toggle="modal" data-bs-target="#CompartirObs"><i class="bi bi-person-fill-gear">Comparitr</i></a>
+
             <div class="card">
                 <div class="card-header bg-transparent mb-3"><h4>Registrar Usuarios</h4></div>
                 <div class="card-body">
