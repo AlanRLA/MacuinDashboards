@@ -68,6 +68,9 @@
         <h4>{{ Auth::user()->name }}</h4>
 
         <h5 class="mt-2">Cliente</h5>
+        @if (Auth::user()->perfil == null)
+            <h5>Artur </h5>
+        @endif
 
         <h5 class="mt-2">{{ Auth::user()->email }}</h5>
 

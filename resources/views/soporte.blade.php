@@ -229,6 +229,7 @@
     <!-- CARD DE CLIENTES  -->
 
     <div class="container-soporte">
+      
         <div class="card" style="height: 19rem;">
             <div class="card-header bg-transparent mb-3"><h3>Consulta de Tickets</h3></div>
                 <div class="card-body overflow-auto" style="max-height: 230px; overflow-y: scroll;">
@@ -265,9 +266,7 @@
                 </div>
         </div>
 
-        {{-- BTN TEMPORAL PARA PROBAR COMPARTIR TICKETS --}}
-        <a href="" data-bs-toggle="modal" data-bs-target="#CompartirObs"><i class="bi bi-person-fill-gear">Comparitr</i></a>
-            <div class="card">
+         <div class="card">
                 <div class="card-header bg-transparent mb-3"><h4>Registrar Usuarios</h4></div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">

@@ -26,7 +26,7 @@ class controladorMacuin extends Controller
             }
             if(Auth::user()->perfil == 'jefe'){
                 
-            return redirect()->route('soporte');    
+                return redirect()->route('soporte_bo');    
             }
             if(Auth::user()->perfil == 'auxiliar'){
                 
