@@ -16,13 +16,17 @@ return new class extends Migration
         Schema::create('tb_soportes', function (Blueprint $table) {
             $table->engine="InnoDB";
             $table->bigIncrements('id_soporte');
-            $table->unsignedBigInteger('id_usu');
+            $table->unsignedBigInteger('id_jefe');
+            $table->unsignedBigInteger('id_aux');
             $table->unsignedBigInteger('id_ticket');
             $table->string('observaciones');
             $table->timestamps();
 
-            $table->foreign('id_usu')->references('id_usu')->onDelete('CASCADE')
-            ->on('tb_usuarios');
+            $table->foreign('id_jefe')->references('id')->onDelete('CASCADE')
+            ->on('users');
+
+            $table->foreign('id_aux')->references('id')->onDelete('CASCADE')
+            ->on('users');
 
             $table->foreign('id_ticket')->references('id_ticket')->onDelete('CASCADE')
             ->on('tb_tickets');
