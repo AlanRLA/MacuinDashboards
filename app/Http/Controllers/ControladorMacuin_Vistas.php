@@ -28,7 +28,8 @@ class ControladorMacuin_Vistas extends Controller
     {
         $deptos = DB::table('tb_departamentos')->get();
         $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
-        return view('cliente',compact('deptos','tickets'));
+        $d_ticket = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
+        return view('cliente',compact('deptos','tickets','d_ticket'));
     }
 
      //VISTA JEFE SOPORTE
@@ -57,7 +58,6 @@ class ControladorMacuin_Vistas extends Controller
             return '¡acción invalida!';
         }
 
-        $user = auth::user();
         $depa = DB::table('tb_departamentos')->get();
         $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
         return view('soporte', compact('depa','tick','usu','estatus','auxs'));
