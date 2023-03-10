@@ -258,9 +258,14 @@
                                                 <input hidden type="text" name="txtTicket" class="form-control" value="1" placeholder="" required>
                                                 <select class="form-select form-select-lg" name="txtAuxiliar" id="">
                                                     <option selected disabled>Selecciona un auxiliar</option>
+
+                                                    
                                                     @foreach ($auxs as $aux)
                                                     <option value="{{$aux->id}}">{{$aux->name}} {{$aux->apellido}}</option>
-                                                    @endforeach
+                                                    @endforeach  
+                                                        
+
+
                                                 </select>
                                             </div>
 
@@ -275,15 +280,17 @@
                                         </form>                   
                                     </div>   
                                     </div>
+                                    </div>
                                 </div>
-                                </div>
-</div>
+
+                            </div>
                             @endforeach                                                                                                         
                         </tbody>
                     </table>
                     <a href="/soporte_bo"><button class="btn btn-primary">Ver todos</button></a>
                 </div>
         </div>
+
 
         {{-- BTN TEMPORAL PARA PROBAR COMPARTIR TICKETS --}}            <div class="card">
                 <div class="card-header bg-transparent mb-3"><h4>Registrar Usuarios</h4></div>
