@@ -18,14 +18,20 @@ class ControladorPDF extends Controller
 
     /*          Funciones de PDF            */
     
+    /* TODOS LOS TICKETS */
     public function pdf(){
         
         //Consultas para el PDF
-        $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
+        $tickets = DB::table('tb_tickets')
+        ->select('users.name', 'users.apellido', 'tb_tickets.clasificacion', 
+        'tb_tickets.detalle', 'tb_tickets.estatus', 'tb_tickets.created_at',
+        'tb_tickets.updated_at')
+        ->join('users','users.id','=','tb_tickets.id_usu')
+        ->get();;
 
-        
+        $usu = Auth::user();
         //Generar PDF
-        $pdf = PDF::loadView('pdf.pdf_reporte_tickets',compact('tickets'));
+        $pdf = PDF::loadView('pdf.pdf_reporte_tickets',compact('tickets','usu'));
         // return $pdf->download();
         return $pdf->stream();
 
