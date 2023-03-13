@@ -26,7 +26,7 @@ class controladorMacuin extends Controller
             }
             if(Auth::user()->perfil == 'jefe'){
                 
-            return redirect()->route('soporte');    
+                return redirect()->route('soporte_bo');    
             }
             if(Auth::user()->perfil == 'auxiliar'){
                 
@@ -162,6 +162,7 @@ class controladorMacuin extends Controller
 
     }
 
+
         //FUNCION ASIGNAR TICKET a AUXILIAR
     public function asignarTicket(Request $r){
         DB::table('tb_soportes')->insert([
@@ -250,5 +251,6 @@ class controladorMacuin extends Controller
     }
 }
 
+?>
 
 
