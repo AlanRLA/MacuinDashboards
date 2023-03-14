@@ -466,10 +466,10 @@
                     </div>
                     <div class="card-body">
                         <img src="img/c.png" class="card-img-top" alt="..." style="pointer-events:none;" >
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <p class="card-text"><small class="text-muted">Last update 3 mins ago</small></p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary form-control" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+                        <button class="btn btn-primary form-control" data-bs-target="#m_fechas" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
                     </div>
                 </div>
               </div>
@@ -527,6 +527,37 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{-- Modal Reporte Fechas --}}
+  <div class="modal fade" id="m_fechas" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalToggleLabel2">Fechas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{{route('reporte_date')}}" method="post">
+                @csrf
+                <div>
+                    <select name="fechas" class="form-select"  id="fechas" aria-label="Default select example">
+                        <option value="" selected disabled>Seleccione la fecha a reportar...</option>
+                        @foreach ($dates as $date)
+                            <option value="{{$date->Date}}">{{$date->Date}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Regresar</button>
         </div>
       </div>
     </div>

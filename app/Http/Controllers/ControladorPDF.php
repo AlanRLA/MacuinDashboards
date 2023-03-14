@@ -46,14 +46,35 @@ class ControladorPDF extends Controller
         'tb_tickets.updated_at')
         ->join('users','users.id','=','tb_tickets.id_usu')
         ->where('tb_tickets.clasificacion','=',$cls)
-        ->get();;
+        ->get();
+
+        $count = DB::table('tb_tickets')->where('tb_tickets.clasificacion','=',$cls)->count();
 
         $usu = Auth::user();
         //Generar PDF
-        $pdf = PDF::loadView('pdf.pdf_reporte_tickets',compact('tickets','usu'));
+        $pdf = PDF::loadView('pdf.pdf_reporte_tickets',compact('tickets','usu','count'));
         // return $pdf->download();
-        return $pdf->stream();
+        return $pdf->stream();        
+     }
 
+     public function pdf_fechas(Request $r){
+      $fechas= $r->fechas;
+      //Consulta para el pdf
+      $tickets = DB::table('tb_tickets')
+      ->select('users.name', 'users.apellido', 'tb_tickets.clasificacion', 
+      'tb_tickets.detalle', 'tb_tickets.estatus', 'tb_tickets.created_at',
+      'tb_tickets.updated_at')
+      ->join('users','users.id','=','tb_tickets.id_usu')
+      ->whereDate('tb_tickets.created_at', $fechas)
+      ->get();
+
+      $count = DB::table('tb_tickets')->whereDate('tb_tickets.created_at', $fechas)->count();
+
+      $usu = Auth::user();
+      //Generar PDF
+      $pdf = PDF::loadView('pdf.pdf_reporte_tickets',compact('tickets','usu','count'));
+      // return $pdf->download();
+      return $pdf->stream(); 
      }
 }
 ?>

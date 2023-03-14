@@ -56,6 +56,11 @@ class ControladorMacuin_Vistas extends Controller
         ->groupBy('estatus')
         ->get();
 
+        $dates = DB::table('tb_tickets')
+            ->selectRaw('DATE(created_at) as Date')
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->get();
+
         
         if(Auth::user()->perfil == null||Auth::user()->perfil == 'auxiliar'){
             return redirect()->route('cliente_rs')->with('no se puede','cancel');
@@ -65,7 +70,7 @@ class ControladorMacuin_Vistas extends Controller
 
         $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
         
-        return view('soporte', compact('depa','tick','usu','estatus','auxs'));
+        return view('soporte', compact('depa','tick','usu','estatus','auxs','dates'));
      }
 
 }

@@ -208,7 +208,13 @@ class controladorMacuin extends Controller
 
         $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
 
-        return view('soporte',compact('depa','tick','usu','estatus', 'auxs'));
+        $dates = DB::table('tb_tickets')
+            ->selectRaw('DATE(created_at) as Date')
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->get();
+
+            return $dates;
+        return view('soporte',compact('depa','tick','usu','estatus', 'auxs', 'dates'));
     }
     
     public function create()
