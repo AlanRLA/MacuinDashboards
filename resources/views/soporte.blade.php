@@ -10,7 +10,8 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <title>Macuin Dashboards</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-        <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/626/626610.png">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-c5A5/D5ue/0Gsz7VpC5jBZ7VgNf9zpH2IeP6oY5Y13r5y5I1H7dGjKgBb7X9exDtf+FfjFucdBzR20R7Gp6yjKQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/626/626610.png">       
         <link rel="stylesheet" href="css/estilosForms.css">
         <link rel="stylesheet" href="css/estilos.css">
 
@@ -67,6 +68,7 @@
         <br>
         <a href="" data-bs-toggle="modal" data-bs-target="#modalColab"><i class="bi bi-person-fill-gear"> Editar Perfil</i></a>
         <a href="" data-bs-toggle="modal" data-bs-target="#RegistrarDpto"><i class="bi bi-person-fill-gear"> Registrar Departamento</i></a>
+        <a href="" data-bs-toggle="modal" data-bs-target="#m_menu"><i class="bi bi-file-earmark-pdf-fill"> Generar reporte</i></a>
         
 
         {{-- <form action="{{route('logout')}}" method="POST">
@@ -191,6 +193,7 @@
     <!-- CARD DE TICKETS  -->
 
     <div class="container-soporte">
+      
         <div class="card" style="height: 19rem;">
             <div class="card-header bg-transparent mb-1"><h3>Consulta de Tickets</h3></div>
                 <div class="card-body overflow-auto" style="max-height: 230px; overflow-y: scroll;">
@@ -250,7 +253,7 @@
                                     </div>
                                     <div class="modal-body">
                                     <div class="container-fluid">
-                                        <form action="{{route('compartir')}}" method="POST">  
+                                        <form action="{{route('compartir',$tick->id_ticket)}}" method="POST">  
                                         @csrf                  
                                             </select>                 
                                             <div class="row mb-3">
@@ -292,7 +295,7 @@
         </div>
 
 
-        {{-- BTN TEMPORAL PARA PROBAR COMPARTIR TICKETS --}}            <div class="card">
+            <div class="card">
                 <div class="card-header bg-transparent mb-3"><h4>Registrar Usuarios</h4></div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -419,6 +422,7 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 @foreach ()
     <!-- Modal Eliminar Uusuario -->
     <div class="modal fade" id="Detalle{{$item->id_dpto}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
@@ -447,11 +451,123 @@
 
 
 
+=======
+{{-- Modal Menu Reportes --}}
+<div class="modal fade" id="m_menu" aria-hidden="true" aria-labelledby="m_menu" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="m_menu">Menú de elección de reporte</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            {{-- CARDS --}}
+            <div class="card-group">
+                {{-- CLASIFICACIÓN --}}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Clasificación</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="img/h.png" class="card-img-top" alt="..." style="pointer-events:none;" >
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary form-control" data-bs-target="#m_clasificacion" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
+                    </div>
+                </div>
+                {{-- ESTATUS --}}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Estatus</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="img/s.png" class="card-img-top" alt="..." style="pointer-events:none;" >
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary form-control" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+                    </div>
+                </div>
+                {{-- fECHA --}}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Fecha</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="img/c.png" class="card-img-top" alt="..." style="pointer-events:none;" >
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary form-control" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+                    </div>
+                </div>
+              </div>
+            </div>
+            {{-- FIN CARDS --}}
+        <div class="modal-footer text-center">
+            <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Reporte General</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{-- segundos modals --}}
+  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Hide this modal and show the first with the button below.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{-- Modal reporte clasificación --}}
+  <div class="modal fade" id="m_clasificacion" aria-hidden="true" aria-labelledby="m_clasificacion" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="m_clasificacion">Clasificación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{{route('reporte_cls')}}" method="post">
+                @csrf
+                <div>
+                    <select name="txtClasificacion" class="form-select"  id="txtClasificacion" aria-label="Default select example">
+                        <option selected disabled>Seleccione el problema que tiene...</option>
+                        <option value="Falla de office">Falla de office</option>
+                        <option value="Fallas en la red">Fallas en la red</option>
+                        <option value="Errores de software">Errores de software</option>
+                        <option value="Errores de hardware">Errores de hardware</option>
+                        <option value="Mantenientos Preventivos">Mantenientos Preventivos</option>
+                    </select>
+                </div>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+        </div>
+      </div>
+    </div>
+  </div>
+>>>>>>> main
 <!--Javacript-->
 
     @yield('codigo')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-3M4QbEx9tI8KFtZrH3q3J2LgBV+JG8WxxKpFsfR1JnXpsof8+fV+ReL+zJezGbc7MvTUL+ak2cJ1bGYaYV7uXw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
