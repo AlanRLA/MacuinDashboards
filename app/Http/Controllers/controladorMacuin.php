@@ -166,13 +166,18 @@ class controladorMacuin extends Controller
     
 
         //FUNCION ASIGNAR TICKET a AUXILIAR
-    public function asignarTicket(Request $r){
+    public function asignarTicket(Request $r,$id){
         DB::table('tb_soportes')->insert([
             "id_jefe"=>Auth::user()->id,
             "id_aux"=>$r->txtAuxiliar,
             "id_ticket"=>$r->txtTicket,
             "observaciones"=>$r->txtObservacion,
             "created_at"=>Carbon::now(),
+            "updated_at"=>Carbon::now()
+        ]);
+
+        DB::table('tb_tickets')->where('id_ticket',$id)->update([
+            "estatus"=>"En proceso",
             "updated_at"=>Carbon::now()
         ]);
         return redirect()->route('soporte_bo')->with('share','asignado');

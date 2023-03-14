@@ -239,16 +239,23 @@
                     <div class="card ">
                         <div class="card-header bg-transparent mb-3"><h3>Consulta de Tickets</h3></div>
                         @foreach($tickets as $tick)
-                        <div class="cardbody">                            
+                        <div class="cardbody">                
+                            @if ($tick->estatus == "Solicitado")            
+                                <div class="container">                    
+                                    <div class="card mb-2">
+                                        <div class="contenedor-flexbox" style="margin-left: 20px">
+                                            <label class="form-label mb-2 mt-2">{{$tick->clasificacion}}: {{$tick->detalle}} . . .</label>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Cancel{{$tick->id_ticket}}">Cancelar Ticket</button>
+                                        </div>                                                                                     
+                                    </div>                    
+                                </div>
+                            @else
                             <div class="container">                    
                                 <div class="card mb-2">
-                                    <div class="contenedor-flexbox" style="margin-left: 20px">
-                                        <label class="form-label mb-2 mt-2">{{$tick->clasificacion}}: {{$tick->detalle}} . . .</label>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Cancel{{$tick->id_ticket}}">Cancelar Ticket</button>
-                                    </div>                                                                                     
-                                </div>                    
+                                    <label class="form-label mb-2 mt-2">No tienes tickets pendientes </label>
+                                </div>
                             </div>
-
+                            @endif                            
                             <!-- Modal Confirmar Cancelar ticket-->
                             <div class="modal fade" id="Cancel{{$tick->id_ticket}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="Cancel" aria-hidden="true">
                                 <div class="modal-dialog modal-Center">
