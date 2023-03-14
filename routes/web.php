@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function(){
 // RUTAS PDFS
 Route::get('pdf', [ControladorPDF::class, 'pdf'])->name('d_pdf');
 Route::post('pdf_cls', [ControladorPDF::class, 'pdf_clasificacion'])->name('reporte_cls');
+Route::post('pdf_date',[controladorPDF::class, 'pdf_fechas'])->name('reporte_date');
 
 ?>
 
