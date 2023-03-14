@@ -24,13 +24,13 @@ class controladorMacuin extends Controller
                 
                return redirect()->route('cliente_rs');    
             }
-            if(Auth::user()->perfil == 'jefe'){
+            if(Auth::user()->perfil == 'Jefe de Soporte'){
                 
                 return redirect()->route('soporte_bo');    
             }
-            if(Auth::user()->perfil == 'auxiliar'){
+            if(Auth::user()->perfil == 'Auxiliar'){
                 
-                return 'auxiliar';
+                return view('auxiliar');  
                 // return redirect()->route('');    
             }
             
@@ -64,7 +64,7 @@ class controladorMacuin extends Controller
         User::create([
             'name' => $r->txtNameUsu,
             'email' => $r->txtemailUsu,
-            'password' => bcrypt(1234),
+            'password' => bcrypt("1234"),
             'perfil' => $r->txtPerfil,
             'id_dpto' => $r->txtDeparta,
         ]);
@@ -87,6 +87,21 @@ class controladorMacuin extends Controller
             return redirect()->route('cliente_rs')->with('save','editado');
 
     }
+
+    public function editarPerfilSoporte(Request $r, $id){
+
+        $usu = User::findOrFail($id); // Buscar el usuario en la base de datos
+
+        $usu->name = $r->txtnombre;
+        $usu->apellido = $r->txtapellido;
+        $usu->email = $r->txtemail;
+        $usu->updated_at = Carbon::now();
+
+        $usu->save(); //Actualizar
+        
+        return redirect()->route('soporte_bo')->with('save2','editado');
+
+}
 
     //FUNCION INSERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)

@@ -18,6 +18,16 @@
 </head>
 <body>
 
+    @if(session()->has('save2'))
+    <script type="text/javascript">          
+        Swal.fire(
+        '¡Todo correcto!',
+        'Se ha editado su perfil',
+        'success'
+        )
+    </script> 
+    @endif
+
     @if (session()->has('successUsuario')) 
         <script type="text/javascript">          
             Swal.fire({
@@ -60,7 +70,7 @@
         <h3 class="mt-3 mb-4"><strong>Macuin<br/></strong>Dashboards</h3>
         <h4>{{ Auth::user()->name }}</h4>
 
-        <h5 class="mt-2">Jefe de Soporte</h5>
+        <h5 class="mt-2"><strong>Perfil:</strong> {{ Auth::user()->perfil }}</h5>
 
         <h5 class="mt-2">{{ Auth::user()->email }}</h5>
 
@@ -314,8 +324,8 @@
                                         <label class="input-group-text" for="inputGroupSelect01">Perfil</label>
                                         <select class="form-select" name="txtPerfil" id="inputGroupSelect01">
                                           <option selected>Selecciona una opcion...</option>
-                                          <option value="jefe">Jefe de Soporte</option>
-                                          <option value="auxiliar">Auxiliar</option>
+                                          <option value="Jefe de Soporte">Jefe de Soporte</option>
+                                          <option value="Auxiliar">Auxiliar</option>
                                         </select>
                                     </div>
 
@@ -385,29 +395,29 @@
         </div>
         <div class="modal-body">
             <div class="container-fluid">
-                <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST">  
+                <form action="{{route('soporte_edit',Auth::user()->id)}}" method="POST">  
                     @csrf                  
                     @method('PUT')
                     </select>                    
                     <div class="row mb-3">
                         <span>Nombre</span>
-                        <input type="text" name="txtNombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
+                        <input type="text" name="txtnombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
                     </div>
                     <div class="row mb-3">
                         <span>Apellidos</span>
-                        <input type="text" name="txtApellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
+                        <input type="text" name="txtapellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
                     </div>
                     <div class="row mb-3">
                         <span>Correo</span>
-                        <input type="text" name="txtEmail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
+                        <input type="text" name="txtemail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
                     </div>
                     <div class="row mb-3">
                         <span>Perfil</span>
-                        <input type="text" name="txtPerfil" class="form-control" placeholder="Pendiente" value="" disabled>
+                        <input type="text" name="txtperfil" class="form-control" value="{{ Auth::user()->perfil }}" disabled>
                     </div>
                     <div class="row mb-3">
                         <span>Contraseña</span>
-                        <input type="password" name="txtPass" class="form-control" placeholder="Solicitar cambio" disabled>
+                        <input type="password" name="txtppass" class="form-control" placeholder="pendiente">
                     </div>
                     
                     <div class="modal-footer">
