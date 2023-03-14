@@ -27,7 +27,7 @@ Route::post('usuarioNew',[controladorMacuin::class, 'registrarUsuario']);
 Route::get('search',[controladorMacuin::class, 'search'])->name('search');
 Route::post('departamentoNew',[controladorMacuin::class, 'insertDpto'])->name('regisDpto');
 Route::put('dpto_edit/{id}',[controladorMacuin::class, 'editarDpto'])->name('editDpto');
-Route::post('asignarTicket',[controladorMacuin::class, 'asignarTicket'])->name('compartir');
+Route::post('asignarTicket/{id}',[controladorMacuin::class, 'asignarTicket'])->name('compartir');
 
 
 

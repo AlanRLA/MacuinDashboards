@@ -251,7 +251,7 @@
                                     </div>
                                     <div class="modal-body">
                                     <div class="container-fluid">
-                                        <form action="{{route('compartir')}}" method="POST">  
+                                        <form action="{{route('compartir',$tick->id_ticket)}}" method="POST">  
                                         @csrf                  
                                             </select>                 
                                             <div class="row mb-3">
