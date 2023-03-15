@@ -26,7 +26,7 @@ class regisJeyAu extends FormRequest
         return [
             'txtNameUsu' =>'required|string',
             'txtemailUsu' =>'required|email|unique:users,email',
-       
+            
         ];
     }
 }
