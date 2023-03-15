@@ -531,7 +531,9 @@
                     </select>
                 </div>
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+
+                        <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                    
                 </div>
             </form>
         </div>
