@@ -15,7 +15,7 @@
         <div>
             <label><strong>Generado por: {{$usu->name}} {{$usu->apellido}}</strong></label>
             <br>
-            <label><strong>Tickets: </strong></label>  
+            <label><strong>Tickets: {{$count}} </strong></label>  
             <p>_______________________________________________</p>
         </div>
         <div>
