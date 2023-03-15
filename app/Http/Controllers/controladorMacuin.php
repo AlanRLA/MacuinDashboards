@@ -226,7 +226,7 @@ class controladorMacuin extends Controller
             ->groupBy(DB::raw('DATE(created_at)'))
             ->get();
 
-            return $dates;
+         
         return view('soporte',compact('depa','tick','usu','estatus', 'auxs', 'dates'));
     }
     
