@@ -31,7 +31,12 @@ class controladorMacuin extends Controller
             }
             if(Auth::user()->perfil == 'Auxiliar'){
                 
+
+                //return view('auxiliar');
+                return redirect()->route('');    
+
                 return redirect()->route('auxiliar_rs');  
+
             }
             
         }
@@ -238,7 +243,7 @@ class controladorMacuin extends Controller
             ->groupBy(DB::raw('DATE(created_at)'))
             ->get();
 
-            return $dates;
+         
         return view('soporte',compact('depa','tick','usu','estatus', 'auxs', 'dates'));
     }
     

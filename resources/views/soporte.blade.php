@@ -29,6 +29,16 @@
     </script> 
     @endif
 
+    @if(session()->has('share'))
+    <script type="text/javascript">          
+        Swal.fire(
+        '¡Todo correcto!',
+        'Se asigno correctamente',
+        'success'
+        )
+    </script> 
+    @endif
+
     @if (session()->has('successUsuario')) 
         <script type="text/javascript">          
             Swal.fire({
@@ -64,6 +74,8 @@
             })
         </script> 
     @endif
+
+
 
 <!-- LOGIN  -->
 
@@ -268,7 +280,7 @@
                                             </select>                 
                                             <div class="row mb-3">
                                                 <span>Buscar Auxiliar</span>
-                                                <input hidden type="text" name="txtTicket" class="form-control" value="1" placeholder="" required>
+                                                <input hidden type="text" name="txtTicket" class="form-control" value="{{$tick->id_ticket}}" placeholder="" required>
                                                 <select class="form-select form-select-lg" name="txtAuxiliar" id="">
                                                     <option selected disabled>Selecciona un auxiliar</option>
 
@@ -453,7 +465,7 @@
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary form-control" data-bs-target="#m_clasificacion" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
+                        <button class="btn btn-primary form-control" data-bs-target="#m_clasificacion" data-bs-toggle="modal" data-bs-dismiss="modal">Clasificacion</button>
                     </div>
                 </div>
                 {{-- ESTATUS --}}
@@ -466,7 +478,7 @@
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary form-control" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+                        <button class="btn btn-primary form-control" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Estatus</button>
                     </div>
                 </div>
                 {{-- fECHA --}}
@@ -486,7 +498,9 @@
             </div>
             {{-- FIN CARDS --}}
         <div class="modal-footer text-center">
-            <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Reporte General</button>
+            <a href="{{route('d_pdf')}}" target="_blank">
+                <button class="btn btn-primary">Reporte General</button>
+            </a>
         </div>
       </div>
     </div>
@@ -518,7 +532,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="{{route('reporte_cls')}}" method="post">
+            <form action="{{route('reporte_cls')}}"  method="post">
                 @csrf
                 <div>
                     <select name="txtClasificacion" class="form-select"  id="txtClasificacion" aria-label="Default select example">
@@ -531,7 +545,8 @@
                     </select>
                 </div>
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                        <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                
                 </div>
             </form>
         </div>
@@ -572,6 +587,42 @@
       </div>
     </div>
   </div>
+
+
+  {{-- Modal Reporte Estatus --}}
+  <div class="modal fade" id="m_estatus" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalToggleLabel2">Fechas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{{route('reporte_estatus')}}" method="post">
+                @csrf
+                <div>
+                    <select name="estatuss" class="form-select"  id="fechas" aria-label="Default select example">
+                        <option value="" selected disabled>Seleccione el estatus a reportar...</option>
+                        @foreach ($estatus as $est)
+                            <option value="{{$est->estatus}}">{{$est->estatus}}</option>
+                        @endforeach
+                    </select>
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Regresar</button>
+            </div>
+        </div>
+     </div>
+    </div>
+
+
+
+
 <!--Javacript-->
 
     @yield('codigo')
