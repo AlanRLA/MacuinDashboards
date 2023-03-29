@@ -73,5 +73,20 @@ class ControladorMacuin_Vistas extends Controller
         return view('soporte', compact('depa','tick','usu','estatus','auxs','dates'));
      }
 
+     public function indexAuxiliar(){
+
+        $estatus = DB::table('tb_tickets')
+        ->select('estatus')
+        ->groupBy('estatus')
+        ->get();
+
+        $dates = DB::table('tb_tickets')
+            ->selectRaw('DATE(created_at) as Date')
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->get();
+        
+        return view('auxiliar',compact('estatus','dates'));
+     }
+
 }
 ?>

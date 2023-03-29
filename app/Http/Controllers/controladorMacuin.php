@@ -30,8 +30,7 @@ class controladorMacuin extends Controller
             }
             if(Auth::user()->perfil == 'Auxiliar'){
                 
-                return view('auxiliar');  
-                // return redirect()->route('');    
+                return redirect()->route('auxiliar_rs');  
             }
             
         }
