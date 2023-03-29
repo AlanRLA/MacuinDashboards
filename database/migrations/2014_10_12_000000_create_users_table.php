@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('perfil')->nullable();
             $table->string('password');
             $table->unsignedBigInteger('id_dpto')->nullable();
+            $table->string('img_perfil')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
