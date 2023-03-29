@@ -128,4 +128,12 @@ body{
 
 .consulta{
     margin-right: 20%;
+    
+}
+.perfil img{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    left: 28px;
+    margin-bottom: 5px;
 }
