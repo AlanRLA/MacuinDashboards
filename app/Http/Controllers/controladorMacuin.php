@@ -8,6 +8,7 @@ use App\Http\Requests\RegisUsu;
 use App\Http\Requests\Login;
 use App\Http\Requests\regisJeyAu;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -30,8 +31,12 @@ class controladorMacuin extends Controller
             }
             if(Auth::user()->perfil == 'Auxiliar'){
                 
+
                 //return view('auxiliar');
                 return redirect()->route('');    
+
+                return redirect()->route('auxiliar_rs');  
+
             }
             
         }
@@ -72,6 +77,7 @@ class controladorMacuin extends Controller
     return redirect()->route('soporte_bo')->with('successUsuario', 'Registrado');
     }
 
+ 
     //FUNCION EDITAR PERFIL
     public function editarPerfil(Request $r, $id){
 
@@ -79,6 +85,16 @@ class controladorMacuin extends Controller
     
             $usu->name = $r->txtNombre;
             $usu->apellido = $r->txtApellido;
+
+            $image = $r->file('imgPerfil');
+
+
+            if ($image) {
+                $filename = uniqid('profile_') . '.' . $image->getClientOriginalExtension();
+                $path = $image->storeAs('profiles', $filename, 'public');
+                $usu->img_perfil = $path;
+            }
+
             $usu->email = $r->txtEmail;
             $usu->updated_at = Carbon::now();
     
@@ -87,6 +103,7 @@ class controladorMacuin extends Controller
             return redirect()->route('cliente_rs')->with('save','editado');
 
     }
+
 
     public function editarPerfilSoporte(Request $r, $id){
 

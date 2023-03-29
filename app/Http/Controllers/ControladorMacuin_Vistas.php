@@ -7,6 +7,7 @@ use App\Http\Requests\Ticket;
 use App\Http\Requests\validadorCliente;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Return_;
@@ -26,10 +27,22 @@ class ControladorMacuin_Vistas extends Controller
     //VISTA CLIENTE Y JEFE DE SOPORTE
     public function indexCliente()
     {
+        
+        $imageData = Auth::user()->img_perfil;
+
+// Convertir los datos BLOB en una cadena base64
+$base64Image = base64_encode($imageData);
+
+// Obtener la extensión del archivo de imagen
+$extension = pathinfo(Auth::user()->img_perfil, PATHINFO_EXTENSION);
+
+// Agregar el tipo de imagen y el prefijo "data:image/extension;base64,"
+$ready= 'data:image/' . $extension . ';base64,' . $base64Image;
+
         $deptos = DB::table('tb_departamentos')->get();
         $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
         $d_ticket = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
-        return view('cliente',compact('deptos','tickets','d_ticket'));
+        return view('cliente',compact('deptos','tickets','d_ticket', 'ready'));
     }
 
      //VISTA JEFE SOPORTE
@@ -71,6 +84,21 @@ class ControladorMacuin_Vistas extends Controller
         $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
         
         return view('soporte', compact('depa','tick','usu','estatus','auxs','dates'));
+     }
+
+     public function indexAuxiliar(){
+
+        $estatus = DB::table('tb_tickets')
+        ->select('estatus')
+        ->groupBy('estatus')
+        ->get();
+
+        $dates = DB::table('tb_tickets')
+            ->selectRaw('DATE(created_at) as Date')
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->get();
+        
+        return view('auxiliar',compact('estatus','dates'));
      }
 
 }
