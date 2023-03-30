@@ -50,6 +50,7 @@ body{
     width: 260px;
     height: 100%;
     padding-top: 20px;
+    margin-right: 10px; /* Margen en el lado derecho del sidebar */
     left: 0;
     background-color: #C19FE2;
 }
@@ -60,14 +61,24 @@ body{
     color: white;
 }
 
+
+
+.sidebar img{
+    width: 50%; /* ajustar el valor al tamaño deseado */
+    max-width: 200px; /* ajustar el valor máximo al tamaño deseado */
+    display: block;
+    margin: 15px auto; /* ajustar el valor superior e inferior según sea necesario */
+}
+
 .sidebar strong{
     color: black;
 }
 
 .sidebar h4{
-    margin-left: 20px;
+    margin-top: 10px;
     font-size: 25px;
     color: black;
+    text-align: center;
 }
 
 .sidebar h5{

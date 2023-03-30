@@ -33,7 +33,7 @@ class controladorMacuin extends Controller
                 
 
                 //return view('auxiliar');
-                return redirect()->route('');    
+
 
                 return redirect()->route('auxiliar_rs');  
 
