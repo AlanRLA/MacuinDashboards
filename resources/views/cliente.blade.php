@@ -77,21 +77,18 @@
 
 <!-- LOGIN  -->
 
-    <div class="sidebar">
+    <div class="sidebar overflow-auto" style="max-height: auto; overflow-y: scroll;">
         <h3 class="mt-3 mb-4"><strong>Macuin<br/></strong>Dashboards</h3>
-        <div class="perfil">
-
-
-            @if (Auth::user()->img_perfil == null)
-            {{-- Foto default --}}
-                    <img src="img/user.jpg" alt="Foto de perfil">
-            @else
-            {{-- Foto editada --}}
+        
+                @if (Auth::user()->img_perfil == null)
+                {{-- Foto default --}}
+                    <img src="img/user.jpg" alt="Foto de perfil">    
+                @else
+                {{-- Foto editada --}}
                     <img src="{{asset('storage/'.Auth::user()->img_perfil)}}" alt="Foto de perfil">
-            @endif
+                @endif
+        
 
-        </div>
-       
         <h4>{{ Auth::user()->name }}</h4>
 
         <h5 class="mt-2">Cliente</h5>
@@ -100,8 +97,6 @@
         @endif
 
         <h5 class="mt-2">{{ Auth::user()->email }}</h5>
-
-        <br>
         <a href="" data-bs-toggle="modal" data-bs-target="#modalColab"><i class="bi bi-person-fill-gear"> Editar Perfil</i></a>
         
 
@@ -143,7 +138,7 @@
                             @endforeach                                                                           
                         </table>
                     </div>
-                
+                <br>
             </div>
         </div>
     </div>
