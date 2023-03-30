@@ -27,6 +27,16 @@ body{
     margin-top: 30px;
 }
 
+.container-auxiliar{
+    position: center;
+    width: 80%;
+    position:relative;
+    left: 285px;
+    float: none;
+    display: inline-block;
+    margin-top: 30px;
+}
+
 .contenedor-flexbox {
     display: flex; 
     justify-content: space-between; /*Con esto le indicamos que margine todos los items que se encuentra adentro hacia la derecha e izquierda*/
@@ -128,12 +138,18 @@ body{
 
 .consulta{
     margin-right: 20%;
-    
 }
+    
 .perfil img{
     position: relative;
     width: 50px;
     height: 50px;
     left: 28px;
     margin-bottom: 5px;
+
+}
+
+h6{
+    margin-left: 20px;
+
 }

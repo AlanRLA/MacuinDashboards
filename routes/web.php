@@ -36,6 +36,7 @@ Route::put('soporte_edit/{id}', [controladorMacuin::class, 'editarPerfilSoporte'
 Route::middleware('auth')->group(function(){
     Route::get('cliente_rs', [ControladorMacuin_Vistas::class, 'indexCliente'])->name('cliente_rs');
     Route::get('soporte_bo', [ControladorMacuin_Vistas::class, 'consultaDepa'])->name('soporte_bo');
+    Route::get('auxiliar_rs',[ControladorMacuin_Vistas::class, 'indexAuxiliar'])->name('auxiliar_rs');
 });
 
 // RUTAS PDFS
