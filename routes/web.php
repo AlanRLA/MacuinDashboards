@@ -30,8 +30,6 @@ Route::put('dpto_edit/{id}',[controladorMacuin::class, 'editarDpto'])->name('edi
 Route::post('asignarTicket/{id}',[controladorMacuin::class, 'asignarTicket'])->name('compartir');
 Route::put('soporte_edit/{id}', [controladorMacuin::class, 'editarPerfilSoporte'])->name('soporte_edit');
 
-
-
 //RUTAS PROTEGIDAS
 Route::middleware('auth')->group(function(){
     Route::get('cliente_rs', [ControladorMacuin_Vistas::class, 'indexCliente'])->name('cliente_rs');
