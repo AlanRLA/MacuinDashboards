@@ -79,8 +79,17 @@
 
 <!-- LOGIN  -->
 
-    <div class="sidebar">
+    <div class="sidebar overflow-auto" style="max-height: auto; overflow-y: scroll;">
         <h3 class="mt-3 mb-4"><strong>Macuin<br/></strong>Dashboards</h3>
+
+                @if (Auth::user()->img_perfil == null)
+                {{-- Foto default --}}
+                    <img src="img/user.jpg" alt="Foto de perfil">    
+                @else
+                {{-- Foto editada --}}
+                    <img src="{{asset('storage/'.Auth::user()->img_perfil)}}" alt="Foto de perfil">
+                @endif
+
         <h4>{{ Auth::user()->name }}</h4>
 
         <h5 class="mt-2"><strong>Perfil:</strong> {{ Auth::user()->perfil }}</h5>
@@ -317,87 +326,108 @@
         </div>
 
 
-            <div class="card">
-                <div class="card-header bg-transparent mb-3"><h4>Registrar Usuarios</h4></div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                                <form action="/usuarioNew" method="post">
-                                    @csrf
-                                    <div class="input-group mb-4">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">Nombre Usuario</span>
-                                        <input type="text" name="txtNameUsu" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                    </div>
+                <div class="card">
+                        <div class="card-header bg-transparent mb-3"><h4>Registrar Usuarios</h4></div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <form action="/usuarioNew" method="post">
+                                @csrf
+                                <div class="input-group mb-4">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Nombre Usuario</span>
+                                    <input type="text" name="txtNameUsu" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                </div>
 
-                                    <div class="input-group mb-4">
-                                        <span class="input-group-text" id="inputGroup-sizing-default">Correo</span>
-                                        <input type="email" name="txtemailUsu" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                                    </div>
+                                <div class="input-group mb-4">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Correo</span>
+                                    <input type="email" name="txtemailUsu" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                                </div>
 
-                                    <div class="input-group mb-4
-                                    ">
-                                        <label class="input-group-text" for="inputGroupSelect01">Perfil</label>
-                                        <select class="form-select" name="txtPerfil" id="inputGroupSelect01">
-                                          <option selected>Selecciona una opcion...</option>
-                                          <option value="Jefe de Soporte">Jefe de Soporte</option>
-                                          <option value="Auxiliar">Auxiliar</option>
-                                        </select>
-                                    </div>
+                                <div class="input-group mb-4">
+                                    <label class="input-group-text" for="inputGroupSelect01">Perfil</label>
+                                    <select class="form-select" name="txtPerfil" id="inputGroupSelect01">
+                                        <option selected>Selecciona una opcion...</option>
+                                        <option value="Jefe de Soporte">Jefe de Soporte</option>
+                                        <option value="Auxiliar">Auxiliar</option>
+                                    </select>
+                                </div>
 
-                                    <div class="input-group mb-5">
-                                        <label class="input-group-text" for="inputGroupSelect01">Departamento</label>
-                                        <select class="form-select" name="txtDeparta" id="inputGroupSelect01">
-                                          <option selected>Selecciona una opcion...</option>
-                                        @foreach ($depa as $dpto)
+                                <div class="input-group mb-5">
+                                    <label class="input-group-text" for="inputGroupSelect01">Departamento</label>
+                                    <select class="form-select" name="txtDeparta" id="inputGroupSelect01">
+                                        <option selected>Selecciona una opcion...</option>
+                                            @foreach ($depa as $dpto)
                                                 <option value="{{$dpto->id_dpto}}">{{$dpto->nombre}}</option>
-                                        @endforeach
-                                        </select>
-                                    </div>
+                                            @endforeach
+                                    </select>
+                                </div>
 
                                     <button type="submit" class="btn btn-primary">Guardar Usuario</button>
 
                                     <button class="btn btn-primary consulta" style="margin-left: 15%" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Consultar Usuarios</button>
 
                                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                                    <div class="offcanvas-header">
-                                        <h5 class="offcanvas-title" id="offcanvasRightLabel">Consultar Usuarios</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                    </div>
-                                    <div class="offcanvas-body">
-                                        
-                                        <table class="table">
-                                            <thead>
-                                              <tr>
-                                                <th scope="col">Nombre</th>
-                                                <th scope="col">Departamento</th>
-                                                <th scope="col">Opciones</th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($usu as $usu)
-                                                <tr>
-                                                    <th scope="row">{{$usu->name}}</th>
-                                                    <td>{{$usu->nombre}}</td>
-                                                    <td>
-                                                        <div class="mb-2">
-                                                            <a class="btn btn-success" href="#" role="button">Editar</a>
-                                                        </div>
-                                                        <div>
-                                                            <a class="btn btn-danger" href="#" role="button">Eliminar</a>
-                                                        </div>
-                                                    </td>
-                                                  </tr>
-                                                @endforeach                                              
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    </div>                                    
-                                </form>
-                    </blockquote>
+                                        <div class="offcanvas-header">
+                                            <h5 class="offcanvas-title" id="offcanvasRightLabel">Consultar Usuarios</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                        </div>
+                                            <div class="offcanvas-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Nombre</th>
+                                                            <th scope="col">Departamento</th>
+                                                            <th scope="col">Opciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($usu as $usu)
+                                                            <tr>
+                                                                <th scope="row">{{$usu->name}}</th>
+                                                                <td>{{$usu->nombre}}</td>
+                                                                <td>
+                                                                    <div class="mb-2">
+                                                                        <a class="btn btn-success" href="#" role="button">Editar</a>
+                                                                    </div>
+                                                                    <div>
+                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal{{$usu->id}}">
+                                                                            Eliminar
+                                                                        </button>
+                                                                    </div>
+
+                                                                        <!-- Modal Eliminar Uusuario 
+                                                                        <div class="modal fade" id="modal{{$usu->id}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+                                                                            <div class="modal-dialog modal-modal-dialog-centered">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title" id="exampleModalLabel">¿Seguro de Eliminar Usuario?</h5>
+                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                    </div>
+                                                                                    <form action="{{route('desUser',$usu->id)}}" method="POST">
+                                                                                        @csrf
+                                                                                        @method('DELETE')
+                                                                                        <div class="modal-footer">
+                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                                                            <button type="submit" class="btn btn-primary">Si, eliminalo</button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>-->
+                                                                </td>
+                                                            </tr>  
+                                                        @endforeach                                              
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                    </div>                                      
+                            </form>     
+                        </blockquote>
+                    </div>
                 </div>
-            </div>
         <br>
     </div>  
 
+    
  <!-- Modal de Colaboradores -->
  <div class="modal fade" id="modalColab">
     <div class="modal-dialog modal-modal-dialog-centered">
@@ -411,7 +441,11 @@
                 <form action="{{route('soporte_edit',Auth::user()->id)}}" method="POST">  
                     @csrf                  
                     @method('PUT')
-                    </select>                    
+                    </select>    
+                    <div class="row mb-3">
+                        <span>Foto de perfil</span> 
+                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*" required>
+                    </div>                
                     <div class="row mb-3">
                         <span>Nombre</span>
                         <input type="text" name="txtnombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
@@ -442,6 +476,7 @@
       </div>
     </div>
 </div>
+
 
 {{-- Modal Menu Reportes --}}
 <div class="modal fade" id="m_menu" aria-hidden="true" aria-labelledby="m_menu" tabindex="-1">
@@ -568,6 +603,7 @@
     </div>
   </div>
 
+
   {{-- Modal Reporte Fechas --}}
   <div class="modal fade" id="m_fechas" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -598,6 +634,41 @@
       </div>
     </div>
   </div>
+
+
+  {{-- Modal Reporte Estatus --}}
+  <div class="modal fade" id="m_estatus" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalToggleLabel2">Fechas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{{route('reporte_estatus')}}" method="post">
+                @csrf
+                <div>
+                    <select name="estatuss" class="form-select"  id="fechas" aria-label="Default select example">
+                        <option value="" selected disabled>Seleccione el estatus a reportar...</option>
+                        @foreach ($estatus as $est)
+                            <option value="{{$est->estatus}}">{{$est->estatus}}</option>
+                        @endforeach
+                    </select>
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Regresar</button>
+            </div>
+        </div>
+     </div>
+    </div>
+
+
+
 
 <!--Javacript-->
 
