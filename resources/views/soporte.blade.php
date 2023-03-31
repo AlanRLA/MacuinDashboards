@@ -489,30 +489,30 @@
         <div class="modal-body">
             {{-- CARDS --}}
             <div class="card-group">
-                {{-- CLASIFICACIÓN --}}
+                {{-- AUXILIARES --}}
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title text-center">Clasificación</h5>
+                        <h5 class="card-title text-center">Auxiliares</h5>
                     </div>
                     <div class="card-body">
-                        <img src="img/h.png" class="card-img-top" alt="..." style="pointer-events:none;" >
+                        <img src="img/auxiliar.png" class="card-img-top" alt="..." style="pointer-events:none;" >
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary form-control" data-bs-target="#m_clasificacion" data-bs-toggle="modal" data-bs-dismiss="modal">Clasificacion</button>
+                        <button class="btn btn-primary form-control" data-bs-target="#m_auxiliar" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
                     </div>
                 </div>
-                {{-- ESTATUS --}}
+                {{-- DEPARTAMENTOS --}}
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title text-center">Estatus</h5>
+                        <h5 class="card-title text-center">Departamentos</h5>
                     </div>
                     <div class="card-body">
-                        <img src="img/s.png" class="card-img-top" alt="..." style="pointer-events:none;" >
+                        <img src="img/empresa.png" class="card-img-top" alt="..." style="pointer-events:none;" >
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary form-control" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Estatus</button>
+                        <button class="btn btn-primary form-control" data-bs-target="#m_departamento" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
                     </div>
                 </div>
                 {{-- fECHA --}}
@@ -539,16 +539,30 @@
       </div>
     </div>
   </div>
-  {{-- segundos modals --}}
-  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  {{-- Modal reporte auxiliar --}}
+  <div class="modal fade" id="m_auxiliar" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+          <h5 class="modal-title" id="exampleModalToggleLabel2">Auxiliares</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Hide this modal and show the first with the button below.
+            <form action="{{route('reporte_aux')}}"  method="post">
+                @csrf
+                <div>
+                    <select name="txtAux" class="form-select"  id="txtAux" aria-label="Default select example">
+                        <option selected disabled>Seleccione el auxiliar a reportar...</option>
+                        @foreach ($auxs as $aux)
+                            <option value="{{$aux->id}}">{{$aux->name}} {{$aux->apellido}}</option>
+                        @endforeach  
+                    </select>
+                </div>
+                <div class="mt-2">
+                        <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                
+                </div>
+            </form>
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
@@ -557,25 +571,23 @@
     </div>
   </div>
 
-  {{-- Modal reporte clasificación --}}
-  <div class="modal fade" id="m_clasificacion" aria-hidden="true" aria-labelledby="m_clasificacion" tabindex="-1">
+  {{-- Modal reporte departamentos --}}
+  <div class="modal fade" id="m_departamento" aria-hidden="true" aria-labelledby="m_clasificacion" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="m_clasificacion">Clasificación</h5>
+          <h5 class="modal-title" id="m_clasificacion">Departamentos</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="{{route('reporte_cls')}}"  method="post">
+            <form action="{{route('reporte_dpto')}}"  method="post">
                 @csrf
                 <div>
-                    <select name="txtClasificacion" class="form-select"  id="txtClasificacion" aria-label="Default select example">
-                        <option selected disabled>Seleccione el problema que tiene...</option>
-                        <option value="Falla de office">Falla de office</option>
-                        <option value="Fallas en la red">Fallas en la red</option>
-                        <option value="Errores de software">Errores de software</option>
-                        <option value="Errores de hardware">Errores de hardware</option>
-                        <option value="Mantenientos Preventivos">Mantenientos Preventivos</option>
+                    <select name="txtDepartamento" class="form-select"  id="txtDepartamento" aria-label="Default select example">
+                        <option selected disabled>Seleccione el departamento a reportar...</option>
+                        @foreach ($depa as $dep)
+                            <option value="{{$dep->id_dpto}}">{{$dep->nombre}}</option>  
+                        @endforeach                  
                     </select>
                 </div>
                 <div class="mt-2">
@@ -654,7 +666,6 @@
         </div>
      </div>
     </div>
-
 
 
 

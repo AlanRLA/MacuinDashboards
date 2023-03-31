@@ -229,7 +229,7 @@
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary form-control" data-bs-target="#m_clasificacion" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
+                            <button class="btn btn-primary form-control" data-bs-target="#m_departamentos" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
                         </div>
                     </div>
                     {{-- ESTATUS --}}
@@ -242,7 +242,7 @@
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary form-control" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
+                            <button class="btn btn-primary form-control" data-bs-target="#m_estatus" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
                         </div>
                     </div>
                     {{-- fECHA --}}
@@ -268,15 +268,59 @@
         </div>
       </div>
       {{-- segundos modals --}}
-      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+      <div class="modal fade" id="m_estatus" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+              <h5 class="modal-title" id="exampleModalToggleLabel2">Estatus</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              Hide this modal and show the first with the button below.
+                <form action="{{route('reporte_estatus')}}" method="post">
+                    @csrf
+                    <div>
+                        <select name="estatus" class="form-select"  id="estatus" aria-label="Default select example">
+                            <option value="" selected disabled>Seleccione el estatus a reportar...</option>
+                            @foreach ($estatus as $est)
+                                <option value="{{$est->estatus}}">{{$est->estatus}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{-- segundos modals --}}
+      <div class="modal fade" id="m_departamentos" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalToggleLabel2">Departamentos</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('reporte_dpto_aux')}}" method="post">
+                    @csrf
+                    <div>
+                        <select name="dptos" class="form-select"  id="dptos" aria-label="Default select example">
+                            <option value="" selected disabled>Seleccione el departamento a reportar...</option>
+                            @foreach ($departs as $dpto)
+                                <option value="{{$dpto->id_dpto}}">{{$dpto->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
               <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
@@ -294,7 +338,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{route('reporte_date')}}" method="post">
+                <form action="{{route('reporte_date_aux')}}" method="post">
                     @csrf
                     <div>
                         <select name="fechas" class="form-select"  id="fechas" aria-label="Default select example">

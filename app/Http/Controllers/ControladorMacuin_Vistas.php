@@ -77,16 +77,28 @@ class ControladorMacuin_Vistas extends Controller
      public function indexAuxiliar(){
 
         $estatus = DB::table('tb_tickets')
-        ->select('estatus')
-        ->groupBy('estatus')
-        ->get();
+            ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+            ->selectRaw(DB::raw('tb_tickets.estatus'))
+            ->where('tb_soportes.id_aux','=',Auth::user()->id)
+            ->groupBy(DB::raw('tb_tickets.estatus'))
+            ->get();
 
         $dates = DB::table('tb_tickets')
-            ->selectRaw('DATE(created_at) as Date')
-            ->groupBy(DB::raw('DATE(created_at)'))
+            ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+            ->selectRaw(DB::raw('DATE(tb_tickets.created_at) as Date'))
+            ->where('tb_soportes.id_aux','=',Auth::user()->id)
+            ->groupBy(DB::raw('DATE(tb_tickets.created_at)'))
             ->get();
-        
-        return view('auxiliar',compact('estatus','dates'));
+
+        $departs = DB::table('tb_departamentos')
+            ->select('tb_departamentos.id_dpto','tb_departamentos.nombre')
+            ->join('tb_tickets','tb_departamentos.id_dpto','=','tb_tickets.id_dpto')
+            ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+            ->where('tb_soportes.id_aux','=',Auth::user()->id)
+            ->groupBy(DB::raw('tb_departamentos.nombre'),DB::raw('tb_departamentos.id_dpto'))
+            ->get();
+
+        return view('auxiliar',compact('estatus','dates','departs'));
      }
 
 }
