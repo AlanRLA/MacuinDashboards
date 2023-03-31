@@ -27,22 +27,10 @@ class ControladorMacuin_Vistas extends Controller
     //VISTA CLIENTE Y JEFE DE SOPORTE
     public function indexCliente()
     {
-        
-        $imageData = Auth::user()->img_perfil;
-
-// Convertir los datos BLOB en una cadena base64
-$base64Image = base64_encode($imageData);
-
-// Obtener la extensión del archivo de imagen
-$extension = pathinfo(Auth::user()->img_perfil, PATHINFO_EXTENSION);
-
-// Agregar el tipo de imagen y el prefijo "data:image/extension;base64,"
-$ready= 'data:image/' . $extension . ';base64,' . $base64Image;
-
         $deptos = DB::table('tb_departamentos')->get();
         $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
         $d_ticket = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
-        return view('cliente',compact('deptos','tickets','d_ticket', 'ready'));
+        return view('cliente',compact('deptos','tickets','d_ticket'));
     }
 
      //VISTA JEFE SOPORTE

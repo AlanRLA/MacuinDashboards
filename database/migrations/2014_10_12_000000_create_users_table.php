@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->unsignedBigInteger('id_dpto')->nullable();
             $table->string('img_perfil')->nullable();
+            $table->integer('estatus')->default(1);
             $table->rememberToken();
             $table->timestamps();
 
