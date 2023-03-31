@@ -74,10 +74,21 @@
 @endif
 
 
+
 <!-- LOGIN  -->
 
-    <div class="sidebar">
+    <div class="sidebar overflow-auto" style="max-height: auto; overflow-y: scroll;">
         <h3 class="mt-3 mb-4"><strong>Macuin<br/></strong>Dashboards</h3>
+        
+                @if (Auth::user()->img_perfil == null)
+                {{-- Foto default --}}
+                    <img src="img/user.jpg" alt="Foto de perfil">    
+                @else
+                {{-- Foto editada --}}
+                    <img src="{{asset('storage/'.Auth::user()->img_perfil)}}" alt="Foto de perfil">
+                @endif
+        
+
         <h4>{{ Auth::user()->name }}</h4>
 
         <h5 class="mt-2">Cliente</h5>
@@ -86,8 +97,6 @@
         @endif
 
         <h5 class="mt-2">{{ Auth::user()->email }}</h5>
-
-        <br>
         <a href="" data-bs-toggle="modal" data-bs-target="#modalColab"><i class="bi bi-person-fill-gear"> Editar Perfil</i></a>
         
 
@@ -129,7 +138,7 @@
                             @endforeach                                                                           
                         </table>
                     </div>
-                
+                <br>
             </div>
         </div>
     </div>
@@ -192,6 +201,7 @@
                                     <form action="/ticket" method="post">
                                         @csrf
                                         <div class="mb-3">
+                                            
                                             <input type="hidden" value="{{Auth::user()->name}}">
                                             <label class="form-label">Departamento</label>                                        
                                             <select name="txtDepartamento" class="form-select" aria-label="Default select example">
@@ -296,10 +306,14 @@
         </div>
         <div class="modal-body">
             <div class="container-fluid">
-                <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST">  
+                <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST" enctype="multipart/form-data">  
                     @csrf                  
                     @method('PUT')
-                    </select>                    
+                    </select>
+                    <div class="row mb-3">
+                        <span>Foto de perfil</span> 
+                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*" required>
+                    </div>                    
                     <div class="row mb-3">
                         <span>Nombre</span>
                         <input type="text" name="txtNombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
@@ -350,7 +364,7 @@
     @yield('codigo')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
 </body>
 </html>

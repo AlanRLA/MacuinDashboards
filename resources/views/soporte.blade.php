@@ -19,6 +19,26 @@
 </head>
 <body>
 
+    @if(session()->has('save2'))
+    <script type="text/javascript">          
+        Swal.fire(
+        '¡Todo correcto!',
+        'Se ha editado su perfil',
+        'success'
+        )
+    </script> 
+    @endif
+
+    @if(session()->has('share'))
+    <script type="text/javascript">          
+        Swal.fire(
+        '¡Todo correcto!',
+        'Se asigno correctamente',
+        'success'
+        )
+    </script> 
+    @endif
+
     @if (session()->has('successUsuario')) 
         <script type="text/javascript">          
             Swal.fire({
@@ -55,13 +75,15 @@
         </script> 
     @endif
 
+
+
 <!-- LOGIN  -->
 
     <div class="sidebar">
         <h3 class="mt-3 mb-4"><strong>Macuin<br/></strong>Dashboards</h3>
         <h4>{{ Auth::user()->name }}</h4>
 
-        <h5 class="mt-2">Jefe de Soporte</h5>
+        <h5 class="mt-2"><strong>Perfil:</strong> {{ Auth::user()->perfil }}</h5>
 
         <h5 class="mt-2">{{ Auth::user()->email }}</h5>
 
@@ -258,7 +280,7 @@
                                             </select>                 
                                             <div class="row mb-3">
                                                 <span>Buscar Auxiliar</span>
-                                                <input hidden type="text" name="txtTicket" class="form-control" value="1" placeholder="" required>
+                                                <input hidden type="text" name="txtTicket" class="form-control" value="{{$tick->id_ticket}}" placeholder="" required>
                                                 <select class="form-select form-select-lg" name="txtAuxiliar" id="">
                                                     <option selected disabled>Selecciona un auxiliar</option>
 
@@ -316,8 +338,8 @@
                                         <label class="input-group-text" for="inputGroupSelect01">Perfil</label>
                                         <select class="form-select" name="txtPerfil" id="inputGroupSelect01">
                                           <option selected>Selecciona una opcion...</option>
-                                          <option value="jefe">Jefe de Soporte</option>
-                                          <option value="auxiliar">Auxiliar</option>
+                                          <option value="Jefe de Soporte">Jefe de Soporte</option>
+                                          <option value="Auxiliar">Auxiliar</option>
                                         </select>
                                     </div>
 
@@ -387,29 +409,29 @@
         </div>
         <div class="modal-body">
             <div class="container-fluid">
-                <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST">  
+                <form action="{{route('soporte_edit',Auth::user()->id)}}" method="POST">  
                     @csrf                  
                     @method('PUT')
                     </select>                    
                     <div class="row mb-3">
                         <span>Nombre</span>
-                        <input type="text" name="txtNombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
+                        <input type="text" name="txtnombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
                     </div>
                     <div class="row mb-3">
                         <span>Apellidos</span>
-                        <input type="text" name="txtApellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
+                        <input type="text" name="txtapellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
                     </div>
                     <div class="row mb-3">
                         <span>Correo</span>
-                        <input type="text" name="txtEmail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
+                        <input type="text" name="txtemail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
                     </div>
                     <div class="row mb-3">
                         <span>Perfil</span>
-                        <input type="text" name="txtPerfil" class="form-control" placeholder="Pendiente" value="" disabled>
+                        <input type="text" name="txtperfil" class="form-control" value="{{ Auth::user()->perfil }}" disabled>
                     </div>
                     <div class="row mb-3">
                         <span>Contraseña</span>
-                        <input type="password" name="txtPass" class="form-control" placeholder="Solicitar cambio" disabled>
+                        <input type="password" name="txtppass" class="form-control" placeholder="pendiente">
                     </div>
                     
                     <div class="modal-footer">
@@ -422,7 +444,7 @@
     </div>
 </div>
 
-<<<<<<< HEAD
+
 @foreach ()
     <!-- Modal Eliminar Uusuario -->
     <div class="modal fade" id="Detalle{{$item->id_dpto}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
@@ -451,7 +473,7 @@
 
 
 
-=======
+
 {{-- Modal Menu Reportes --}}
 <div class="modal fade" id="m_menu" aria-hidden="true" aria-labelledby="m_menu" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -473,7 +495,7 @@
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary form-control" data-bs-target="#m_clasificacion" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
+                        <button class="btn btn-primary form-control" data-bs-target="#m_clasificacion" data-bs-toggle="modal" data-bs-dismiss="modal">Clasificacion</button>
                     </div>
                 </div>
                 {{-- ESTATUS --}}
@@ -486,7 +508,7 @@
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary form-control" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+                        <button class="btn btn-primary form-control" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Estatus</button>
                     </div>
                 </div>
                 {{-- fECHA --}}
@@ -496,17 +518,19 @@
                     </div>
                     <div class="card-body">
                         <img src="img/c.png" class="card-img-top" alt="..." style="pointer-events:none;" >
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <p class="card-text"><small class="text-muted">Last update 3 mins ago</small></p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary form-control" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+                        <button class="btn btn-primary form-control" data-bs-target="#m_fechas" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
                     </div>
                 </div>
               </div>
             </div>
             {{-- FIN CARDS --}}
         <div class="modal-footer text-center">
-            <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Reporte General</button>
+            <a href="{{route('d_pdf')}}" target="_blank">
+                <button class="btn btn-primary">Reporte General</button>
+            </a>
         </div>
       </div>
     </div>
@@ -538,7 +562,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="{{route('reporte_cls')}}" method="post">
+            <form action="{{route('reporte_cls')}}"  method="post">
                 @csrf
                 <div>
                     <select name="txtClasificacion" class="form-select"  id="txtClasificacion" aria-label="Default select example">
@@ -551,7 +575,8 @@
                     </select>
                 </div>
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                        <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                
                 </div>
             </form>
         </div>
@@ -561,7 +586,75 @@
       </div>
     </div>
   </div>
->>>>>>> main
+
+
+  {{-- Modal Reporte Fechas --}}
+  <div class="modal fade" id="m_fechas" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalToggleLabel2">Fechas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{{route('reporte_date')}}" method="post">
+                @csrf
+                <div>
+                    <select name="fechas" class="form-select"  id="fechas" aria-label="Default select example">
+                        <option value="" selected disabled>Seleccione la fecha a reportar...</option>
+                        @foreach ($dates as $date)
+                            <option value="{{$date->Date}}">{{$date->Date}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Regresar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {{-- Modal Reporte Estatus --}}
+  <div class="modal fade" id="m_estatus" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalToggleLabel2">Fechas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{{route('reporte_estatus')}}" method="post">
+                @csrf
+                <div>
+                    <select name="estatuss" class="form-select"  id="fechas" aria-label="Default select example">
+                        <option value="" selected disabled>Seleccione el estatus a reportar...</option>
+                        @foreach ($estatus as $est)
+                            <option value="{{$est->estatus}}">{{$est->estatus}}</option>
+                        @endforeach
+                    </select>
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Regresar</button>
+            </div>
+        </div>
+     </div>
+    </div>
+
+
+
+
+
 <!--Javacript-->
 
     @yield('codigo')

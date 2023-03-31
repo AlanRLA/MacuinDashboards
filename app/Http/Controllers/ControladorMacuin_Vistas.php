@@ -7,6 +7,7 @@ use App\Http\Requests\Ticket;
 use App\Http\Requests\validadorCliente;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Return_;
@@ -56,6 +57,11 @@ class ControladorMacuin_Vistas extends Controller
         ->groupBy('estatus')
         ->get();
 
+        $dates = DB::table('tb_tickets')
+            ->selectRaw('DATE(created_at) as Date')
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->get();
+
         
         if(Auth::user()->perfil == null||Auth::user()->perfil == 'auxiliar'){
             return redirect()->route('cliente_rs')->with('no se puede','cancel');
@@ -65,7 +71,22 @@ class ControladorMacuin_Vistas extends Controller
 
         $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
         
-        return view('soporte', compact('depa','tick','usu','estatus','auxs'));
+        return view('soporte', compact('depa','tick','usu','estatus','auxs','dates'));
+     }
+
+     public function indexAuxiliar(){
+
+        $estatus = DB::table('tb_tickets')
+        ->select('estatus')
+        ->groupBy('estatus')
+        ->get();
+
+        $dates = DB::table('tb_tickets')
+            ->selectRaw('DATE(created_at) as Date')
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->get();
+        
+        return view('auxiliar',compact('estatus','dates'));
      }
 
 }

@@ -8,6 +8,7 @@ use App\Http\Requests\RegisUsu;
 use App\Http\Requests\Login;
 use App\Http\Requests\regisJeyAu;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -24,14 +25,18 @@ class controladorMacuin extends Controller
                 
                return redirect()->route('cliente_rs');    
             }
-            if(Auth::user()->perfil == 'jefe'){
+            if(Auth::user()->perfil == 'Jefe de Soporte'){
                 
                 return redirect()->route('soporte_bo');    
             }
-            if(Auth::user()->perfil == 'auxiliar'){
+            if(Auth::user()->perfil == 'Auxiliar'){
                 
-                return 'auxiliar';
-                // return redirect()->route('');    
+
+                //return view('auxiliar');
+
+
+                return redirect()->route('auxiliar_rs');  
+
             }
             
         }
@@ -64,7 +69,7 @@ class controladorMacuin extends Controller
         User::create([
             'name' => $r->txtNameUsu,
             'email' => $r->txtemailUsu,
-            'password' => bcrypt(1234),
+            'password' => bcrypt("1234"),
             'perfil' => $r->txtPerfil,
             'id_dpto' => $r->txtDeparta,
         ]);
@@ -72,6 +77,7 @@ class controladorMacuin extends Controller
     return redirect()->route('soporte_bo')->with('successUsuario', 'Registrado');
     }
 
+ 
     //FUNCION EDITAR PERFIL
     public function editarPerfil(Request $r, $id){
 
@@ -79,6 +85,16 @@ class controladorMacuin extends Controller
     
             $usu->name = $r->txtNombre;
             $usu->apellido = $r->txtApellido;
+
+            $image = $r->file('imgPerfil');
+
+
+            if ($image) {
+                $filename = uniqid('profile_') . '.' . $image->getClientOriginalExtension();
+                $path = $image->storeAs('profiles', $filename, 'public');
+                $usu->img_perfil = $path;
+            }
+
             $usu->email = $r->txtEmail;
             $usu->updated_at = Carbon::now();
     
@@ -87,6 +103,22 @@ class controladorMacuin extends Controller
             return redirect()->route('cliente_rs')->with('save','editado');
 
     }
+
+
+    public function editarPerfilSoporte(Request $r, $id){
+
+        $usu = User::findOrFail($id); // Buscar el usuario en la base de datos
+
+        $usu->name = $r->txtnombre;
+        $usu->apellido = $r->txtapellido;
+        $usu->email = $r->txtemail;
+        $usu->updated_at = Carbon::now();
+
+        $usu->save(); //Actualizar
+        
+        return redirect()->route('soporte_bo')->with('save2','editado');
+
+}
 
     //FUNCION INSERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)
@@ -163,8 +195,6 @@ class controladorMacuin extends Controller
     }
 
 
-    
-
         //FUNCION ASIGNAR TICKET a AUXILIAR
     public function asignarTicket(Request $r,$id){
         DB::table('tb_soportes')->insert([
@@ -182,6 +212,40 @@ class controladorMacuin extends Controller
         ]);
         return redirect()->route('soporte_bo')->with('share','asignado');
             // return 'asignado';
+    }
+
+
+    public function search(Request $request) {
+        $estatus = $request->input('filtro');
+        $tick = DB::table('tb_tickets')
+                ->crossJoin('users')
+                ->crossJoin('tb_departamentos')
+                ->select('tb_tickets.id_ticket', 'users.name', 'tb_departamentos.nombre', 'tb_tickets.created_at', 'tb_tickets.clasificacion', 'tb_tickets.detalle', 'tb_tickets.estatus')
+                ->where('tb_tickets.id_usu','=',DB::raw('users.id'))
+                ->where('tb_tickets.id_dpto','=',DB::raw('tb_departamentos.id_dpto'))
+                ->where('tb_tickets.estatus','=',$estatus)
+                ->get();
+        $usu = DB::table('users')
+                ->crossJoin('tb_departamentos')
+                ->select('users.name', 'tb_departamentos.nombre')
+                ->where('users.id_dpto','=',DB::raw('tb_departamentos.id_dpto'))
+                ->get();
+
+        $depa = DB::table('tb_departamentos')->get();
+        $estatus = DB::table('tb_tickets')
+                ->select('estatus')
+                ->groupBy('estatus')
+                ->get();
+
+        $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
+
+        $dates = DB::table('tb_tickets')
+            ->selectRaw('DATE(created_at) as Date')
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->get();
+
+         
+        return view('soporte',compact('depa','tick','usu','estatus', 'auxs', 'dates'));
     }
 
     

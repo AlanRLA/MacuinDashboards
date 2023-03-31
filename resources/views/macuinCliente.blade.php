@@ -32,7 +32,7 @@
                         </div>
                         <div class="row mb-3">
                             <span>Perfil</span>
-                            <input type="text" name="txtPerfil" class="form-control" placeholder="Pendiente" value="" disabled>
+                            <input type="text" name="txtPerfil" class="form-control" placeholder="" value="" disabled>
                         </div>
                         <div class="row mb-3">
                             <span>Contraseña</span>

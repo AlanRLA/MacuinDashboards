@@ -2,7 +2,6 @@ body{
     background: #7F7FD5;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
 }
 
 /*estilos CLIENTE*/
@@ -27,6 +26,16 @@ body{
     margin-top: 30px;
 }
 
+.container-auxiliar{
+    position: center;
+    width: 80%;
+    position:relative;
+    left: 285px;
+    float: none;
+    display: inline-block;
+    margin-top: 30px;
+}
+
 .contenedor-flexbox {
     display: flex; 
     justify-content: space-between; /*Con esto le indicamos que margine todos los items que se encuentra adentro hacia la derecha e izquierda*/
@@ -40,8 +49,10 @@ body{
     width: 260px;
     height: 100%;
     padding-top: 20px;
+    margin-right: 10px; /* Margen en el lado derecho del sidebar */
     left: 0;
     background-color: #C19FE2;
+    z-index: 9999; /* Valor alto de z-index para asegurar que el sidebar esté siempre por encima de cualquier otro elemento en la página */
 }
 
 .sidebar h3{
@@ -50,14 +61,24 @@ body{
     color: white;
 }
 
+
+
+.sidebar img{
+    width: 50%; /* ajustar el valor al tamaño deseado */
+    max-width: 200px; /* ajustar el valor máximo al tamaño deseado */
+    display: block;
+    margin: 15px auto; /* ajustar el valor superior e inferior según sea necesario */
+}
+
 .sidebar strong{
     color: black;
 }
 
 .sidebar h4{
-    margin-left: 20px;
+    margin-top: 10px;
     font-size: 25px;
     color: black;
+    text-align: center;
 }
 
 .sidebar h5{
@@ -128,4 +149,18 @@ body{
 
 .consulta{
     margin-right: 20%;
+}
+    
+.perfil img{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    left: 28px;
+    margin-bottom: 5px;
+
+}
+
+h6{
+    margin-left: 20px;
+
 }

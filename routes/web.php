@@ -28,18 +28,20 @@ Route::get('search',[controladorMacuin::class, 'search'])->name('search');
 Route::post('departamentoNew',[controladorMacuin::class, 'insertDpto'])->name('regisDpto');
 Route::put('dpto_edit/{id}',[controladorMacuin::class, 'editarDpto'])->name('editDpto');
 Route::post('asignarTicket/{id}',[controladorMacuin::class, 'asignarTicket'])->name('compartir');
-
-
+Route::put('soporte_edit/{id}', [controladorMacuin::class, 'editarPerfilSoporte'])->name('soporte_edit');
 
 //RUTAS PROTEGIDAS
 Route::middleware('auth')->group(function(){
     Route::get('cliente_rs', [ControladorMacuin_Vistas::class, 'indexCliente'])->name('cliente_rs');
     Route::get('soporte_bo', [ControladorMacuin_Vistas::class, 'consultaDepa'])->name('soporte_bo');
+    Route::get('auxiliar_rs',[ControladorMacuin_Vistas::class, 'indexAuxiliar'])->name('auxiliar_rs');
 });
 
 // RUTAS PDFS
 Route::get('pdf', [ControladorPDF::class, 'pdf'])->name('d_pdf');
 Route::post('pdf_cls', [ControladorPDF::class, 'pdf_clasificacion'])->name('reporte_cls');
+Route::post('pdf_date',[controladorPDF::class, 'pdf_fechas'])->name('reporte_date');
+Route::post('pdf_estatus',[controladorPDF::class, 'pdf_estatus'])->name('reporte_estatus');
 
 ?>
 
