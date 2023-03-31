@@ -214,6 +214,7 @@ class controladorMacuin extends Controller
             // return 'asignado';
     }
 
+
     public function search(Request $request) {
         $estatus = $request->input('filtro');
         $tick = DB::table('tb_tickets')
@@ -246,6 +247,7 @@ class controladorMacuin extends Controller
          
         return view('soporte',compact('depa','tick','usu','estatus', 'auxs', 'dates'));
     }
+
     
     public function create()
     {

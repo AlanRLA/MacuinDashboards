@@ -444,6 +444,36 @@
     </div>
 </div>
 
+
+@foreach ()
+    <!-- Modal Eliminar Uusuario -->
+    <div class="modal fade" id="Detalle{{$item->id_dpto}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+        <div class="modal-dialog modal-modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">¿Seguro de Eliminar Usuario?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+             <label hidden>id de Usuarios {{$item->id_usu}}</label>   
+             <div class="container-fluid">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Eliminar Usuario</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Regresar</button>
+                    </div>
+                </form>                   
+            </div>   
+            </div>
+        </div>
+        </div>
+    </div>
+    @endforeach
+
+
+
+
 {{-- Modal Menu Reportes --}}
 <div class="modal fade" id="m_menu" aria-hidden="true" aria-labelledby="m_menu" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -557,6 +587,7 @@
     </div>
   </div>
 
+
   {{-- Modal Reporte Fechas --}}
   <div class="modal fade" id="m_fechas" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -619,6 +650,7 @@
         </div>
      </div>
     </div>
+
 
 
 
