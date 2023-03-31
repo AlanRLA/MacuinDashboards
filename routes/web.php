@@ -39,8 +39,12 @@ Route::middleware('auth')->group(function(){
 
 // RUTAS PDFS
 Route::get('pdf', [ControladorPDF::class, 'pdf'])->name('d_pdf');
+Route::post('pdf_aux',[controladorPDF::class, 'pdf_aux'])->name('reporte_aux');
+Route::post('pdf_dpto',[controladorPDF::class, 'pdf_departamento'])->name('reporte_dpto');
+Route::post('pdf_dpto_aux',[controladorPDF::class,'pdf_dpto_aux'])->name('reporte_dpto_aux');
 Route::post('pdf_cls', [ControladorPDF::class, 'pdf_clasificacion'])->name('reporte_cls');
 Route::post('pdf_date',[controladorPDF::class, 'pdf_fechas'])->name('reporte_date');
+Route::post('pdf_date_aux',[controladorPDF::class, 'pdf_fechas_aux'])->name('reporte_date_aux');
 Route::post('pdf_estatus',[controladorPDF::class, 'pdf_estatus'])->name('reporte_estatus');
 
 ?>
