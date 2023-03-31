@@ -48,7 +48,7 @@ class ControladorMacuin_Vistas extends Controller
 
         $usu = DB::table('users')
         ->crossJoin('tb_departamentos')
-        ->select('users.name', 'tb_departamentos.nombre')
+        ->select('users.id','users.name', 'tb_departamentos.nombre')
         ->where('users.id_dpto','=',DB::raw('tb_departamentos.id_dpto'))
         ->get();
 
