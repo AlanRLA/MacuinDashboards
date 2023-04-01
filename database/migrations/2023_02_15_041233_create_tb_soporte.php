@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_aux');
             $table->unsignedBigInteger('id_ticket');
             $table->string('observaciones');
+            $table->string('detalle_aux');
             $table->timestamps();
 
             $table->foreign('id_jefe')->references('id')->onDelete('CASCADE')

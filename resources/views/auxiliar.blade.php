@@ -114,56 +114,76 @@
     </div>
 
 
-    <!-- CARD DE TICKETS  -->
-
     <div class="container-auxiliar">
-      
         <div class="card" style="height: 38rem;">
             <div class="card-header bg-transparent mb-1"><h3>Control de Tickets</h3></div>
-                <div class="card-body overflow-auto" style="max-height: 100%; overflow-y: scroll;">
-                    <div class="container">
-                        <div class="contenedor-flexbox">
-                            <form action="" method="get" id="search-form">
-                                @csrf
-                                <select class="form-select" aria-label="Default select example" name="filtro" id="search-form">  
-                                    <option disabled selected>Estatus ...</option>                                                                   
-                                </select>                            
-                                <button type="submit" class="btn btn-primary">Buscar</button>
-                            </form>    
-                        </div>  
-                        
+            <div class="card-body overflow-auto" style="max-height: 100%; overflow-y: scroll;">
+                <div class="container">
+                    <div class="contenedor-flexbox">
+                        <form action="" method="get" id="search-form">
+                            @csrf
+                            <select class="form-select" aria-label="Default select example" name="filtro" id="search-form">  
+                                <option disabled selected>Estatus ...</option>                                                                   
+                            </select>                            
+                            <button type="submit" class="btn btn-primary">Buscar</button>
+                        </form>    
+                    </div>  
+                    
+                    @foreach ($tickets as $ticket)
                         <div class="card ">
-                            <div class="card-header bg-transparent mb-2 text-center"><h5>Departamento</h5></div>
+                            <div class="card-header bg-transparent mb-2 text-center"><h5>Departamento: {{$ticket->dpto}}</h5></div>
                             <div class="cardbody">                                                                                   
-                                <h6>Descripcion ticket:</h6>
-                                <h6>Estatus:</h6>
-                                <h6>Fecha:</h6>
-                                <h6>Opciones:</h6>                                                                       
-                            </div>                    
-                        </div>      
-                        <div class="card ">
-                            <div class="card-header bg-transparent mb-2 text-center"><h5>Departamento</h5></div>
-                            <div class="cardbody">                                                                                   
-                                <h6>Descripcion ticket:</h6>
-                                <h6>Estatus:</h6>
-                                <h6>Fecha:</h6>
-                                <h6>Opciones:</h6>                                                                                     
-                            </div>                    
-                        </div>      
-                        <div class="card ">
-                            <div class="card-header bg-transparent mb-2 text-center"><h5>Departamento</h5></div>
-                            <div class="cardbody">                                                                                   
-                                <h6>Descripcion ticket:</h6>
-                                <h6>Estatus:</h6>
-                                <h6>Fecha:</h6>
-                                <h6>Opciones:</h6>                                                                                     
-                            </div>                    
-                        </div>                 
-                    </div>
+                                <h6>Descripcion ticket: {{$ticket->clasificacion}}</h6>
+                                <h6>Estatus: {{$ticket->estatus}}</h6>
+                                <h6>Fecha: {{$ticket->fecha}}</h6>
+                                <h6>Opciones: <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Detalle{{$ticket->id_ticket}}">más detalles</button> <button class="btn btn-info">estatus</button> <button class="btn btn-warning">comentar</button> </h6>   
+                               </div>
+                                <!-- Modal Detalle Ticket -->
+<div class="modal fade" id="Detalle{{$ticket->id_ticket}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+    <div class="modal-dialog modal-modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalles de Ticket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label>{{$ticket->id_ticket}}</label>
+                <div>
+                    <span>Cliente</span><br>
+                    <input type="text" class="form-control" value="{{$ticket->nombre}}" disabled>    
                 </div>
+                <div>
+                    <span>Correo cliente</span><br>
+                    <input type="text" class="form-control" value="{{$ticket->email}}" disabled>    
+                </div>
+                <div>
+                    <span>Detalle</span><br>
+                    <input type="text" class="form-control" value="{{$ticket->detalle}}" disabled>
+                </div>
+                <div>
+                    <span>Ultima modificación</span><br>
+                    <input type="text" class="form-control" value="{{$ticket->updated_at}}" disabled>
+                </div>
+                <div>
+                    <span>Comentarios del jefe</span>
+                    <textarea cols="30" rows="3" class="form-control" disabled>{{$ticket->observaciones}}</textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
         <br>
-    </div>  
+    </div>
+
+
+
 
     <!-- Modal de Colaboradores -->
     <div class="modal fade" id="modalColab">
@@ -315,6 +335,47 @@
           </div>
         </div>
       </div>
+       {{-- <!-- Modal Detalle Ticket -->
+    @foreach ($tickets as $ticketM)
+    <div class="modal fade" id="Detalle{{$ticketM->id_ticket}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+        <div class="modal-dialog modal-modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Detalles de Ticket</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label>{{$ticketM->id_ticket}}</label>
+                <div>
+                    <span>Cliente</span><br>
+                    <input type="text" class="form-control" value="" disabled>    
+                </div>
+                <div>
+                    <span>Correo cliente</span><br>
+                    <input type="text" class="form-control" value="" disabled>    
+                </div>
+                <div>
+                    <span>Detalle</span><br>
+                    <input type="text" class="form-control" value="" disabled>
+                </div>
+                <div>
+                    <span>Ultima modificación</span><br>
+                    <input type="text" class="form-control" value="" disabled>
+                </div>
+                <div>
+                    <span>Comentarios del jefe</span>
+                    <textarea cols="30" rows="3" class="form-control" disabled>...</textarea>
+                </div>
+                <div>
+            </div>
+            
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+        </div>
+    </div>
+    @endforeach --}}
 <!--Javacript-->
 
     @yield('codigo')
