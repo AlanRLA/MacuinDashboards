@@ -258,57 +258,98 @@ class controladorMacuin extends Controller
 
     public function deleteUsuario($request, $id)
     {
-        DB::table('users')->where('id',$id)->updated_at([
-            "estatus"=> 0
+        DB::table('users')->where('id',$id)->updated([
+            "estatus"=> 0,
+            "updated_at"=>Carbon::now(),
         ]);
 
         return redirect('soporte_bo') -> with('eliminacion','Envio correcto');
     }
-    
-    public function create()
+
+    public function Comentar_aux(Request $r, $id)
     {
-        //
+        DB::table('tb_soportes')->where('id_soporte',$id)->update([
+            'detalle_aux'=>$r->Comentario,
+            'updated_at'=>Carbon::now(),
+        ]);
+        return redirect('auxiliar_rs');
     }
 
-    
-    public function store(Request $request)
+    public function search_aux(Request $r)
     {
-        //
-    }
+        $id_aux = Auth::user()->id;
+        $filtro = $r->search;
 
-   
-    public function show($id)
-    {
-        //
-    }
+        if (is_null($filtro)){
+            return redirect('auxiliar_rs');
+        }else{
+            
+            $timestamp = strtotime($filtro); //Comprueba si filtro se puede convertir a fecha 
+            
+            if ($timestamp === false) {   //hace esto si filtro NO   es una fecha 
+            $tickets = DB::table('tb_soportes')
+                ->select('tb_soportes.id_soporte', 'tb_soportes.id_aux', DB::raw("CONCAT(`users`.`name`, ' ', `users`.`apellido`) as nombre"), 'tb_tickets.detalle', 'tb_soportes.updated_at', 'users.email', 'tb_soportes.id_ticket', 'tb_departamentos.nombre as dpto', 'tb_soportes.observaciones', 'tb_soportes.detalle_aux', 'tb_tickets.clasificacion', 'tb_tickets.estatus', 'tb_tickets.created_at as fecha')
+                ->join('tb_tickets','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+                ->join('tb_departamentos','tb_tickets.id_dpto','=','tb_departamentos.id_dpto')
+                ->join('users','tb_tickets.id_usu','=','users.id')
+                ->where('tb_soportes.id_aux', '=', Auth::user()->id)
+                ->where('tb_tickets.estatus','=',$filtro)
+                ->get();
 
-   
-    public function edit($id)
-    {
-        //
-    }
+            $id_aux = Auth::user()->id;
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            $estatus = DB::table('tb_tickets')
+                ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+                ->selectRaw(DB::raw('tb_tickets.estatus'))
+                ->where('tb_soportes.id_aux','=',Auth::user()->id)
+                ->groupBy(DB::raw('tb_tickets.estatus'))
+                ->get();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            $dates = DB::table('tb_tickets')
+                ->selectRaw('DATE(created_at) as Date')
+                ->groupBy(DB::raw('DATE(created_at)'))
+                ->get();
+
+                $departs = DB::table('tb_departamentos')
+                ->select('tb_departamentos.id_dpto','tb_departamentos.nombre')
+                ->join('tb_tickets','tb_departamentos.id_dpto','=','tb_tickets.id_dpto')
+                ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+                ->where('tb_soportes.id_aux','=',Auth::user()->id)
+                ->groupBy(DB::raw('tb_departamentos.nombre'),DB::raw('tb_departamentos.id_dpto'))
+                ->get();
+        
+            return view('auxiliar',compact('estatus','dates','departs','tickets'));
+            } else{
+                $tickets = DB::table('tb_soportes')
+                ->select('tb_soportes.id_soporte', 'tb_soportes.id_aux', DB::raw("CONCAT(`users`.`name`, ' ', `users`.`apellido`) as nombre"), 'tb_tickets.detalle', 'tb_soportes.updated_at', 'users.email', 'tb_soportes.id_ticket', 'tb_departamentos.nombre as dpto', 'tb_soportes.observaciones', 'tb_soportes.detalle_aux', 'tb_tickets.clasificacion', 'tb_tickets.estatus', 'tb_tickets.created_at as fecha')
+                ->join('tb_tickets','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+                ->join('tb_departamentos','tb_tickets.id_dpto','=','tb_departamentos.id_dpto')
+                ->join('users','tb_tickets.id_usu','=','users.id')
+                ->where('tb_soportes.id_aux', '=', $id_aux)
+                ->whereDate('tb_tickets.created_at','=',$filtro)
+                ->get();
+
+                $estatus = DB::table('tb_tickets')
+                ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+                ->selectRaw(DB::raw('tb_tickets.estatus'))
+                ->where('tb_soportes.id_aux','=',Auth::user()->id)
+                ->groupBy(DB::raw('tb_tickets.estatus'))
+                ->get();
+
+            $dates = DB::table('tb_tickets')
+                ->selectRaw('DATE(created_at) as Date')
+                ->groupBy(DB::raw('DATE(created_at)'))
+                ->get();
+
+            $departs = DB::table('tb_departamentos')
+                ->select('tb_departamentos.id_dpto','tb_departamentos.nombre')
+                ->join('tb_tickets','tb_departamentos.id_dpto','=','tb_tickets.id_dpto')
+                ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+                ->where('tb_soportes.id_aux','=',Auth::user()->id)
+                ->groupBy(DB::raw('tb_departamentos.nombre'),DB::raw('tb_departamentos.id_dpto'))
+                ->get();
+            return view('auxiliar',compact('estatus','dates','departs','tickets'));
+        }}
     }
 }
 

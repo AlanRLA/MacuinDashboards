@@ -116,15 +116,14 @@
 
     <div class="container-auxiliar">
         <div class="card" style="height: 38rem;">
-            <div class="card-header bg-transparent mb-1"><h3>Control de Tickets</h3></div>
+            <div class="card-header bg-transparent mb-1"><h3>Control de Tickets <a href="/auxiliar_rs"><button class="btn btn-primary" style="margin-left: 60%">Ver todos</button></a></h3>                 
+            </div>
             <div class="card-body overflow-auto" style="max-height: 100%; overflow-y: scroll;">
                 <div class="container">
                     <div class="contenedor-flexbox">
-                        <form action="" method="get" id="search-form">
+                        <form action="{{route('search_aux')}}" method="get" id="search-form">
                             @csrf
-                            <select class="form-select" aria-label="Default select example" name="filtro" id="search-form">  
-                                <option disabled selected>Estatus ...</option>                                                                   
-                            </select>                            
+                            <input type="text" name="search">                       
                             <button type="submit" class="btn btn-primary">Buscar</button>
                         </form>    
                     </div>  
@@ -136,44 +135,94 @@
                                 <h6>Descripcion ticket: {{$ticket->clasificacion}}</h6>
                                 <h6>Estatus: {{$ticket->estatus}}</h6>
                                 <h6>Fecha: {{$ticket->fecha}}</h6>
-                                <h6>Opciones: <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Detalle{{$ticket->id_ticket}}">más detalles</button> <button class="btn btn-info">estatus</button> <button class="btn btn-warning">comentar</button> </h6>   
-                               </div>
+                                <h6>Opciones: <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Detalle{{$ticket->id_ticket}}">más detalles</button> <button class="btn btn-info">estatus</button> <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Coment">comentar</button> </h6>   
+                            </div>
                                 <!-- Modal Detalle Ticket -->
-<div class="modal fade" id="Detalle{{$ticket->id_ticket}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
-    <div class="modal-dialog modal-modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detalles de Ticket</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <label>{{$ticket->id_ticket}}</label>
-                <div>
-                    <span>Cliente</span><br>
-                    <input type="text" class="form-control" value="{{$ticket->nombre}}" disabled>    
-                </div>
-                <div>
-                    <span>Correo cliente</span><br>
-                    <input type="text" class="form-control" value="{{$ticket->email}}" disabled>    
-                </div>
-                <div>
-                    <span>Detalle</span><br>
-                    <input type="text" class="form-control" value="{{$ticket->detalle}}" disabled>
-                </div>
-                <div>
-                    <span>Ultima modificación</span><br>
-                    <input type="text" class="form-control" value="{{$ticket->updated_at}}" disabled>
-                </div>
-                <div>
-                    <span>Comentarios del jefe</span>
-                    <textarea cols="30" rows="3" class="form-control" disabled>{{$ticket->observaciones}}</textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
+                            <div class="modal fade" id="Detalle{{$ticket->id_ticket}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+                                <div class="modal-dialog modal-modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Detalles de Ticket</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <label>{{$ticket->id_ticket}}</label>
+                                            <div>
+                                                <span>Cliente</span><br>
+                                                <input type="text" class="form-control" value="{{$ticket->nombre}}" disabled>    
+                                            </div>
+                                            <div>
+                                                <span>Correo cliente</span><br>
+                                                <input type="text" class="form-control" value="{{$ticket->email}}" disabled>    
+                                            </div>
+                                            <div>
+                                                <span>Detalle</span><br>
+                                                <input type="text" class="form-control" value="{{$ticket->detalle}}" disabled>
+                                            </div>
+                                            <div>
+                                                <span>Ultima modificación</span><br>
+                                                <input type="text" class="form-control" value="{{$ticket->updated_at}}" disabled>
+                                            </div>
+                                            <div>
+                                                <span>Comentarios del jefe</span>
+                                                <textarea cols="30" rows="3" class="form-control" disabled>{{$ticket->observaciones}}</textarea>
+                                            </div>
+                                            <div>
+                                                <span>Comentarios de seguimiento</span>
+                                                <textarea cols="30" rows="3" class="form-control" disabled>{{$ticket->detalle_aux}}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Comentario Ticket -->
+                            <div class="modal fade" id="Coment" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+                                <div class="modal-dialog modal-modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <form action="{{route('comentar',$ticket->id_ticket)}}" method="POST">
+                                            @csrf                  
+                                            @method('PUT')
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Detalles de Ticket</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <span>Cliente</span><br>
+                                                    <input type="text" class="form-control" value="{{$ticket->nombre}}" disabled>    
+                                                </div>
+                                                <div>
+                                                    <span>Correo cliente</span><br>
+                                                    <input type="text" class="form-control" value="{{$ticket->email}}" disabled>    
+                                                </div>
+                                                <div>
+                                                    <span>Detalle</span><br>
+                                                    <input type="text" class="form-control" value="{{$ticket->detalle}}" disabled>
+                                                </div>
+                                                <div>
+                                                    <span>Ultima modificación</span><br>
+                                                    <input type="text" class="form-control" value="{{$ticket->updated_at}}" disabled>
+                                                </div>
+                                                <div>
+                                                    <span>Ultimo Comentario</span><br>
+                                                    <input type="text" class="form-control" value="{{$ticket->detalle_aux}}" disabled>
+                                                </div>
+                                                <div>
+                                                    <span>Agregar comentario:</span>
+                                                    <textarea cols="30" rows="3" class="form-control" name="Comentario"></textarea>
+                                                </div>
+                                                <div>
+                                                    <button type="submit" class="btn btn-primary mt-2">Mandar comentario</button>
+                                                </div>
+                                            </div>
+                                        </form>                                        
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
