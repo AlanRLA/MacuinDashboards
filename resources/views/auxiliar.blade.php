@@ -65,6 +65,18 @@
         </script> 
     @endif
 
+    @if(session()->has('cambio'))
+    <script type="text/javascript">          
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Estatus Actualizado',
+            showConfirmButton: false,
+            timer: 1100
+        })
+    </script> 
+    @endif
+
 <!-- LOGIN  -->
 
     <div class="sidebar">
@@ -135,7 +147,11 @@
                                 <h6>Descripcion ticket: {{$ticket->clasificacion}}</h6>
                                 <h6>Estatus: {{$ticket->estatus}}</h6>
                                 <h6>Fecha: {{$ticket->fecha}}</h6>
-                                <h6>Opciones: <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Detalle{{$ticket->id_ticket}}">más detalles</button> <button class="btn btn-info">estatus</button> <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Coment">comentar</button> </h6>   
+                                <h6>Opciones: 
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Detalle{{$ticket->id_ticket}}">Más detalles</button> 
+                                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Estatus">Estatus</button> 
+                                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Coment">Comentar</button> 
+                                </h6>   
                             </div>
                                 <!-- Modal Detalle Ticket -->
                             <div class="modal fade" id="Detalle{{$ticket->id_ticket}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
@@ -177,6 +193,40 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Modal cambiar estatus ticket -->
+                              <div class="modal fade" id="Estatus" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+                                <div class="modal-dialog modal-modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <form action="{{route('cam_estatus',$ticket->id_ticket)}}" method="POST">
+                                            @csrf                  
+                                            @method('PUT')
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Estatus de Ticket</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <label for="recipient-name" class="col-form-label">Cambiar Estatus:</label>
+                                                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="estatusTicket">
+                                                        <option selected>Selecciona una opcion...</option>
+                                                        <option value="Completado">Completado</option>
+                                                        <option value="En proceso">En proceso</option>
+                                                        <option value="Nunca Solucionado">Nunca Solucionado</option>
+                                                    </select>  
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-primary" >Actualizar</button>
+                                                </div>
+                                            </div>
+                                        </form>                                        
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Modal Comentario Ticket -->
                             <div class="modal fade" id="Coment" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
                                 <div class="modal-dialog modal-modal-dialog-centered">
@@ -223,6 +273,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     @endforeach
                 </div>

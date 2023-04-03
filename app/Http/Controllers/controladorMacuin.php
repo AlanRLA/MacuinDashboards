@@ -351,6 +351,15 @@ class controladorMacuin extends Controller
             return view('auxiliar',compact('estatus','dates','departs','tickets'));
         }}
     }
+
+    public function cambiarEstatus(Request $r, $id)
+    {
+        DB::table('tb_tickets')->where('id_ticket',$id)->update([
+            'estatus'=>$r->estatusTicket,
+            'updated_at'=>Carbon::now(),
+        ]);
+        return redirect('auxiliar_rs')->with('cambio','Envio correcto');
+    }
 }
 
 ?>
