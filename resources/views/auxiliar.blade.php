@@ -153,7 +153,7 @@
                                 <h6>Fecha: {{$ticket->fecha}}</h6>
                                 <h6>Opciones: 
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Detalle{{$ticket->id_ticket}}">Más detalles</button> 
-                                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Estatus">Estatus</button> 
+                                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Estatus{{$ticket->id_ticket}}">Estatus</button> 
                                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Coment">Comentar</button> 
                                 </h6>   
                             </div>
@@ -199,7 +199,7 @@
                             </div>
 
                             <!-- Modal cambiar estatus ticket -->
-                              <div class="modal fade" id="Estatus" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+                              <div class="modal fade" id="Estatus{{$ticket->id_ticket}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
                                 <div class="modal-dialog modal-modal-dialog-centered">
                                     <div class="modal-content">
                                         <form action="{{route('cam_estatus',$ticket->id_ticket)}}" method="POST">
@@ -417,6 +417,7 @@
             </div>
             <div class="modal-footer">
               <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+              
             </div>
           </div>
         </div>
@@ -443,6 +444,7 @@
                     </div>
                     <div class="mt-2">
                         <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                        
                     </div>
                 </form>
             </div>
