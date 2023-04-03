@@ -223,25 +223,23 @@
 
     <!-- CARD DE TICKETS  -->
 
-    <div class="container-soporte">
-      
-        <div class="card" style="height: 19rem;">
-            <div class="card-header bg-transparent mb-1"><h3>Consulta de Tickets</h3></div>
+    <div class="container-soporte">      
+        <div class="card" style="height: 20rem;">
+            <div class="card-header bg-transparent mb-1">
+                <h3>Consulta de Tickets</h3>
+                    <form class="d-flex" role="search" action="/search" method="get" id="search-form" style="margin-left: 60%">
+                        @csrf
+                        <select class="form-select" aria-label="Default select example" name="filtro" id="search-form">  
+                            <option disabled selected>Estatus ...</option>
+                            @foreach ($estatus as $esta)
+                            <option value="{{$esta->estatus}}">{{$esta->estatus}}</option>
+                            @endforeach                                
+                        </select>
+                        <button type="submit" class="btn btn-primary">Buscar</button>             
+                    </form>          
+            </div>
                 <div class="card-body overflow-auto" style="max-height: 230px; overflow-y: scroll;">
-                    <div class="container">
-                        <div class="contenedor-flexbox">
-                            <form action="/search" method="get" id="search-form">
-                                @csrf
-                                <select class="form-select" aria-label="Default select example" name="filtro" id="search-form">  
-                                    <option disabled selected>Estatus ...</option>
-                                    @foreach ($estatus as $esta)
-                                        <option value="{{$esta->estatus}}">{{$esta->estatus}}</option>
-                                    @endforeach                                
-                                </select>                            
-                                <button type="submit" class="btn btn-primary">Buscar</button>
-                            </form>    
-                        </div>                                            
-                    </div>
+                    <a href="/soporte_bo"><button class="btn btn-primary">Ver todos</button></a>
                     <table class="table" >
                         <thead>
                         <tr>
@@ -316,12 +314,10 @@
                                     </div>
                                     </div>
                                 </div>
-
                             </div>
                             @endforeach                                                                                                         
                         </tbody>
                     </table>
-                    <a href="/soporte_bo"><button class="btn btn-primary">Ver todos</button></a>
                 </div>
         </div>
 
@@ -389,30 +385,14 @@
                                                                         <a class="btn btn-success" href="#" role="button">Editar</a>
                                                                     </div>
                                                                     <div>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal{{$usu->id}}">
+                                                                        
+                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
                                                                             Eliminar
                                                                         </button>
+                                                                        
                                                                     </div>
 
-                                                                        <!-- Modal Eliminar Uusuario 
-                                                                        <div class="modal fade" id="modal{{$usu->id}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
-                                                                            <div class="modal-dialog modal-modal-dialog-centered">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title" id="exampleModalLabel">¿Seguro de Eliminar Usuario?</h5>
-                                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                                    </div>
-                                                                                    <form action="{{route('desUser',$usu->id)}}" method="POST">
-                                                                                        @csrf
-                                                                                        @method('DELETE')
-                                                                                        <div class="modal-footer">
-                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                                                            <button type="submit" class="btn btn-primary">Si, eliminalo</button>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>-->
+                                                                      
                                                                 </td>
                                                             </tr>  
                                                         @endforeach                                              
