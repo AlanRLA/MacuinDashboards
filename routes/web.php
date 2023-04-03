@@ -30,6 +30,9 @@ Route::put('dpto_edit/{id}',[controladorMacuin::class, 'editarDpto'])->name('edi
 Route::post('asignarTicket/{id}',[controladorMacuin::class, 'asignarTicket'])->name('compartir');
 Route::put('soporte_edit/{id}', [controladorMacuin::class, 'editarPerfilSoporte'])->name('soporte_edit');
 
+/* RUTAS DELETE SOPORTE USUARIO*/
+Route::put('delete_usuario/{id}',[controladorMacuin::class,'deleteUsuario'])->name('desUser');
+
 //RUTAS PROTEGIDAS
 Route::middleware('auth')->group(function(){
     Route::get('cliente_rs', [ControladorMacuin_Vistas::class, 'indexCliente'])->name('cliente_rs');
@@ -39,8 +42,12 @@ Route::middleware('auth')->group(function(){
 
 // RUTAS PDFS
 Route::get('pdf', [ControladorPDF::class, 'pdf'])->name('d_pdf');
+Route::post('pdf_aux',[controladorPDF::class, 'pdf_aux'])->name('reporte_aux');
+Route::post('pdf_dpto',[controladorPDF::class, 'pdf_departamento'])->name('reporte_dpto');
+Route::post('pdf_dpto_aux',[controladorPDF::class,'pdf_dpto_aux'])->name('reporte_dpto_aux');
 Route::post('pdf_cls', [ControladorPDF::class, 'pdf_clasificacion'])->name('reporte_cls');
 Route::post('pdf_date',[controladorPDF::class, 'pdf_fechas'])->name('reporte_date');
+Route::post('pdf_date_aux',[controladorPDF::class, 'pdf_fechas_aux'])->name('reporte_date_aux');
 Route::post('pdf_estatus',[controladorPDF::class, 'pdf_estatus'])->name('reporte_estatus');
 
 ?>

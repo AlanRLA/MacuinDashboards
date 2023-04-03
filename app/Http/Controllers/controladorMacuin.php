@@ -111,6 +111,14 @@ class controladorMacuin extends Controller
 
         $usu->name = $r->txtnombre;
         $usu->apellido = $r->txtapellido;
+
+        $image = $r->file('imgPerfil');
+        if ($image) {
+            $filename = uniqid('profile_') . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('profiles', $filename, 'public');
+            $usu->img_perfil = $path;
+        }
+        
         $usu->email = $r->txtemail;
         $usu->updated_at = Carbon::now();
 
@@ -214,6 +222,7 @@ class controladorMacuin extends Controller
             // return 'asignado';
     }
 
+
     public function search(Request $request) {
         $estatus = $request->input('filtro');
         $tick = DB::table('tb_tickets')
@@ -245,6 +254,15 @@ class controladorMacuin extends Controller
 
          
         return view('soporte',compact('depa','tick','usu','estatus', 'auxs', 'dates'));
+    }
+
+    public function deleteUsuario($request, $id)
+    {
+        DB::table('users')->where('id',$id)->updated_at([
+            "estatus"=> 0
+        ]);
+
+        return redirect('soporte_bo') -> with('eliminacion','Envio correcto');
     }
     
     public function create()
