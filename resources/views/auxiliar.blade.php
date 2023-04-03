@@ -115,8 +115,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($tickets as $ticket)
                                 <tr>
+                                    <th scope="col">{{$ticket->detalle}}</th>
+                                    <th scope="col">{{$ticket->estatus}}</th>
                                 </tr>
+                                @endforeach
                             </tbody>                                                                                                                                                                                 
                         </table>
                     </div>
@@ -128,7 +132,7 @@
 
     <div class="container-auxiliar">
         <div class="card" style="height: 38rem;">
-            <div class="card-header bg-transparent mb-1"><h3>Control de Tickets <a href="/auxiliar_rs"><button class="btn btn-primary" style="margin-left: 60%">Ver todos</button></a></h3>                 
+            <div class="card-header bg-transparent mb-1"><h3>Control de Tickets</h3>                 
             </div>
             <div class="card-body overflow-auto" style="max-height: 100%; overflow-y: scroll;">
                 <div class="container">
