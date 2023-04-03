@@ -76,6 +76,8 @@ class ControladorMacuin_Vistas extends Controller
 
      public function indexAuxiliar(){
 
+        $id_aux = Auth::user()->id;
+
         $estatus = DB::table('tb_tickets')
             ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
             ->selectRaw(DB::raw('tb_tickets.estatus'))
@@ -84,27 +86,16 @@ class ControladorMacuin_Vistas extends Controller
             ->get();
 
         $dates = DB::table('tb_tickets')
-
-        ->selectRaw('DATE(created_at) as Date')
-        ->groupBy(DB::raw('DATE(created_at)'))
-        ->get();
-
-        $id_aux = Auth::user()->id;
+            ->selectRaw('DATE(created_at) as Date')
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->get();
         
         $tickets = DB::table('tb_soportes')
-        ->select('tb_soportes.id_soporte', 'tb_soportes.id_aux', DB::raw("CONCAT(`users`.`name`, ' ', `users`.`apellido`) as nombre"), 'tb_tickets.detalle', 'tb_soportes.updated_at', 'users.email', 'tb_soportes.id_ticket', 'tb_departamentos.nombre as dpto', 'tb_soportes.observaciones', 'tb_soportes.detalle_aux', 'tb_tickets.clasificacion', 'tb_tickets.estatus', 'tb_tickets.created_at as fecha')
-        ->join('tb_tickets','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
-        ->join('tb_departamentos','tb_tickets.id_dpto','=','tb_departamentos.id_dpto')
-        ->join('users','tb_tickets.id_usu','=','users.id')
-        ->where('tb_soportes.id_aux', '=', $id_aux)
-        ->get();
-
-        return view('auxiliar',compact('estatus','dates', 'tickets'));
-
-            ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
-            ->selectRaw(DB::raw('DATE(tb_tickets.created_at) as Date'))
-            ->where('tb_soportes.id_aux','=',Auth::user()->id)
-            ->groupBy(DB::raw('DATE(tb_tickets.created_at)'))
+            ->select('tb_soportes.id_soporte', 'tb_soportes.id_aux', DB::raw("CONCAT(`users`.`name`, ' ', `users`.`apellido`) as nombre"), 'tb_tickets.detalle', 'tb_soportes.updated_at', 'users.email', 'tb_soportes.id_ticket', 'tb_departamentos.nombre as dpto', 'tb_soportes.observaciones', 'tb_soportes.detalle_aux', 'tb_tickets.clasificacion', 'tb_tickets.estatus', 'tb_tickets.created_at as fecha')
+            ->join('tb_tickets','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+            ->join('tb_departamentos','tb_tickets.id_dpto','=','tb_departamentos.id_dpto')
+            ->join('users','tb_tickets.id_usu','=','users.id')
+            ->where('tb_soportes.id_aux', '=', $id_aux)
             ->get();
 
         $departs = DB::table('tb_departamentos')
@@ -115,8 +106,16 @@ class ControladorMacuin_Vistas extends Controller
             ->groupBy(DB::raw('tb_departamentos.nombre'),DB::raw('tb_departamentos.id_dpto'))
             ->get();
 
-        return view('auxiliar',compact('estatus','dates','departs'));
+        return view('auxiliar',compact('estatus','dates','departs','tickets'));
 
+        
+        // return view('auxiliar',compact('estatus','dates', 'tickets'));
+
+        //     ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
+        //     ->selectRaw(DB::raw('DATE(tb_tickets.created_at) as Date'))
+        //     ->where('tb_soportes.id_aux','=',Auth::user()->id)
+        //     ->groupBy(DB::raw('DATE(tb_tickets.created_at)'))
+        //     ->get();
      }
 
 }

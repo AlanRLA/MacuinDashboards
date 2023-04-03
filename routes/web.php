@@ -33,6 +33,10 @@ Route::put('soporte_edit/{id}', [controladorMacuin::class, 'editarPerfilSoporte'
 /* RUTAS DELETE SOPORTE USUARIO*/
 Route::put('delete_usuario/{id}',[controladorMacuin::class,'deleteUsuario'])->name('desUser');
 
+//RUTAS AUXILIAR
+Route::put('comentar/{id}',[controladorMacuin::class,'Comentar_aux'])->name('comentar');
+Route::get('search_aux',[controladorMacuin::class,'search_aux'])->name('search_aux');
+
 //RUTAS PROTEGIDAS
 Route::middleware('auth')->group(function(){
     Route::get('cliente_rs', [ControladorMacuin_Vistas::class, 'indexCliente'])->name('cliente_rs');
