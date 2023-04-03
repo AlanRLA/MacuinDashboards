@@ -413,6 +413,7 @@
             </div>
             <div class="modal-footer">
               <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+              
             </div>
           </div>
         </div>
@@ -439,6 +440,7 @@
                     </div>
                     <div class="mt-2">
                         <button type="submit" class="btn btn-primary"> <i class="bi bi-download"></i> Descargar</button>
+                        
                     </div>
                 </form>
             </div>
