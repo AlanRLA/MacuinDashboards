@@ -91,7 +91,7 @@
 
 <!-- LOGIN  -->
 
-    <div class="sidebar">
+    <div class="sidebar overflow-auto" style="max-height: auto; overflow-y: scroll;">
         <h3 class="mt-3 mb-4"><strong>Macuin<br/></strong>Dashboards</h3>
         <h4>{{ Auth::user()->name }}</h4>
 
@@ -144,17 +144,18 @@
 
     <div class="container-auxiliar">
         <div class="card" style="height: 38rem;">
-            <div class="card-header bg-transparent mb-1"><h3>Control de Tickets</h3>                 
-            </div>
-            <div class="card-body overflow-auto" style="max-height: 100%; overflow-y: scroll;">
-                <div class="container">
-                    <div class="contenedor-flexbox">
-                        <form action="{{route('search_aux')}}" method="get" id="search-form">
+            <div class="card-header bg-transparent mb-1"><h3>Control de Tickets</h3>
+                  <div class="contenedor-flexbox">
+                        <form action="{{route('search_aux')}}" method="get" id="search-form" style="margin-left: 75%">
                             @csrf
                             <input type="text" name="search">                       
                             <button type="submit" class="btn btn-primary">Buscar</button>
                         </form>    
-                    </div>  
+                    </div>                 
+            </div>
+            <div class="card-body overflow-auto" style="max-height: 100%; overflow-y: scroll;">
+                <div class="container">
+                    
                     
                     @foreach ($tickets as $ticket)
                         <div class="card ">
@@ -166,11 +167,11 @@
                                 <h6>Opciones: 
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Detalle{{$ticket->id_ticket}}">Más detalles</button> 
 
-                                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Estatus">Estatus</button> 
+                             
                                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Coment{{$ticket->id_ticket}}">Comentar</button> 
 
                                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Estatus{{$ticket->id_ticket}}">Estatus</button> 
-                                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Coment">Comentar</button> 
+
 
                                 </h6>   
                             </div>
