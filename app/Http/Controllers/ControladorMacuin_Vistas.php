@@ -27,10 +27,21 @@ class ControladorMacuin_Vistas extends Controller
     //VISTA CLIENTE Y JEFE DE SOPORTE
     public function indexCliente()
     {
+
         $deptos = DB::table('tb_departamentos')->get();
         $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
+        
+        $tickets2 = DB::table('tb_tickets')
+        ->select('tb_soportes.id_soporte', 'aux.name', 'aux.apellido', 'tb_tickets.id_ticket', 'tb_tickets.id_usu', 'tb_tickets.detalle', 'tb_soportes.detalle_aux', 'tb_tickets.clasificacion', 'tb_tickets.estatus', 'tb_tickets.created_at', 'tb_soportes.id_aux', 'tb_soportes.updated_at')
+        ->leftJoin('tb_soportes','tb_tickets.id_ticket','=','tb_soportes.id_ticket')
+        ->leftJoin('users as aux','tb_soportes.id_aux','=','aux.id')
+        ->where ('tb_tickets.estatus','<>','Cancelado')
+        ->where ('tb_tickets.id_usu','=',Auth::user()->id)
+        ->get();
+
         $d_ticket = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
-        return view('cliente',compact('deptos','tickets','d_ticket'));
+
+        return view('cliente',compact('deptos','tickets','tickets2','d_ticket'));
     }
 
      //VISTA JEFE SOPORTE
