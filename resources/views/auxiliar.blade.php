@@ -77,6 +77,18 @@
     </script> 
     @endif
 
+    @if(session()->has('msj'))
+    <script type="text/javascript">          
+        Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Se ha comentado',
+            showConfirmButton: false,
+            timer: 1100
+        })
+    </script> 
+    @endif
+
 <!-- LOGIN  -->
 
     <div class="sidebar">
@@ -153,8 +165,13 @@
                                 <h6>Fecha: {{$ticket->fecha}}</h6>
                                 <h6>Opciones: 
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Detalle{{$ticket->id_ticket}}">Más detalles</button> 
+
+                                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Estatus">Estatus</button> 
+                                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Coment{{$ticket->id_ticket}}">Comentar</button> 
+
                                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Estatus{{$ticket->id_ticket}}">Estatus</button> 
                                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Coment">Comentar</button> 
+
                                 </h6>   
                             </div>
                                 <!-- Modal Detalle Ticket -->
@@ -166,7 +183,6 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <label>{{$ticket->id_ticket}}</label>
                                             <div>
                                                 <span>Cliente</span><br>
                                                 <input type="text" class="form-control" value="{{$ticket->nombre}}" disabled>    
@@ -213,7 +229,7 @@
                                                 <div>
                                                     <label for="recipient-name" class="col-form-label">Cambiar Estatus:</label>
                                                     <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="estatusTicket">
-                                                        <option selected>Selecciona una opcion...</option>
+                                                        <option selected disabled>Selecciona una opcion...</option>
                                                         <option value="Completado">Completado</option>
                                                         <option value="En proceso">En proceso</option>
                                                         <option value="Nunca Solucionado">Nunca Solucionado</option>
@@ -232,24 +248,20 @@
                             </div>
 
                             <!-- Modal Comentario Ticket -->
-                            <div class="modal fade" id="Coment" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+                            <div class="modal fade" id="Coment{{$ticket->id_ticket}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
                                 <div class="modal-dialog modal-modal-dialog-centered">
                                     <div class="modal-content">
                                         <form action="{{route('comentar',$ticket->id_ticket)}}" method="POST">
                                             @csrf                  
                                             @method('PUT')
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Detalles de Ticket</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Agregar comentario</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div>
                                                     <span>Cliente</span><br>
                                                     <input type="text" class="form-control" value="{{$ticket->nombre}}" disabled>    
-                                                </div>
-                                                <div>
-                                                    <span>Correo cliente</span><br>
-                                                    <input type="text" class="form-control" value="{{$ticket->email}}" disabled>    
                                                 </div>
                                                 <div>
                                                     <span>Detalle</span><br>
@@ -265,7 +277,7 @@
                                                 </div>
                                                 <div>
                                                     <span>Agregar comentario:</span>
-                                                    <textarea cols="30" rows="3" class="form-control" name="Comentario"></textarea>
+                                                    <textarea cols="30" rows="3" class="form-control" name="Comentario"></textarea required>
                                                 </div>
                                                 <div>
                                                     <button type="submit" class="btn btn-primary mt-2">Mandar comentario</button>

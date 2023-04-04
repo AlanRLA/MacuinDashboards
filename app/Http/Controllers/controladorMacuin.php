@@ -266,13 +266,17 @@ class controladorMacuin extends Controller
         return redirect('soporte_bo') -> with('eliminacion','Envio correcto');
     }
 
+
     public function Comentar_aux(Request $r, $id)
     {
-        DB::table('tb_soportes')->where('id_soporte',$id)->update([
+        $id = $id;
+
+        DB::table('tb_soportes')->where('id_ticket',$id)->update([
             'detalle_aux'=>$r->Comentario,
             'updated_at'=>Carbon::now(),
         ]);
-        return redirect('auxiliar_rs');
+        return redirect('auxiliar_rs')->with('cambio','Envio correcto');
+        return ($id);
     }
 
     public function search_aux(Request $r)
@@ -281,7 +285,7 @@ class controladorMacuin extends Controller
         $filtro = $r->search;
 
         if (is_null($filtro)){
-            return redirect('auxiliar_rs');
+            return redirect('auxiliar_rs')->with('msj','comentario');
         }else{
             
             $timestamp = strtotime($filtro); //Comprueba si filtro se puede convertir a fecha 

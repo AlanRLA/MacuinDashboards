@@ -112,22 +112,22 @@
         
         <div class="card" style="max-width: 18rem;">
             <div class="card mb-3" style="max-width: 18rem;">
-                <div class="card-header">Solicitudes</div>
+                <div class="card-header text-center">Solicitudes</div>
                
                     <div class="tablita overflow-auto" style="max-height: 230px; overflow-y: scroll;">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Problema</th>
-                                    <th scope="col">Estatus</th>
+                                    <th class="text-center" scope="col">Problema</th>
+                                    <th class="text-center" scope="col">Estatus</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($tickets as $item)
                                 <tr>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#Detalle{{$item->id_ticket}}">
-                                            {{$item->clasificacion}}
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#Detalle{{$item->id_ticket}}">                                            
+                                        {{$item->clasificacion}}
                                         </button>
                                     </td>
                                     <td>
@@ -143,9 +143,10 @@
         </div>
     </div>
 
-    @foreach ($tickets as $item)
+
+    @foreach ($tickets2 as $data)
     <!-- Modal Detalle Ticket -->
-    <div class="modal fade" id="Detalle{{$item->id_ticket}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+    <div class="modal fade" id="Detalle{{$data->id_ticket}}" tabindex="-1" aria-labelledby="Detalle{{$data->id_ticket}}" aria-hidden="true">
         <div class="modal-dialog modal-modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -155,26 +156,33 @@
             <div class="modal-body">
                 <div>
                     <span>Clasifiación</span><br>
-                    <input type="text" class="form-control" value="{{$item->clasificacion}}" disabled>    
+                    <input type="text" class="form-control" value="{{$data->clasificacion}}" disabled>    
                 </div>
                 <div>
                     <span>Detalle</span><br>
-                    <input type="text" class="form-control" value="{{$item->detalle}}" disabled>
+                    <input type="text" class="form-control" value="{{$data->detalle}}" disabled>
                 </div>
                 <div>
                     <span>Seguimiento por:</span>
-                    <input type="text" class="form-control" value="auxiliar" disabled>
+                    @if ($data->name == null)
+                        <input type="text" class="form-control" value="Aún no se asigna un auxiliar" disabled>  
+                    @else
+                        <input type="text" class="form-control" value="{{$data->name}} {{$data->apellido}}" disabled>  
+                    @endif
                 </div>
                 <div>
-                    <span>Comentarios del auxiliar</span>
-                    <textarea cols="30" rows="3" class="form-control" disabled>...</textarea>
+                <span>Comentarios del auxiliar</span>
+                @if ($data->detalle_aux == null)
+                    <textarea cols="30" rows="3" class="form-control" disabled>Aun no hay Comentarios</textarea>
+                @else
+                    <textarea cols="30" rows="3" class="form-control" disabled>{{$data->detalle_aux}} {{$data->updated_at}}</textarea>
+                @endif
                 </div>
                 <div>
                     <span>Fecha de solicitud</span>
-                    <input type="text" class="form-control" value="{{$item->created_at}}" disabled>
+                    <input type="text" class="form-control" value="{{$data->created_at}}" disabled>
                 </div>
             
-            {{-- id de ticket {{$item->id_ticket}}  --}}
             </div>
             <div class="modal-footer">
             </div>
@@ -245,7 +253,7 @@
                 </div>
         
                 <div class="col-md-6">
-                    <!--Agregar tabla  -->
+                    <!-- Consulta de tickets  -->
                     <div class="card ">
                         <div class="card-header bg-transparent mb-3"><h3>Consulta de Tickets</h3></div>
                         @foreach($tickets as $tick)
@@ -260,11 +268,19 @@
                                     </div>                    
                                 </div>
                             @else
-                            <div class="container">                    
-                                <div class="card mb-2">
+                                @if ($tick->estatus <> "Solicitado" || $tick->estatus <> "Cancelado")
+                                     <div class="container">                    
+                                     <div class="card mb-2">
+                                        <label class="form-label mb-2 mt-2">{{$tick->clasificacion}}: {{$tick->detalle}} <strong>Atendido</strong></label>
+                                    </div>
+                                    </div>
+                                @else
+                                    <div class="container">                    
+                                    <div class="card mb-2">
                                     <label class="form-label mb-2 mt-2">No tienes tickets pendientes </label>
+                                    </div>
                                 </div>
-                            </div>
+                                @endif
                             @endif                            
                             <!-- Modal Confirmar Cancelar ticket-->
                             <div class="modal fade" id="Cancel{{$tick->id_ticket}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="Cancel" aria-hidden="true">
@@ -327,12 +343,8 @@
                         <input type="text" name="txtEmail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
                     </div>
                     <div class="row mb-3">
-                        <span>Perfil</span>
-                        <input type="text" name="txtPerfil" class="form-control" placeholder="Pendiente" value="" disabled>
-                    </div>
-                    <div class="row mb-3">
                         <span>Contraseña</span>
-                        <input type="password" name="txtPass" class="form-control" placeholder="Solicitar cambio" disabled>
+                        <input type="password" name="txtPass" class="form-control" placeholder="Solicitar cambio/Pendiente" disabled>
                     </div>
                     
                     <div class="modal-footer">
