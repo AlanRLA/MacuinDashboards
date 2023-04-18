@@ -75,7 +75,17 @@
         </script> 
     @endif
 
-
+    @if (session()->has('borrado')) 
+    <script type="text/javascript">          
+        Swal.fire({
+        position: 'top-center',
+        icon: 'success',
+        title: 'Usuario eliminado',
+        showConfirmButton: false,
+        timer: 1500
+        })
+    </script> 
+    @endif
 
 <!-- LOGIN  -->
 
@@ -359,7 +369,7 @@
 
                                     <button type="submit" class="btn btn-primary">Guardar Usuario</button>
 
-                                    <button class="btn btn-primary consulta" style="margin-left: 15%" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Consultar Usuarios</button>
+                                    <button class="btn btn-primary consulta" style="margin-left: 15%" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" data-backdrop="false">Consultar Usuarios</button>
 
                                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                                         <div class="offcanvas-header text-center">
@@ -370,6 +380,7 @@
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
+                                                            <th scope="col">id</th>
                                                             <th scope="col">Nombre</th>
                                                             <th scope="col">Departamento</th>
                                                             <th scope="col">Opciones</th>
@@ -378,6 +389,7 @@
                                                     <tbody class="text-center">
                                                         @foreach ($usu as $usu)
                                                             <tr>
+                                                                <th scope="row">{{$usu->id}}</th>
                                                                 <th scope="row">{{$usu->name}}</th>
                                                                 <td>{{$usu->nombre}}</td>
                                                                 <td>
@@ -385,9 +397,10 @@
                                                                         <button type="button" class="btn btn-primary btn-sm">
                                                                             Editar
                                                                         </button>
-                                                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal">
+                                                                        <button type="button" class="btn btn-danger btn-sm" onclick="borrarUsuario({{$usu->id}})">
                                                                             Eliminar
                                                                         </button>
+
                                                                     </div>                                                                    
                                                                 </td>
                                                             </tr>  
@@ -403,6 +416,24 @@
         <br>
     </div>  
 
+     {{-- Modal Confirmación para eliminar --}}
+     <div class="modal fade" id="exampleModal{{$usu->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmar borrado</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            ¿Seguro que desea borrar al usuario...?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, regresar</button>
+            <button type="button" class="btn btn-primary">Sí, borrar</button>
+            </div>
+        </div>
+        </div>
+    </div>
     
  <!-- Modal de Colaboradores -->
  <div class="modal fade" id="modalColab">
@@ -639,16 +670,51 @@
      </div>
     </div>
 
+    
 
 
 
 <!--Javacript-->
 
+<script>    
+    function borrarUsuario(id) {
+        // Mostrar alert de confirmación de borrado
+        new Swal({
+            title: "¿Está seguro que desea eliminar el usuario?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar"
+
+        })
+        .then((willDelete) => {
+            if (willDelete.isConfirmed) {
+            // Hacer una llamada Ajax a la ruta eliminar-usuario con el ID del usuario
+            axios.post('/borrado_log/' + id)
+                .then(function(response) {
+                    // Si la respuesta es exitosa, recargar la página
+                    location.reload();
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+        });
+    }
+
+</script>
+
     @yield('codigo')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-3M4QbEx9tI8KFtZrH3q3J2LgBV+JG8WxxKpFsfR1JnXpsof8+fV+ReL+zJezGbc7MvTUL+ak2cJ1bGYaYV7uXw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    
 </body>
 </html>

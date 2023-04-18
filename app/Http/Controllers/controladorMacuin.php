@@ -240,12 +240,15 @@ class controladorMacuin extends Controller
         return view('soporte',compact('depa','tick','usu','estatus', 'auxs', 'dates'));
     }
 
-    public function deleteUsuario($request, $id)
+    public function deleteUsuario(Request $r, $id)
     {
-        DB::table('users')->where('id',$id)->updated([
-            "estatus"=> 0,
-            "updated_at"=>Carbon::now(),
-        ]);
+        // Obtener el usuario a borrar
+        $usu = User::findOrFail($id);
+
+        $usu->estatus = 0;
+        $usu->updated_at = Carbon::now();
+
+        $usu->save(); //Actualizar
 
         return redirect('soporte_bo') -> with('eliminacion','Envio correcto');
     }

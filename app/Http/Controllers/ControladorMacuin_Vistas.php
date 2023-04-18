@@ -47,8 +47,6 @@ class ControladorMacuin_Vistas extends Controller
      //VISTA JEFE SOPORTE
      public function consultaDepa(){
 
-        
-
         $tick = DB::table('tb_tickets')
         ->crossJoin('users')
         ->crossJoin('tb_departamentos')
@@ -60,6 +58,7 @@ class ControladorMacuin_Vistas extends Controller
         $usu = DB::table('users')
         ->crossJoin('tb_departamentos')
         ->select('users.id','users.name', 'tb_departamentos.nombre')
+        ->where('users.estatus','=',1)
         ->where('users.id_dpto','=',DB::raw('tb_departamentos.id_dpto'))
         ->get();
 
