@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    @if(session()->has('save2'))
+    @if(session()->has('save'))
     <script type="text/javascript">          
         Swal.fire(
         '¡Todo correcto!',
@@ -93,6 +93,15 @@
 
     <div class="sidebar overflow-auto" style="max-height: auto; overflow-y: scroll;">
         <h3 class="mt-3 mb-4"><strong>Macuin<br/></strong>Dashboards</h3>
+
+        @if (Auth::user()->img_perfil == null)
+        {{-- Foto default --}}
+            <img src="img/user.jpg" alt="Foto de perfil">    
+        @else
+        {{-- Foto editada --}}
+            <img src="{{asset('storage/'.Auth::user()->img_perfil)}}" alt="Foto de perfil">
+        @endif
+
         <h4>{{ Auth::user()->name }}</h4>
 
         <h5 class="mt-2"><strong>Perfil:</strong> {{ Auth::user()->perfil }}</h5>
@@ -299,10 +308,15 @@
         <br>
     </div>
 
-
-
-
     <!-- Modal de Colaboradores -->
+
+ <div class="modal fade" id="modalColab">
+    <div class="modal-dialog modal-modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Datos de usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
     <div class="modal fade" id="modalColab">
         <div class="modal-dialog modal-modal-dialog-centered">
         <div class="modal-content">
@@ -347,9 +361,44 @@
                     </form>                   
                 </div>        
             </div>
+
         </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST" enctype="multipart/form-data">  
+                    @csrf                  
+                    @method('PUT')
+                    </select>
+                    <div class="row mb-3">
+                        <span>Foto de perfil</span> 
+                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*" required>
+                    </div>                    
+                    <div class="row mb-3">
+                        <span>Nombre</span>
+                        <input type="text" name="txtNombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
+                    </div>
+                    <div class="row mb-3">
+                        <span>Apellidos</span>
+                        <input type="text" name="txtApellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
+                    </div>
+                    <div class="row mb-3">
+                        <span>Correo</span>
+                        <input type="text" name="txtEmail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
+                    </div>
+                    <div class="row mb-3">
+                        <span>Contraseña</span>
+                        <input type="password" name="txtPass" class="form-control" placeholder="Solicitar cambio/Pendiente" disabled>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Editar Datos</button>
+                    </div>
+                </form>                   
+            </div>        
         </div>
+      </div>
     </div>
+</div>
     <div class="modal fade" id="m_menu" aria-hidden="true" aria-labelledby="m_menu" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">

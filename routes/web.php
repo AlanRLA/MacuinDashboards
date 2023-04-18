@@ -19,7 +19,7 @@ Route::get('cliente', [ControladorMacuin_Vistas::class, 'indexCliente'])->name('
 Route::post('ticket', [controladorMacuin::class, 'insertTicket']);
 Route::put('cancelar/{id}', [controladorMacuin::class, 'cancelTicket'])->name('cancel');
 Route::put('cliente_edit/{id}', [controladorMacuin::class, 'editarPerfil'])->name('cliente_edit');
-
+Route::put('borrado_log/{id}', [controladorMacuin::class, 'deleteUsuario'])->name('cliente_edit');
 
 //RUTAS JEFE DE SOPORTE
 Route::get('soporte', [ControladorMacuin_Vistas::class, 'consultaDepa'])->name('soporte');
@@ -28,8 +28,10 @@ Route::get('search',[controladorMacuin::class, 'search'])->name('search');
 Route::post('departamentoNew',[controladorMacuin::class, 'insertDpto'])->name('regisDpto');
 Route::put('dpto_edit/{id}',[controladorMacuin::class, 'editarDpto'])->name('editDpto');
 Route::post('asignarTicket/{id}',[controladorMacuin::class, 'asignarTicket'])->name('compartir');
+
 Route::put('soporte_edit/{id}', [controladorMacuin::class, 'editarPerfilSoporte'])->name('soporte_edit');
 Route::put('dpto_del/{id}',[ControladorMacuin::class,'eliminaDpto'])->name('deleteDpto');
+
 
 //RUTAS AUXILIAR
 Route::put('comentar/{id}',[controladorMacuin::class,'Comentar_aux'])->name('comentar');

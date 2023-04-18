@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    @if(session()->has('save2'))
+    @if(session()->has('save'))
     <script type="text/javascript">          
         Swal.fire(
         '¡Todo correcto!',
@@ -75,6 +75,19 @@
         </script> 
     @endif
 
+
+    @if (session()->has('borrado')) 
+    <script type="text/javascript">          
+        Swal.fire({
+        position: 'top-center',
+        icon: 'success',
+        title: 'Usuario eliminado',
+        showConfirmButton: false,
+        timer: 1500
+        })
+    </script> 
+    @endif
+
     @if (session()->has('eliminado')) 
         <script type="text/javascript">          
             Swal.fire({
@@ -86,6 +99,7 @@
             })
         </script> 
     @endif
+
 
 
 <!-- LOGIN  -->
@@ -412,40 +426,39 @@
 
                                     <button type="submit" class="btn btn-primary">Guardar Usuario</button>
 
-                                    <button class="btn btn-primary consulta" style="margin-left: 15%" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Consultar Usuarios</button>
+                                    <button class="btn btn-primary consulta" style="margin-left: 15%" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" data-backdrop="false">Consultar Usuarios</button>
 
                                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                                        <div class="offcanvas-header">
-                                            <h5 class="offcanvas-title" id="offcanvasRightLabel">Consultar Usuarios</h5>
+                                        <div class="offcanvas-header text-center">
+                                            <h5 class="offcanvas-title " id="offcanvasRightLabel"><Strong>Consultar Usuarios</Strong></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                         </div>
                                             <div class="offcanvas-body">
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
+                                                            <th scope="col">id</th>
                                                             <th scope="col">Nombre</th>
                                                             <th scope="col">Departamento</th>
                                                             <th scope="col">Opciones</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody class="text-center">
                                                         @foreach ($usu as $usu)
                                                             <tr>
+                                                                <th scope="row">{{$usu->id}}</th>
                                                                 <th scope="row">{{$usu->name}}</th>
                                                                 <td>{{$usu->nombre}}</td>
                                                                 <td>
-                                                                    <div class="mb-2">
-                                                                        <a class="btn btn-success" href="#" role="button">Editar</a>
-                                                                    </div>
-                                                                    <div>
-                                                                        
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
+                                                                    <div class="d-grid gap-2 d-md-block">
+                                                                        <button type="button" class="btn btn-primary btn-sm">
+                                                                            Editar
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-danger btn-sm" onclick="borrarUsuario({{$usu->id}})">
                                                                             Eliminar
                                                                         </button>
-                                                                        
-                                                                    </div>
 
-                                                                      
+                                                                    </div>                                                                    
                                                                 </td>
                                                             </tr>  
                                                         @endforeach                                              
@@ -460,6 +473,24 @@
         <br>
     </div>  
 
+     {{-- Modal Confirmación para eliminar --}}
+     <div class="modal fade" id="exampleModal{{$usu->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmar borrado</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            ¿Seguro que desea borrar al usuario...?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, regresar</button>
+            <button type="button" class="btn btn-primary">Sí, borrar</button>
+            </div>
+        </div>
+        </div>
+    </div>
     
  <!-- Modal de Colaboradores -->
  <div class="modal fade" id="modalColab">
@@ -471,29 +502,30 @@
         </div>
         <div class="modal-body">
             <div class="container-fluid">
-                <form action="{{route('soporte_edit',Auth::user()->id)}}" method="POST">  
+                <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST" enctype="multipart/form-data">  
                     @csrf                  
                     @method('PUT')
-                    </select>    
+                    </select>
                     <div class="row mb-3">
                         <span>Foto de perfil</span> 
+
+                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*" required>
+                    </div>                    
+
                         <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*">
                     </div>                
+
                     <div class="row mb-3">
                         <span>Nombre</span>
-                        <input type="text" name="txtnombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
+                        <input type="text" name="txtNombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
                     </div>
                     <div class="row mb-3">
                         <span>Apellidos</span>
-                        <input type="text" name="txtapellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
+                        <input type="text" name="txtApellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
                     </div>
                     <div class="row mb-3">
                         <span>Correo</span>
-                        <input type="text" name="txtemail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
-                    </div>
-                    <div class="row mb-3">
-                        <span>Perfil</span>
-                        <input type="text" name="txtperfil" class="form-control" value="{{ Auth::user()->perfil }}" disabled>
+                        <input type="text" name="txtEmail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
                     </div>
                     <div class="row mb-3">
                         <span>Contraseña</span>
@@ -502,6 +534,7 @@
                     <div class="row mb-3">
                         <span>Contraseña Nueva</span>
                         <input type="password" name="txtNewPass" class="form-control" placeholder="" value="" required>
+
                     </div>
                     
                     <div class="modal-footer">
@@ -704,16 +737,51 @@
      </div>
     </div>
 
+    
 
 
 
 <!--Javacript-->
 
+<script>    
+    function borrarUsuario(id) {
+        // Mostrar alert de confirmación de borrado
+        new Swal({
+            title: "¿Está seguro que desea eliminar el usuario?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar"
+
+        })
+        .then((willDelete) => {
+            if (willDelete.isConfirmed) {
+            // Hacer una llamada Ajax a la ruta eliminar-usuario con el ID del usuario
+            axios.post('/borrado_log/' + id)
+                .then(function(response) {
+                    // Si la respuesta es exitosa, recargar la página
+                    location.reload();
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+        });
+    }
+
+</script>
+
     @yield('codigo')
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-3M4QbEx9tI8KFtZrH3q3J2LgBV+JG8WxxKpFsfR1JnXpsof8+fV+ReL+zJezGbc7MvTUL+ak2cJ1bGYaYV7uXw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    
 </body>
 </html>

@@ -33,14 +33,10 @@ class controladorMacuin extends Controller
                 
 
                 //return view('auxiliar');
-
-
                 return redirect()->route('auxiliar_rs');  
 
-            }
-            
-        }
-        
+            }         
+        }     
         return back()->withErrors(['invalid_credentials'=>'Usuario y/o contraseña no coinciden'])->withInput();
     }
 
@@ -88,7 +84,9 @@ class controladorMacuin extends Controller
 
             $image = $r->file('imgPerfil');
 
+            $perfil = Auth::user()->perfil;
 
+            //IMG
             if ($image) {
                 $filename = uniqid('profile_') . '.' . $image->getClientOriginalExtension();
                 $path = $image->storeAs('profiles', $filename, 'public');
@@ -124,7 +122,16 @@ class controladorMacuin extends Controller
     
             $usu->save(); //Actualizar
             
-            return redirect()->route('cliente_rs')->with('save','editado');
+            //Redireccion OP
+            if ($perfil == 'cliente'){
+                return redirect()->route('cliente_rs')->with('save','editado');
+            }else{
+                if ($perfil == 'Auxiliar'){
+                    return redirect()->route('auxiliar_rs')->with('save','editado');
+                }else{
+                    return redirect()->route('soporte_bo')->with('save','editado');
+                }
+            }
 
     }
 
@@ -177,6 +184,7 @@ class controladorMacuin extends Controller
         return redirect()->route('soporte_bo')->with('save2','editado');
 
 }
+
 
 
 public function editarPerfilAuxiliar(Request $r, $id){
@@ -365,12 +373,15 @@ public function editarPerfilAuxiliar(Request $r, $id){
         return view('soporte',compact('depa','tick','usu','estatus', 'auxs', 'dates'));
     }
 
-    public function deleteUsuario($request, $id)
+    public function deleteUsuario(Request $r, $id)
     {
-        DB::table('users')->where('id',$id)->updated([
-            "estatus"=> 0,
-            "updated_at"=>Carbon::now(),
-        ]);
+        // Obtener el usuario a borrar
+        $usu = User::findOrFail($id);
+
+        $usu->estatus = 0;
+        $usu->updated_at = Carbon::now();
+
+        $usu->save(); //Actualizar
 
         return redirect('soporte_bo') -> with('eliminacion','Envio correcto');
     }
