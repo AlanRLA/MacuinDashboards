@@ -377,7 +377,7 @@ public function editarPerfilAuxiliar(Request $r, $id){
 
         $usu->save(); //Actualizar
 
-        return redirect('soporte_bo') -> with('eliminacion','Envio correcto');
+        return redirect('soporte_bo') -> with('borrado','Envio correcto');
     }
 
 

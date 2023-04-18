@@ -56,10 +56,9 @@ class ControladorMacuin_Vistas extends Controller
         ->get();
 
         $usu = DB::table('users')
-        ->crossJoin('tb_departamentos')
         ->select('users.id','users.name', 'tb_departamentos.nombre')
+        ->leftJoin('tb_departamentos','users.id_dpto','=','tb_departamentos.id_dpto')
         ->where('users.estatus','=',1)
-        ->where('users.id_dpto','=',DB::raw('tb_departamentos.id_dpto'))
         ->get();
 
         $estatus = DB::table('tb_tickets')
@@ -108,6 +107,7 @@ class ControladorMacuin_Vistas extends Controller
             ->join('tb_departamentos','tb_tickets.id_dpto','=','tb_departamentos.id_dpto')
             ->join('users','tb_tickets.id_usu','=','users.id')
             ->where('tb_soportes.id_aux', '=', $id_aux)
+            ->orderBy('tb_soportes.updated_at', 'desc')
             ->get();
 
         $departs = DB::table('tb_departamentos')
