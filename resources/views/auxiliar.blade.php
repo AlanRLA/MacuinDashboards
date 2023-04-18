@@ -153,17 +153,18 @@
 
     <div class="container-auxiliar">
         <div class="card" style="height: 38rem;">
-            <div class="card-header bg-transparent mb-1"><h3>Control de Tickets</h3>                 
-            </div>
-            <div class="card-body overflow-auto" style="max-height: 100%; overflow-y: scroll;">
-                <div class="container">
-                    <div class="contenedor-flexbox">
-                        <form action="{{route('search_aux')}}" method="get" id="search-form">
+            <div class="card-header bg-transparent mb-1"><h3>Control de Tickets</h3>
+                  <div class="contenedor-flexbox">
+                        <form action="{{route('search_aux')}}" method="get" id="search-form" style="margin-left: 75%">
                             @csrf
                             <input type="text" name="search">                       
                             <button type="submit" class="btn btn-primary">Buscar</button>
                         </form>    
-                    </div>  
+                    </div>                 
+            </div>
+            <div class="card-body overflow-auto" style="max-height: 100%; overflow-y: scroll;">
+                <div class="container">
+                    
                     
                     @foreach ($tickets as $ticket)
                         <div class="card ">
@@ -175,11 +176,11 @@
                                 <h6>Opciones: 
                                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Detalle{{$ticket->id_ticket}}">Más detalles</button> 
 
-                                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Estatus">Estatus</button> 
+                             
                                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Coment{{$ticket->id_ticket}}">Comentar</button> 
 
                                     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Estatus{{$ticket->id_ticket}}">Estatus</button> 
-                                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#Coment">Comentar</button> 
+
 
                                 </h6>   
                             </div>
@@ -308,12 +309,59 @@
     </div>
 
     <!-- Modal de Colaboradores -->
+
  <div class="modal fade" id="modalColab">
     <div class="modal-dialog modal-modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Datos de usuario</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    <div class="modal fade" id="modalColab">
+        <div class="modal-dialog modal-modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Datos de usuario</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form action="{{route('auxiliar_edit',Auth::user()->id)}}" method="POST">  
+                        @csrf                  
+                        @method('PUT')
+                        </select>                    
+                        <div class="row mb-3">
+                            <span>Nombre</span>
+                            <input type="text" name="txtnombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
+                        </div>
+                        <div class="row mb-3">
+                            <span>Apellidos</span>
+                            <input type="text" name="txtapellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
+                        </div>
+                        <div class="row mb-3">
+                            <span>Correo</span>
+                            <input type="text" name="txtemail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
+                        </div>
+                        <div class="row mb-3">
+                            <span>Perfil</span>
+                            <input type="text" name="txtperfil" class="form-control" value="{{ Auth::user()->perfil }}" disabled>
+                        </div>
+                        <div class="row mb-3">
+                            <span>Contraseña</span>
+                            <input type="password" name="txtPass" class="form-control" placeholder="" value="" required>
+                        </div>
+                        <div class="row mb-3">
+                            <span>Contraseña Nueva</span>
+                            <input type="password" name="txtNewPass" class="form-control" placeholder="" value="" required>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Editar Datos</button>
+                        </div>
+                    </form>                   
+                </div>        
+            </div>
+
         </div>
         <div class="modal-body">
             <div class="container-fluid">
