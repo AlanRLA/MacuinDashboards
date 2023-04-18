@@ -28,6 +28,16 @@
     </script> 
     @endif
 
+    @if(session()->has('password'))
+    <script type="text/javascript">          
+        Swal.fire(
+        'Error',
+        'La contraseña actual es incorrecta.',
+        'error'
+        )
+    </script> 
+    @endif
+
 @if (session()->has('mail')) 
     <script type="text/javascript">          
         Swal.fire({
@@ -305,7 +315,7 @@
                     </select>
                     <div class="row mb-3">
                         <span>Foto de perfil</span> 
-                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*" required>
+                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*">
                     </div>                    
                     <div class="row mb-3">
                         <span>Nombre</span>
@@ -321,7 +331,11 @@
                     </div>
                     <div class="row mb-3">
                         <span>Contraseña</span>
-                        <input type="password" name="txtPass" class="form-control" placeholder="Solicitar cambio/Pendiente" disabled>
+                        <input type="password" name="txtPass" class="form-control" placeholder="" value="" required>
+                    </div>
+                    <div class="row mb-3">
+                        <span>Contraseña Nueva</span>
+                        <input type="password" name="txtNewPass" class="form-control" placeholder="" value="" required>
                     </div>
                     
                     <div class="modal-footer">

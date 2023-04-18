@@ -75,6 +75,7 @@
         </script> 
     @endif
 
+
     @if (session()->has('borrado')) 
     <script type="text/javascript">          
         Swal.fire({
@@ -86,6 +87,20 @@
         })
     </script> 
     @endif
+
+    @if (session()->has('eliminado')) 
+        <script type="text/javascript">          
+            Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'Departamento eliminado',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        </script> 
+    @endif
+
+
 
 <!-- LOGIN  -->
 
@@ -131,7 +146,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Nombre</th>
-                                    <th scope="col">Ubicacion</th>
+                                    <th scope="col">Opcion:</th>
                                 </tr>
                             </thead>
                             <tbody style="max-height: 50px; overflow-y: auto;">
@@ -143,7 +158,9 @@
                                         </button>
                                     </td>
                                     <td>
-                                        {{$item->ubicacion}}
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#EliminarDpto{{$item->id_dpto}}">
+                                            Eliminar
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>                                                                                                        
@@ -187,12 +204,52 @@
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Editar Datos</button>
                     </div>
-                </form>                   
+                </form> 
+                                  
             </div>   
             </div>
         </div>
         </div>
     </div>
+
+    <!-- Modal Eliminar Departamento -->
+    <div class="modal fade" id="EliminarDpto{{$item->id_dpto}}" tabindex="-1" aria-labelledby="Detalle" aria-hidden="true">
+        <div class="modal-dialog modal-modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Eliminar Departamento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+             <label hidden>id de Departamento {{$item->id_dpto}}</label>   
+             <div class="container-fluid">
+                <form action="{{route('deleteDpto',$item->id_dpto)}}" method="POST">  
+                    @csrf                  
+                    @method('PUT')
+                    </select>                    
+                    <div class="row mb-3">
+                        <span>Nombre</span>
+                        <input type="text" name="txtNombre" class="form-control" value="{{$item->nombre}}" placeholder="" required disabled>
+                    </div>
+                    <div class="row mb-3">
+                        <span>Telefono</span>
+                        <input type="text" name="txtTel" class="form-control" placeholder="" value="{{$item->telefono}}" required disabled>
+                    </div>
+                    <div class="row mb-3">
+                        <span>Ubicación</span>
+                        <input type="text" name="txtUbi" class="form-control" value="{{$item->ubicacion}}" placeholder="" required disabled>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Eliminar Departamento</button>
+                    </div>
+                </form>                                   
+            </div>   
+            </div>
+        </div>
+        </div>
+    </div>
+
     @endforeach
 
     <!-- Modal Registrar Departamento -->
@@ -453,8 +510,9 @@
                     </select>
                     <div class="row mb-3">
                         <span>Foto de perfil</span> 
-                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*" required>
-                    </div>                    
+                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*">
+                    </div>                
+
                     <div class="row mb-3">
                         <span>Nombre</span>
                         <input type="text" name="txtNombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
@@ -469,7 +527,12 @@
                     </div>
                     <div class="row mb-3">
                         <span>Contraseña</span>
-                        <input type="password" name="txtPass" class="form-control" placeholder="Solicitar cambio/Pendiente" disabled>
+                        <input type="password" name="txtPass" class="form-control" placeholder="" value="" required>
+                    </div>
+                    <div class="row mb-3">
+                        <span>Contraseña Nueva</span>
+                        <input type="password" name="txtNewPass" class="form-control" placeholder="" value="" required>
+
                     </div>
                     
                     <div class="modal-footer">

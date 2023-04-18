@@ -29,10 +29,15 @@ Route::post('departamentoNew',[controladorMacuin::class, 'insertDpto'])->name('r
 Route::put('dpto_edit/{id}',[controladorMacuin::class, 'editarDpto'])->name('editDpto');
 Route::post('asignarTicket/{id}',[controladorMacuin::class, 'asignarTicket'])->name('compartir');
 
+Route::put('soporte_edit/{id}', [controladorMacuin::class, 'editarPerfilSoporte'])->name('soporte_edit');
+Route::put('dpto_del/{id}',[ControladorMacuin::class,'eliminaDpto'])->name('deleteDpto');
+
+
 //RUTAS AUXILIAR
 Route::put('comentar/{id}',[controladorMacuin::class,'Comentar_aux'])->name('comentar');
 Route::get('search_aux',[controladorMacuin::class,'search_aux'])->name('search_aux');
 Route::put('cambio_estatus/{id}', [controladorMacuin::class, 'cambiarEstatus'])->name('cam_estatus');
+Route::put('auxiliar_edit/{id}', [controladorMacuin::class, 'editarPerfilAuxiliar'])->name('auxiliar_edit');
 
 //RUTAS PROTEGIDAS
 Route::middleware('auth')->group(function(){

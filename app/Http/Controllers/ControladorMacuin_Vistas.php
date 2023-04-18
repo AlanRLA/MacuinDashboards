@@ -28,7 +28,7 @@ class ControladorMacuin_Vistas extends Controller
     public function indexCliente()
     {
 
-        $deptos = DB::table('tb_departamentos')->get();
+        $deptos = DB::table('tb_departamentos')->where('estatus','1')->get();
         $tickets = DB::table('tb_tickets')->where('estatus','<>','Cancelado')->where('id_usu','=',Auth::user()->id)->get();
         
         $tickets2 = DB::table('tb_tickets')
@@ -76,7 +76,9 @@ class ControladorMacuin_Vistas extends Controller
             return redirect()->route('cliente_rs')->with('no se puede','cancel');
         }
 
-        $depa = DB::table('tb_departamentos')->get();
+        $depa = DB::table('tb_departamentos')
+        ->where('estatus','1')
+        ->get();
 
         $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
         
@@ -113,6 +115,7 @@ class ControladorMacuin_Vistas extends Controller
             ->join('tb_tickets','tb_departamentos.id_dpto','=','tb_tickets.id_dpto')
             ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
             ->where('tb_soportes.id_aux','=',Auth::user()->id)
+            ->where('tb_departamentos.estatus','=','1')
             ->groupBy(DB::raw('tb_departamentos.nombre'),DB::raw('tb_departamentos.id_dpto'))
             ->get();
 
