@@ -202,6 +202,16 @@ class controladorMacuin extends Controller
 
     }
 
+    //FUNCION ELIMINAR DEPARTAMENTO
+    public function eliminaDpto(Request $r,$id){
+        DB::table('tb_departamentos')->where('id_dpto',$id)->update([
+            "estatus"=>'0',
+            "updated_at"=>Carbon::now()
+        ]);
+
+        return redirect()->route('soporte_bo')->with('eliminado','eliminado');
+    }
+
 
         //FUNCION ASIGNAR TICKET a AUXILIAR
     public function asignarTicket(Request $r,$id){
@@ -328,6 +338,7 @@ class controladorMacuin extends Controller
                         ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
                         ->where('tb_soportes.id_aux','=',Auth::user()->id)
                         ->groupBy(DB::raw('tb_departamentos.nombre'),DB::raw('tb_departamentos.id_dpto'))
+                        ->where('tb_departamentos.estatus','=','1')
                         ->get();
             
                     return view('auxiliar',compact('estatus','dates','departs','tickets'));
@@ -383,6 +394,7 @@ class controladorMacuin extends Controller
                 ->join('tb_soportes','tb_soportes.id_ticket','=','tb_tickets.id_ticket')
                 ->where('tb_soportes.id_aux','=',Auth::user()->id)
                 ->groupBy(DB::raw('tb_departamentos.nombre'),DB::raw('tb_departamentos.id_dpto'))
+                ->where('tb_departamentos.estatus','=','1')
                 ->get();
             return view('auxiliar',compact('estatus','dates','departs','tickets'));
         }}
