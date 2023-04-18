@@ -364,13 +364,7 @@ public function editarPerfilAuxiliar(Request $r, $id){
 
         $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
 
-        $dates = DB::table('tb_tickets')
-            ->selectRaw('DATE(created_at) as Date')
-            ->groupBy(DB::raw('DATE(created_at)'))
-            ->get();
-
-         
-        return view('soporte',compact('depa','tick','usu','estatus', 'auxs', 'dates'));
+        return view('soporte',compact('depa','tick','usu','estatus', 'auxs'));
     }
 
     public function deleteUsuario(Request $r, $id)
