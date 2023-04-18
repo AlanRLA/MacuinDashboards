@@ -15,6 +15,12 @@
         <link rel="stylesheet" href="css/estilosForms.css">
         <link rel="stylesheet" href="css/estilos.css">
 
+        <!-- Bootstrap 5 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-XXXX" crossorigin="anonymous">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-XXXX" crossorigin="anonymous"></script>
+
 
 </head>
 <body>
@@ -110,7 +116,7 @@
 
         <br>
         <a href="" data-bs-toggle="modal" data-bs-target="#modalColab"><i class="bi bi-person-fill-gear"> Editar Perfil</i></a>
-        <a href="" data-bs-toggle="modal" data-bs-target="#m_menu"><i class="bi bi-file-earmark-pdf-fill"> Generar reporte</i></a>
+        <a href="" data-bs-toggle="modal" data-bs-target="#modalMenu"><i class="bi bi-file-earmark-pdf-fill">Generar reporte</i></a>
         
 
         {{-- <form action="{{route('logout')}}" method="POST">
@@ -310,13 +316,6 @@
 
     <!-- Modal de Colaboradores -->
 
- <div class="modal fade" id="modalColab">
-    <div class="modal-dialog modal-modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Datos de usuario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
     <div class="modal fade" id="modalColab">
         <div class="modal-dialog modal-modal-dialog-centered">
         <div class="modal-content">
@@ -325,45 +324,6 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="container-fluid">
-                    <form action="{{route('auxiliar_edit',Auth::user()->id)}}" method="POST">  
-                        @csrf                  
-                        @method('PUT')
-                        </select>                    
-                        <div class="row mb-3">
-                            <span>Nombre</span>
-                            <input type="text" name="txtnombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
-                        </div>
-                        <div class="row mb-3">
-                            <span>Apellidos</span>
-                            <input type="text" name="txtapellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
-                        </div>
-                        <div class="row mb-3">
-                            <span>Correo</span>
-                            <input type="text" name="txtemail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
-                        </div>
-                        <div class="row mb-3">
-                            <span>Perfil</span>
-                            <input type="text" name="txtperfil" class="form-control" value="{{ Auth::user()->perfil }}" disabled>
-                        </div>
-                        <div class="row mb-3">
-                            <span>Contraseña</span>
-                            <input type="password" name="txtPass" class="form-control" placeholder="" value="" required>
-                        </div>
-                        <div class="row mb-3">
-                            <span>Contraseña Nueva</span>
-                            <input type="password" name="txtNewPass" class="form-control" placeholder="" value="" required>
-                        </div>
-                        
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Editar Datos</button>
-                        </div>
-                    </form>                   
-                </div>        
-            </div>
-
-        </div>
-        <div class="modal-body">
             <div class="container-fluid">
                 <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST" enctype="multipart/form-data">  
                     @csrf                  
@@ -398,66 +358,70 @@
         </div>
       </div>
     </div>
-</div>
-    <div class="modal fade" id="m_menu" aria-hidden="true" aria-labelledby="m_menu" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="m_menu">Menú de elección de reporte</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {{-- CARDS --}}
-                <div class="card-group">
-                    {{-- CLASIFICACIÓN --}}
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title text-center">Departamentos</h5>
-                        </div>
-                        <div class="card-body">
-                            <img src="img/h.png" class="card-img-top" alt="..." style="pointer-events:none;" >
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-primary form-control" data-bs-target="#m_departamentos" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
-                        </div>
-                    </div>
-                    {{-- ESTATUS --}}
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title text-center">Estatus</h5>
-                        </div>
-                        <div class="card-body">
-                            <img src="img/s.png" class="card-img-top" alt="..." style="pointer-events:none;" >
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-primary form-control" data-bs-target="#m_estatus" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
-                        </div>
-                    </div>
-                    {{-- fECHA --}}
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title text-center">Fecha</h5>
-                        </div>
-                        <div class="card-body">
-                            <img src="img/c.png" class="card-img-top" alt="..." style="pointer-events:none;" >
-                            <p class="card-text"><small class="text-muted">Last update 3 mins ago</small></p>
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-primary form-control" data-bs-target="#m_fechas" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
-                        </div>
-                    </div>
+</div>  
+
+
+<!-- MENU Modal principal -->
+<div class="modal" tabindex="-1" id="modalMenu">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="m_menu">Menú de elección de reporte</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              {{-- CARDS --}}
+              <div class="card-group">
+                  {{-- CLASIFICACIÓN --}}
+                  <div class="card">
+                      <div class="card-header">
+                          <h5 class="card-title text-center">Departamentos</h5>
+                      </div>
+                      <div class="card-body">
+                          <img src="img/h.png" class="card-img-top" alt="..." style="pointer-events:none;" >
+                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      </div>
+                      <div class="card-footer">
+                          <button class="btn btn-primary form-control" data-bs-target="#m_departamentos" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
+                      </div>
+                  </div>
+                  {{-- ESTATUS --}}
+                  <div class="card">
+                      <div class="card-header">
+                          <h5 class="card-title text-center">Estatus</h5>
+                      </div>
+                      <div class="card-body">
+                          <img src="img/s.png" class="card-img-top" alt="..." style="pointer-events:none;" >
+                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      </div>
+                      <div class="card-footer">
+                          <button class="btn btn-primary form-control" data-bs-target="#m_estatus" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
+                      </div>
+                  </div>
+                  {{-- FECHA --}}
+                  <div class="card">
+                      <div class="card-header">
+                          <h5 class="card-title text-center">Fecha</h5>
+                      </div>
+                      <div class="card-body">
+                          <img src="img/c.png" class="card-img-top" alt="..." style="pointer-events:none;" >
+                          <p class="card-text"><small class="text-muted">Last update 3 mins ago</small></p>
+                      </div>
+                      <div class="card-footer">
+                          <button class="btn btn-primary form-control" data-bs-target="#m_fechas" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
+                      </div>
                   </div>
                 </div>
-                {{-- FIN CARDS --}}
-            <div class="modal-footer text-center">
-                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Reporte General</button>
-            </div>
-          </div>
+              </div>
+              {{-- FIN CARDS --}}
+        <div class="modal-footer">
         </div>
       </div>
-      {{-- segundos modals --}}
+    </div>
+  </div>
+  
+      {{-- Secundiarios modals --}}
+      {{-- Modal Reporte Estatus --}}
       <div class="modal fade" id="m_estatus" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -482,14 +446,14 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+              <button class="btn btn-primary" data-bs-target="#modalPrincipal" data-bs-toggle="modal" data-bs-dismiss="modal">Volver</button>
               
             </div>
           </div>
         </div>
       </div>
 
-      {{-- segundos modals --}}
+      {{--Modal Reporte Departamentos --}}
       <div class="modal fade" id="m_departamentos" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
@@ -515,7 +479,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+                <button class="btn btn-primary" data-bs-target="#modalPrincipal" data-bs-toggle="modal" data-bs-dismiss="modal">Volver</button>
             </div>
           </div>
         </div>
@@ -546,7 +510,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Regresar</button>
+                <button class="btn btn-primary" data-bs-target="#modalPrincipal" data-bs-toggle="modal" data-bs-dismiss="modal">Volver</button>
             </div>
           </div>
         </div>
@@ -593,8 +557,15 @@
     </div>
     @endforeach --}}
 <!--Javacript-->
+<script>
+    $('.modal').on('hidden.bs.modal', function (e) {
+      $('.modal-backdrop').remove();
+    });
+  </script>
 
     @yield('codigo')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-XXXX" crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-3M4QbEx9tI8KFtZrH3q3J2LgBV+JG8WxxKpFsfR1JnXpsof8+fV+ReL+zJezGbc7MvTUL+ak2cJ1bGYaYV7uXw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -547,7 +547,7 @@
 
 
 {{-- Modal Menu Reportes --}}
-<div class="modal fade" id="m_menu" aria-hidden="true" aria-labelledby="m_menu" tabindex="-1">
+<div class="modal" id="m_menu" aria-hidden="true" aria-labelledby="m_menu" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -583,7 +583,20 @@
                         <button class="btn btn-primary form-control" data-bs-target="#m_departamento" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
                     </div>
                 </div>
-                {{-- fECHA --}}
+                 {{-- ESTATUS --}}
+                 <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Estatus</h5>
+                    </div>
+                    <div class="card-body">
+                        <img src="img/s.png" class="card-img-top" alt="..." style="pointer-events:none;" >
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary form-control" data-bs-target="#m_estatus" data-bs-toggle="modal" data-bs-dismiss="modal">Generar</button>
+                    </div>
+                </div>
+                {{-- FECHA --}}
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title text-center">Fecha</h5>
@@ -633,7 +646,7 @@
             </form>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+            <button class="btn btn-primary" data-bs-target="#modalPrincipal" data-bs-toggle="modal" data-bs-dismiss="modal">Volver</button>
         </div>
       </div>
     </div>
@@ -665,7 +678,7 @@
             </form>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
+            <button class="btn btn-primary" data-bs-target="#modalPrincipal" data-bs-toggle="modal" data-bs-dismiss="modal">Volver</button>
         </div>
       </div>
     </div>
@@ -697,7 +710,7 @@
             </form>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Regresar</button>
+            <button class="btn btn-primary" data-bs-target="#modalPrincipal" data-bs-toggle="modal" data-bs-dismiss="modal">Volver</button>
         </div>
       </div>
     </div>
@@ -729,7 +742,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-            <button class="btn btn-primary" data-bs-target="#m_menu" data-bs-toggle="modal" data-bs-dismiss="modal">Regresar</button>
+                <button class="btn btn-primary" data-bs-target="#modalPrincipal" data-bs-toggle="modal" data-bs-dismiss="modal">Volver</button>
             </div>
         </div>
      </div>
