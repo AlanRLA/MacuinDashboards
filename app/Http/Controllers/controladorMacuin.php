@@ -275,7 +275,7 @@ class controladorMacuin extends Controller
             'detalle_aux'=>$r->Comentario,
             'updated_at'=>Carbon::now(),
         ]);
-        return redirect('auxiliar_rs')->with('cambio','Envio correcto');
+        return redirect('auxiliar_rs')->with('msj','Envio correcto');
         return ($id);
     }
 
