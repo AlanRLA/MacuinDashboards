@@ -380,7 +380,7 @@
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">id</th>
+                                                            <th scope="col">Id</th>
                                                             <th scope="col">Nombre</th>
                                                             <th scope="col">Departamento</th>
                                                             <th scope="col">Opciones</th>
@@ -391,12 +391,14 @@
                                                             <tr>
                                                                 <th scope="row">{{$usu->id}}</th>
                                                                 <th scope="row">{{$usu->name}}</th>
-                                                                <td>{{$usu->nombre}}</td>
+                                                                @if ($usu->nombre == null)
+                                                                    <td>es cliente</td>
+                                                                @else
+                                                                    <td>{{$usu->nombre}}</td>  
+                                                                @endif
+                                                         
                                                                 <td>
-                                                                    <div class="d-grid gap-2 d-md-block">
-                                                                        <button type="button" class="btn btn-primary btn-sm">
-                                                                            Editar
-                                                                        </button>
+                                                                    <div class="d-grid gap-2 d-md-block">                                              
                                                                         <button type="button" class="btn btn-danger btn-sm" onclick="borrarUsuario({{$usu->id}})">
                                                                             Eliminar
                                                                         </button>
@@ -680,7 +682,7 @@
     function borrarUsuario(id) {
         // Mostrar alert de confirmación de borrado
         new Swal({
-            title: "¿Está seguro que desea eliminar el usuario?",
+            title: "¿Está seguro que desea eliminar el usuario de ID: "+id+"?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#d33",
@@ -691,14 +693,15 @@
         })
         .then((willDelete) => {
             if (willDelete.isConfirmed) {
-            // Hacer una llamada Ajax a la ruta eliminar-usuario con el ID del usuario
-            axios.post('/borrado_log/' + id)
+            // Hacer una llamada Ajax a la ruta borrado_log pasando el ID
+            axios.put('/borrado_log/' + id)
                 .then(function(response) {
                     // Si la respuesta es exitosa, recargar la página
                     location.reload();
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    location.reload();//LLave maestra
+                    
                 });
         }
         });
