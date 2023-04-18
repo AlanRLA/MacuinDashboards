@@ -312,7 +312,7 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    <form action="{{route('soporte_edit',Auth::user()->id)}}" method="POST">  
+                    <form action="{{route('auxiliar_edit',Auth::user()->id)}}" method="POST">  
                         @csrf                  
                         @method('PUT')
                         </select>                    
@@ -334,7 +334,11 @@
                         </div>
                         <div class="row mb-3">
                             <span>Contraseña</span>
-                            <input type="password" name="txtppass" class="form-control" placeholder="pendiente">
+                            <input type="password" name="txtPass" class="form-control" placeholder="" value="" required>
+                        </div>
+                        <div class="row mb-3">
+                            <span>Contraseña Nueva</span>
+                            <input type="password" name="txtNewPass" class="form-control" placeholder="" value="" required>
                         </div>
                         
                         <div class="modal-footer">
