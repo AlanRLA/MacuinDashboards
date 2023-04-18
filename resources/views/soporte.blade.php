@@ -508,10 +508,6 @@
                     </select>
                     <div class="row mb-3">
                         <span>Foto de perfil</span> 
-
-                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*" required>
-                    </div>                    
-
                         <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*">
                     </div>                
 
