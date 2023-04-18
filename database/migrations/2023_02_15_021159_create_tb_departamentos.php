@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('telefono');
             $table->string('ubicacion');
+            $table->integer('estatus')->default(1);
             $table->timestamps();
         });
     }
