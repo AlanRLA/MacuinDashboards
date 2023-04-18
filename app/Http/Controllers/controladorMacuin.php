@@ -33,14 +33,10 @@ class controladorMacuin extends Controller
                 
 
                 //return view('auxiliar');
-
-
                 return redirect()->route('auxiliar_rs');  
 
-            }
-            
-        }
-        
+            }         
+        }     
         return back()->withErrors(['invalid_credentials'=>'Usuario y/o contraseña no coinciden'])->withInput();
     }
 
@@ -88,7 +84,9 @@ class controladorMacuin extends Controller
 
             $image = $r->file('imgPerfil');
 
+            $perfil = Auth::user()->perfil;
 
+            //IMG
             if ($image) {
                 $filename = uniqid('profile_') . '.' . $image->getClientOriginalExtension();
                 $path = $image->storeAs('profiles', $filename, 'public');
@@ -100,33 +98,19 @@ class controladorMacuin extends Controller
     
             $usu->save(); //Actualizar
             
-            return redirect()->route('cliente_rs')->with('save','editado');
+            //Redireccion OP
+            if ($perfil == 'cliente'){
+                return redirect()->route('cliente_rs')->with('save','editado');
+            }else{
+                if ($perfil == 'Auxiliar'){
+                    return redirect()->route('auxiliar_rs')->with('save','editado');
+                }else{
+                    return redirect()->route('soporte_bo')->with('save','editado');
+                }
+            }
 
     }
-
-
-    public function editarPerfilSoporte(Request $r, $id){
-
-        $usu = User::findOrFail($id); // Buscar el usuario en la base de datos
-
-        $usu->name = $r->txtnombre;
-        $usu->apellido = $r->txtapellido;
-
-        $image = $r->file('imgPerfil');
-        if ($image) {
-            $filename = uniqid('profile_') . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('profiles', $filename, 'public');
-            $usu->img_perfil = $path;
-        }
-        
-        $usu->email = $r->txtemail;
-        $usu->updated_at = Carbon::now();
-
-        $usu->save(); //Actualizar
-        
-        return redirect()->route('soporte_bo')->with('save2','editado');
-
-}
+ 
 
     //FUNCION INSERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)

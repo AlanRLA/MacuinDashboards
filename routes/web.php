@@ -28,7 +28,6 @@ Route::get('search',[controladorMacuin::class, 'search'])->name('search');
 Route::post('departamentoNew',[controladorMacuin::class, 'insertDpto'])->name('regisDpto');
 Route::put('dpto_edit/{id}',[controladorMacuin::class, 'editarDpto'])->name('editDpto');
 Route::post('asignarTicket/{id}',[controladorMacuin::class, 'asignarTicket'])->name('compartir');
-Route::put('soporte_edit/{id}', [controladorMacuin::class, 'editarPerfilSoporte'])->name('soporte_edit');
 
 //RUTAS AUXILIAR
 Route::put('comentar/{id}',[controladorMacuin::class,'Comentar_aux'])->name('comentar');

@@ -91,10 +91,7 @@
 
         <h4>{{ Auth::user()->name }}</h4>
 
-        <h5 class="mt-2">Cliente</h5>
-        @if (Auth::user()->perfil == null)
-            <h5>Artur </h5>
-        @endif
+        <h5 class="mt-2"><strong>Perfil:</strong> {{ Auth::user()->perfil }}</h5>
 
         <h5 class="mt-2">{{ Auth::user()->email }}</h5>
         <a href="" data-bs-toggle="modal" data-bs-target="#modalColab"><i class="bi bi-person-fill-gear"> Editar Perfil</i></a>

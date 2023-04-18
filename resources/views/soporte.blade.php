@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    @if(session()->has('save2'))
+    @if(session()->has('save'))
     <script type="text/javascript">          
         Swal.fire(
         '¡Todo correcto!',
@@ -362,8 +362,8 @@
                                     <button class="btn btn-primary consulta" style="margin-left: 15%" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Consultar Usuarios</button>
 
                                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-                                        <div class="offcanvas-header">
-                                            <h5 class="offcanvas-title" id="offcanvasRightLabel">Consultar Usuarios</h5>
+                                        <div class="offcanvas-header text-center">
+                                            <h5 class="offcanvas-title " id="offcanvasRightLabel"><Strong>Consultar Usuarios</Strong></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                         </div>
                                             <div class="offcanvas-body">
@@ -375,24 +375,20 @@
                                                             <th scope="col">Opciones</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody class="text-center">
                                                         @foreach ($usu as $usu)
                                                             <tr>
                                                                 <th scope="row">{{$usu->name}}</th>
                                                                 <td>{{$usu->nombre}}</td>
                                                                 <td>
-                                                                    <div class="mb-2">
-                                                                        <a class="btn btn-success" href="#" role="button">Editar</a>
-                                                                    </div>
-                                                                    <div>
-                                                                        
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal">
+                                                                    <div class="d-grid gap-2 d-md-block">
+                                                                        <button type="button" class="btn btn-primary btn-sm">
+                                                                            Editar
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal">
                                                                             Eliminar
                                                                         </button>
-                                                                        
-                                                                    </div>
-
-                                                                      
+                                                                    </div>                                                                    
                                                                 </td>
                                                             </tr>  
                                                         @endforeach                                              
@@ -418,33 +414,29 @@
         </div>
         <div class="modal-body">
             <div class="container-fluid">
-                <form action="{{route('soporte_edit',Auth::user()->id)}}" method="POST">  
+                <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST" enctype="multipart/form-data">  
                     @csrf                  
                     @method('PUT')
-                    </select>    
+                    </select>
                     <div class="row mb-3">
                         <span>Foto de perfil</span> 
                         <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*" required>
-                    </div>                
+                    </div>                    
                     <div class="row mb-3">
                         <span>Nombre</span>
-                        <input type="text" name="txtnombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
+                        <input type="text" name="txtNombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
                     </div>
                     <div class="row mb-3">
                         <span>Apellidos</span>
-                        <input type="text" name="txtapellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
+                        <input type="text" name="txtApellido" class="form-control" placeholder="" value="{{ Auth::user()->apellido }}" required>
                     </div>
                     <div class="row mb-3">
                         <span>Correo</span>
-                        <input type="text" name="txtemail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
-                    </div>
-                    <div class="row mb-3">
-                        <span>Perfil</span>
-                        <input type="text" name="txtperfil" class="form-control" value="{{ Auth::user()->perfil }}" disabled>
+                        <input type="text" name="txtEmail" class="form-control" value="{{ Auth::user()->email }}" placeholder="" required>
                     </div>
                     <div class="row mb-3">
                         <span>Contraseña</span>
-                        <input type="password" name="txtppass" class="form-control" placeholder="pendiente">
+                        <input type="password" name="txtPass" class="form-control" placeholder="Solicitar cambio/Pendiente" disabled>
                     </div>
                     
                     <div class="modal-footer">
