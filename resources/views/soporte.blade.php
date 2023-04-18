@@ -477,7 +477,7 @@
                     </select>    
                     <div class="row mb-3">
                         <span>Foto de perfil</span> 
-                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*" required>
+                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*">
                     </div>                
                     <div class="row mb-3">
                         <span>Nombre</span>
@@ -497,7 +497,11 @@
                     </div>
                     <div class="row mb-3">
                         <span>Contraseña</span>
-                        <input type="password" name="txtppass" class="form-control" placeholder="pendiente">
+                        <input type="password" name="txtPass" class="form-control" placeholder="" value="" required>
+                    </div>
+                    <div class="row mb-3">
+                        <span>Contraseña Nueva</span>
+                        <input type="password" name="txtNewPass" class="form-control" placeholder="" value="" required>
                     </div>
                     
                     <div class="modal-footer">

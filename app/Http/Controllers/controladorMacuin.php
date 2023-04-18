@@ -96,6 +96,30 @@ class controladorMacuin extends Controller
             }
 
             $usu->email = $r->txtEmail;
+
+            // Obtener la contraseña actual del usuario
+            $currentPassword = $usu->password;
+
+            // Obtener la nueva contraseña ingresada por el usuario
+            $newPassword = $r->txtNewPass;
+
+            // Obtener la contraseña actual ingresada por el usuario
+            $inputPassword = $r->txtPass;
+
+            // Verificar que la contraseña actual ingresada sea correcta
+            if (!password_verify($inputPassword, $currentPassword)) {
+                // La contraseña actual no es correcta, mostrar mensaje de error
+                return redirect()->route('cliente_rs')->with('password' , 'La contraseña actual es incorrecta.');
+            } else {
+                // La contraseña actual es correcta, actualizar la contraseña del usuario
+                $hash = password_hash($newPassword, PASSWORD_DEFAULT);
+                $usu->password = $hash;
+                $usu->save();
+
+                // Mostrar mensaje de éxito
+                return redirect()->route('cliente_rs')->with('save','editado');
+            }
+
             $usu->updated_at = Carbon::now();
     
             $usu->save(); //Actualizar
@@ -120,6 +144,32 @@ class controladorMacuin extends Controller
         }
         
         $usu->email = $r->txtemail;
+
+        $usu->email = $r->txtEmail;
+
+            // Obtener la contraseña actual del usuario
+            $currentPassword = $usu->password;
+
+            // Obtener la nueva contraseña ingresada por el usuario
+            $newPassword = $r->txtNewPass;
+
+            // Obtener la contraseña actual ingresada por el usuario
+            $inputPassword = $r->txtPass;
+
+            // Verificar que la contraseña actual ingresada sea correcta
+            if (!password_verify($inputPassword, $currentPassword)) {
+                // La contraseña actual no es correcta, mostrar mensaje de error
+                return redirect()->route('cliente_rs')->with('password' , 'La contraseña actual es incorrecta.');
+            } else {
+                // La contraseña actual es correcta, actualizar la contraseña del usuario
+                $hash = password_hash($newPassword, PASSWORD_DEFAULT);
+                $usu->password = $hash;
+                $usu->save();
+
+                // Mostrar mensaje de éxito
+                return redirect()->route('cliente_rs')->with('save','editado');
+            }
+
         $usu->updated_at = Carbon::now();
 
         $usu->save(); //Actualizar
@@ -127,6 +177,55 @@ class controladorMacuin extends Controller
         return redirect()->route('soporte_bo')->with('save2','editado');
 
 }
+
+
+public function editarPerfilAuxiliar(Request $r, $id){
+
+    $usu = User::findOrFail($id); // Buscar el usuario en la base de datos
+
+    $usu->name = $r->txtnombre;
+    $usu->apellido = $r->txtapellido;
+
+    $image = $r->file('imgPerfil');
+    if ($image) {
+        $filename = uniqid('profile_') . '.' . $image->getClientOriginalExtension();
+        $path = $image->storeAs('profiles', $filename, 'public');
+        $usu->img_perfil = $path;
+    }
+    
+    $usu->email = $r->txtemail;
+
+        // Obtener la contraseña actual del usuario
+        $currentPassword = $usu->password;
+
+        // Obtener la nueva contraseña ingresada por el usuario
+        $newPassword = $r->txtNewPass;
+
+        // Obtener la contraseña actual ingresada por el usuario
+        $inputPassword = $r->txtPass;
+
+        // Verificar que la contraseña actual ingresada sea correcta
+        if (!password_verify($inputPassword, $currentPassword)) {
+            // La contraseña actual no es correcta, mostrar mensaje de error
+            return redirect()->route('cliente_rs')->with('password' , 'La contraseña actual es incorrecta.');
+        } else {
+            // La contraseña actual es correcta, actualizar la contraseña del usuario
+            $hash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $usu->password = $hash;
+            $usu->save();
+
+            // Mostrar mensaje de éxito
+            return redirect()->route('cliente_rs')->with('save','editado');
+        }
+
+    $usu->updated_at = Carbon::now();
+
+    $usu->save(); //Actualizar
+    
+    return redirect()->route('auxiliar_rs')->with('save2','editado');
+
+}
+
 
     //FUNCION INSERTAR TICKET CLIENTE
     public function insertTicket(Ticket $request)
