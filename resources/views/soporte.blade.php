@@ -18,6 +18,15 @@
 
 </head>
 <body>
+    @if(session()->has('password'))
+    <script type="text/javascript">          
+        Swal.fire(
+        'Error',
+        'La contraseña actual es incorrecta.',
+        'error'
+        )
+    </script> 
+    @endif
 
     @if(session()->has('save'))
     <script type="text/javascript">          
@@ -504,7 +513,7 @@
         </div>
         <div class="modal-body">
             <div class="container-fluid">
-                <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST" enctype="multipart/form-data">  
+                <form action="{{route('soporte_edit',Auth::user()->id)}}" method="POST" enctype="multipart/form-data">  
                     @csrf                  
                     @method('PUT')
                     </select>
@@ -527,11 +536,11 @@
                     </div>
                     <div class="row mb-3">
                         <span>Contraseña</span>
-                        <input type="password" name="txtPass" class="form-control" placeholder="" value="" required>
+                        <input type="password" name="txtPass" class="form-control" placeholder="" value="">
                     </div>
                     <div class="row mb-3">
                         <span>Contraseña Nueva</span>
-                        <input type="password" name="txtNewPass" class="form-control" placeholder="" value="" required>
+                        <input type="password" name="txtNewPass" class="form-control" placeholder="" value="">
 
                     </div>
                     

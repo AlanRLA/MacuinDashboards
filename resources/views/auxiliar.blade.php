@@ -24,6 +24,15 @@
 
 </head>
 <body>
+    @if(session()->has('password'))
+    <script type="text/javascript">          
+        Swal.fire(
+        'Error',
+        'La contraseña actual es incorrecta.',
+        'error'
+        )
+    </script> 
+    @endif
 
     @if(session()->has('save'))
     <script type="text/javascript">          
@@ -316,14 +325,15 @@
 
     <!-- Modal de Colaboradores -->
 
-    <div class="modal fade" id="modalColab">
-        <div class="modal-dialog modal-modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Datos de usuario</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+<!-- Modal de Colaboradores -->
+<div class="modal fade" id="modalColab">
+    <div class="modal-dialog modal-modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Datos de usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
             <div class="container-fluid">
                 <form action="{{route('cliente_edit',Auth::user()->id)}}" method="POST" enctype="multipart/form-data">  
                     @csrf                  
@@ -331,8 +341,9 @@
                     </select>
                     <div class="row mb-3">
                         <span>Foto de perfil</span> 
-                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*" required>
-                    </div>                    
+                        <input type="file" name="imgPerfil" id="imgPerfil" class="form-control-file" accept="image/*">
+                    </div>                
+
                     <div class="row mb-3">
                         <span>Nombre</span>
                         <input type="text" name="txtNombre" class="form-control" value="{{ Auth::user()->name }}" placeholder="" required>
@@ -347,7 +358,12 @@
                     </div>
                     <div class="row mb-3">
                         <span>Contraseña</span>
-                        <input type="password" name="txtPass" class="form-control" placeholder="Solicitar cambio/Pendiente" disabled>
+                        <input type="password" name="txtPass" class="form-control" placeholder="" value="">
+                    </div>
+                    <div class="row mb-3">
+                        <span>Contraseña Nueva</span>
+                        <input type="password" name="txtNewPass" class="form-control" placeholder="" value="">
+
                     </div>
                     
                     <div class="modal-footer">
@@ -358,7 +374,8 @@
         </div>
       </div>
     </div>
-</div>  
+</div>
+
 
 
 <!-- MENU Modal principal -->
