@@ -107,7 +107,35 @@ class controladorMacuin extends Controller
             // Verificar que la contraseña actual ingresada sea correcta
             if (!password_verify($inputPassword, $currentPassword)) {
                 // La contraseña actual no es correcta, mostrar mensaje de error
-                return redirect()->route('cliente_rs')->with('password' , 'La contraseña actual es incorrecta.');
+
+                if ($inputPassword == null){
+                    $usu->updated_at = Carbon::now();
+    
+                    $usu->save(); //Actualizar
+                    
+                    //Redireccion OP
+                    if ($perfil == 'cliente'){
+                        return redirect()->route('cliente_rs')->with('save','editado');
+                    }else{
+                        if ($perfil == 'Auxiliar'){
+                            return redirect()->route('auxiliar_rs')->with('save','editado');
+                        }else{
+                            return redirect()->route('soporte_bo')->with('save','editado');
+                        }
+                    }
+                }else{
+                    if ($perfil == 'cliente'){
+                    return redirect()->route('cliente_rs')->with('password' , 'La contraseña actual es incorrecta.');
+                }else{
+                    if ($perfil == 'Auxiliar'){
+                        return redirect()->route('auxiliar_rs')->with('password' , 'La contraseña actual es incorrecta.');
+                    }else{
+                        return redirect()->route('soporte_bo')->with('password' , 'La contraseña actual es incorrecta.');
+                    }
+                }
+                }
+
+                
             } else {
                 // La contraseña actual es correcta, actualizar la contraseña del usuario
                 $hash = password_hash($newPassword, PASSWORD_DEFAULT);
@@ -115,7 +143,15 @@ class controladorMacuin extends Controller
                 $usu->save();
 
                 // Mostrar mensaje de éxito
-                return redirect()->route('cliente_rs')->with('save','editado');
+                if ($perfil == 'cliente'){
+                    return redirect()->route('cliente_rs')->with('save','editado');
+                }else{
+                    if ($perfil == 'Auxiliar'){
+                        return redirect()->route('auxiliar_rs')->with('save','editado');
+                    }else{
+                        return redirect()->route('soporte_bo')->with('save','editado');
+                    }
+                }
             }
 
             $usu->updated_at = Carbon::now();
@@ -134,105 +170,6 @@ class controladorMacuin extends Controller
             }
 
     }
-
-
-    public function editarPerfilSoporte(Request $r, $id){
-
-        $usu = User::findOrFail($id); // Buscar el usuario en la base de datos
-
-        $usu->name = $r->txtnombre;
-        $usu->apellido = $r->txtapellido;
-
-        $image = $r->file('imgPerfil');
-        if ($image) {
-            $filename = uniqid('profile_') . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('profiles', $filename, 'public');
-            $usu->img_perfil = $path;
-        }
-        
-        $usu->email = $r->txtemail;
-
-        $usu->email = $r->txtEmail;
-
-            // Obtener la contraseña actual del usuario
-            $currentPassword = $usu->password;
-
-            // Obtener la nueva contraseña ingresada por el usuario
-            $newPassword = $r->txtNewPass;
-
-            // Obtener la contraseña actual ingresada por el usuario
-            $inputPassword = $r->txtPass;
-
-            // Verificar que la contraseña actual ingresada sea correcta
-            if (!password_verify($inputPassword, $currentPassword)) {
-                // La contraseña actual no es correcta, mostrar mensaje de error
-                return redirect()->route('cliente_rs')->with('password' , 'La contraseña actual es incorrecta.');
-            } else {
-                // La contraseña actual es correcta, actualizar la contraseña del usuario
-                $hash = password_hash($newPassword, PASSWORD_DEFAULT);
-                $usu->password = $hash;
-                $usu->save();
-
-                // Mostrar mensaje de éxito
-                return redirect()->route('cliente_rs')->with('save','editado');
-            }
-
-        $usu->updated_at = Carbon::now();
-
-        $usu->save(); //Actualizar
-        
-        return redirect()->route('soporte_bo')->with('save2','editado');
-
-}
-
-
-
-public function editarPerfilAuxiliar(Request $r, $id){
-
-    $usu = User::findOrFail($id); // Buscar el usuario en la base de datos
-
-    $usu->name = $r->txtnombre;
-    $usu->apellido = $r->txtapellido;
-
-    $image = $r->file('imgPerfil');
-    if ($image) {
-        $filename = uniqid('profile_') . '.' . $image->getClientOriginalExtension();
-        $path = $image->storeAs('profiles', $filename, 'public');
-        $usu->img_perfil = $path;
-    }
-    
-    $usu->email = $r->txtemail;
-
-        // Obtener la contraseña actual del usuario
-        $currentPassword = $usu->password;
-
-        // Obtener la nueva contraseña ingresada por el usuario
-        $newPassword = $r->txtNewPass;
-
-        // Obtener la contraseña actual ingresada por el usuario
-        $inputPassword = $r->txtPass;
-
-        // Verificar que la contraseña actual ingresada sea correcta
-        if (!password_verify($inputPassword, $currentPassword)) {
-            // La contraseña actual no es correcta, mostrar mensaje de error
-            return redirect()->route('cliente_rs')->with('password' , 'La contraseña actual es incorrecta.');
-        } else {
-            // La contraseña actual es correcta, actualizar la contraseña del usuario
-            $hash = password_hash($newPassword, PASSWORD_DEFAULT);
-            $usu->password = $hash;
-            $usu->save();
-
-            // Mostrar mensaje de éxito
-            return redirect()->route('cliente_rs')->with('save','editado');
-        }
-
-    $usu->updated_at = Carbon::now();
-
-    $usu->save(); //Actualizar
-    
-    return redirect()->route('auxiliar_rs')->with('save2','editado');
-
-}
 
 
     //FUNCION INSERTAR TICKET CLIENTE
@@ -350,10 +287,16 @@ public function editarPerfilAuxiliar(Request $r, $id){
                 ->where('tb_tickets.id_dpto','=',DB::raw('tb_departamentos.id_dpto'))
                 ->where('tb_tickets.estatus','=',$estatus)
                 ->get();
-        $usu = DB::table('users')
-                ->crossJoin('tb_departamentos')
-                ->select('users.name', 'tb_departamentos.nombre')
-                ->where('users.id_dpto','=',DB::raw('tb_departamentos.id_dpto'))
+
+                $usu = DB::table('users')
+                ->select('users.id','users.name', 'tb_departamentos.nombre')
+                ->leftJoin('tb_departamentos','users.id_dpto','=','tb_departamentos.id_dpto')
+                ->where('users.estatus','=',1)
+                ->get();
+
+                $dates = DB::table('tb_tickets')
+                ->selectRaw('DATE(created_at) as Date')
+                ->groupBy(DB::raw('DATE(created_at)'))
                 ->get();
 
         $depa = DB::table('tb_departamentos')->get();
@@ -364,7 +307,7 @@ public function editarPerfilAuxiliar(Request $r, $id){
 
         $auxs = DB::table('users')->where('perfil','=','auxiliar')->get();
 
-        return view('soporte',compact('depa','tick','usu','estatus', 'auxs'));
+        return view('soporte',compact('depa','tick','usu','estatus', 'auxs', 'dates'));
     }
 
     public function deleteUsuario(Request $r, $id)
